@@ -1,0 +1,64 @@
+import React ,{Component} from 'react';
+import ReactDOM from 'react-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import LayoutHome  from './LayoutUser/LayoutHome';
+class Example extends React.Component{
+    constructor(props){
+        super(props);
+    }
+    render(){
+        return (
+            <Router>
+                <div className="layout">
+                    <div className="container">
+                        <div className="header">
+                            <div className="row">
+                                <div className="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <div className="logo"> <h4>Ve Xe 2020</h4></div>
+                                </div>
+                                <div className="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                    <div className="menu">
+                                        <ul>
+                                            <li>
+                                                <Link to="/"><i className="fas fa-bus-alt" /><p>Vé Xe</p></Link>
+                                            </li>
+                                            <li>
+                                                <Link to="/"><i className="fas fa-tv" /> <p>Phần Mềm Nhà Xe</p></Link>
+                                            </li>
+                                            <li>
+                                                <Link to="/"><i className="fas fa-ticket-alt" /> <p>Quản Lý Vé</p></Link>
+                                            </li>
+                                            <li>
+                                                <Link to="/"><i className="fas fa-globe-africa" /> <p>Viet Nam</p></Link>
+                                            </li>
+                                            <li>
+                                                <Link to="/"><i className="fas fa-phone-volume" /><p>Call Now</p></Link>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   <Switch>
+                        <Route exact path="/">
+                            <LayoutHome />
+                        </Route>
+                   </Switch>
+                </div>
+            </Router>
+        );
+
+    }
+}
+
+export default Example;
+
+if (document.getElementById('vexe')) {
+    ReactDOM.render(<Example />, document.getElementById('vexe'));
+}

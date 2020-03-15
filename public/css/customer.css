@@ -1,0 +1,70 @@
+.logo{
+			padding-top: 22px;
+		}
+		.menu ul{
+			display: flex;
+		    list-style: none;
+		    justify-content: space-around;
+		}
+		.menu ul li a{
+		    display: flex;
+		    justify-content: space-between;
+		    align-items: center;
+		    color: #000000de;
+    		text-decoration: none;
+		}
+		.menu li i {
+			padding: 25px 12px
+		}
+		.menu li p {
+			padding-top: 14px;
+			font-size: 18px;
+    		font-weight: initial;
+		}
+		.body .top{
+			height: 650px;
+		    width: 100%;
+		    background-repeat: no-repeat;
+		    background-size: cover;
+		    background-image: url(https://images5.alphacoders.com/374/374077.jpg);
+		    position: relative;
+		    overflow: hidden;
+		}
+		.body-top{
+			width: 80% !important;
+			position: absolute !important;
+			top: 40% !important;
+			text-align: center;
+		}
+		.menu-search input{
+			width: 21%;
+			height: 40px;
+		}
+		.menu-search button{
+			height: 40px;
+			margin-top:-6px;
+		}
+		.body .center .content, .body .bottom .content{	
+			display: flex;
+			justify-content: space-between;
+
+		}
+		.body .center .content img{
+			width: 90%;
+		}
+		.body .center .title, .body .bottom .title {
+		    width: 30%;
+		    margin: auto;
+		    margin-bottom: 20px;
+		    margin-top: 62px;
+		}
+		.body .bottom .title{
+			width:40%;
+		}
+		.body .bottom .block{
+			width:22%;
+		}
+		.body .bottom i{
+			font-size: 60px;
+    		margin-right: 20px;
+		}
