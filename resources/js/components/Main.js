@@ -7,7 +7,8 @@ import {
   Link
 } from "react-router-dom";
 import LayoutHome  from './LayoutUser/LayoutHome';
-class Example extends React.Component{
+import LayoutRegTick from './LayoutUser/LayoutRegTick';
+class Main extends React.Component{
     constructor(props){
         super(props);
     }
@@ -28,7 +29,7 @@ class Example extends React.Component{
                                                 <Link to="/"><i className="fas fa-bus-alt" /><p>Vé Xe</p></Link>
                                             </li>
                                             <li>
-                                                <Link to="/"><i className="fas fa-tv" /> <p>Phần Mềm Nhà Xe</p></Link>
+                                                <Link to="/alo"><i className="fas fa-tv" /> <p>Phần Mềm Nhà Xe</p></Link>
                                             </li>
                                             <li>
                                                 <Link to="/"><i className="fas fa-ticket-alt" /> <p>Quản Lý Vé</p></Link>
@@ -49,6 +50,9 @@ class Example extends React.Component{
                         <Route exact path="/">
                             <LayoutHome />
                         </Route>
+                         <Route  path="/alo">
+                            <LayoutRegTick />
+                        </Route>
                    </Switch>
                 </div>
             </Router>
@@ -57,8 +61,8 @@ class Example extends React.Component{
     }
 }
 
-export default Example;
+export default Main;
 
 if (document.getElementById('vexe')) {
-    ReactDOM.render(<Example />, document.getElementById('vexe'));
+    ReactDOM.render(<Main />, document.getElementById('vexe'));
 }
