@@ -1,5 +1,7 @@
-import React ,{Component} from 'react';
-import ReactDOM from 'react-dom';
+import React ,{Component}   from 'react';
+import ReactDOM             from 'react-dom';
+import {createStore}        from 'redux';
+import {myReducer}          from './../Reducers';
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,6 +10,7 @@ import {
 } from "react-router-dom";
 import LayoutHome  from './LayoutUser/LayoutHome';
 import LayoutRegTick from './LayoutUser/LayoutRegTick';
+import {Provider} from 'react-redux';
 class Main extends React.Component{
     constructor(props){
         super(props);
@@ -48,7 +51,7 @@ class Main extends React.Component{
                     </div>
                    <Switch>
                         <Route exact path="/">
-                            <LayoutHome />
+                            <LayoutHome  />
                         </Route>
                          <Route  path="/alo">
                             <LayoutRegTick />
@@ -62,7 +65,11 @@ class Main extends React.Component{
 }
 
 export default Main;
-
+const myStore = createStore(myReducer);
 if (document.getElementById('vexe')) {
-    ReactDOM.render(<Main />, document.getElementById('vexe'));
+    ReactDOM.render(
+        <Provider store = {myStore} >
+            <Main />
+        </Provider>,
+         document.getElementById('vexe'));
 }

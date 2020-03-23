@@ -19,32 +19,13 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-
+import axios from 'axios';
 
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
+  BrowserRouter,
   Link,
-  Redirect,
-  useHistory,
-  useLocation
+ 
 } from "react-router-dom";
-
-
-// const useStyles = makeStyles({
-//   root: {
-//     maxWidth: 345,
-//   },
-// });
-
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     '& > *': {
-//       margin: theme.spacing(1),
-//     },
-//   },
-// }));
 
 class LayoutHome extends React.Component {
 	 constructor(props){
@@ -52,14 +33,32 @@ class LayoutHome extends React.Component {
         this.state = {
         	dateSearch   : new Date(),
         	toLocation   : 10,
-        	fromLocation : 10
-
+			fromLocation : 10,
+			trips        : []
         };
-        this.onSubmitSearch = this.onSubmitSearch.bind(this);
+        this.onChangeInp  = this.onChangeInp.bind(this);
+        this.onChangeInpDate  = this.onChangeInpDate.bind(this);
     }
 
-    onSubmitSearch(){
+    onChangeInp(e){
+    	this.setState({
+    		[e.target.name] : e.target.value
+       	});
     }
+    onChangeInpDate(date){
+    	this.setState({
+    		dateSearch : date
+    	});
+    }
+	
+	// handle when click btn "tìm Vé Xe"
+
+	componentDidMount(){
+		axios.get('http://127.0.0.1:8000/api/home').then( res => {
+			if(res.data)
+				this.setState({ trips : res.data })
+		}).catch(err => {throw err});
+	}
 
 	render() {
 		return (
@@ -74,26 +73,39 @@ class LayoutHome extends React.Component {
 									    <InputLabel id="demo-simple-select-label"><i className="fas iconLocation fa-map-marker-alt"></i></InputLabel>
 									    <Select
 									    	className 	= "inputSearch"
+									    	name 		= "fromLocation"
 									        labelId		= "demo-simple-select-label"
 									        id 			= "demo-simple-select"
 									        value 		= {this.state.fromLocation}
+									        onChange 	= { e => this.onChangeInp(e) }
 									    >
-											<MenuItem value={10}>From</MenuItem>
-											<MenuItem value={20}>Twenty</MenuItem>
-											<MenuItem value={30}>Thirty</MenuItem>
+										{
+											this.state.trips.map( (value, key) => { 
+												return (
+													<MenuItem key = {key} value={value.Trips_ID}>{value.Trips_Start}</MenuItem> 
+												); 
+											})
+										}
 									    </Select>
 									</FormControl>
 						            <FormControl className="">
 										<InputLabel id="demo-simple-select-label"><i className="fas iconLocation fa-map-marker-alt"></i></InputLabel>
 										<Select
 											className 	= "inputSearch"
+									    	name 		= "toLocation"
 											labelId 	="demo-simple-select-label"
 											id 			="demo-simple-select"
 											value		= {this.state.toLocation}
+									        onChange 	= { e => this.onChangeInp(e) }
+
 										>
-											<MenuItem value={10}>To</MenuItem>
-											<MenuItem value={20}>Twenty</MenuItem>
-											<MenuItem value={30}>Thirty</MenuItem>
+											{
+												this.state.trips.map( (value, key) => {
+													return (
+													<MenuItem value={key} key ={key}>{value.Trips_Ends}</MenuItem>
+													);
+												})
+											}
 										</Select>
 									</FormControl>
 						            <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -104,12 +116,15 @@ class LayoutHome extends React.Component {
 											margin		="normal"
 											id			="date-picker-inline"
 											value		=  {this.state.dateSearch}
+											onChange    = {this.onChangeInpDate}
 											KeyboardButtonProps={{
 											'aria-label': 'change date',
 											}}
 										/>
 									</MuiPickersUtilsProvider>
-						            <Button className="btnSearch" variant="contained" color="primary"  onClick = {this.onSubmitSearch} endIcon={<Icon>send</Icon>}> <Link to="/alo">Tìm Vé Xe </Link></Button>
+						            <Button className="btnSearch" variant="contained" disabled = {((this.state.fromLocation === 10) || (this.state.toLocation === 10)) ? true : false} color="primary" endIcon={<Icon>send</Icon>}>
+										<Link to={{ pathname: "/alo", state : {to : this.state.toLocation, from : this.state.fromLocation, date: this.state.dateSearch} }}>Tìm Vé Xe</Link>  
+									</Button>
 						        </div>
 						    </div>
 			      		</div>
