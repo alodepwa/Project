@@ -73,3 +73,39 @@
 .MuiButtonBase-root svg.MuiSvgIcon-root{
 	font-size: 38px;
 }
+
+/* layout search  */
+.time{
+    list-style: none;
+}
+
+.image{
+    border-radius: 5%;
+}
+.color span {
+    color: tomato;
+
+}
+.hover-content:hover {
+    box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.5);
+   
+}
+.pagination{
+	justify-content: center;
+}
+.pagination li {
+    padding: 5px;
+    margin-top: 20px;
+}
+.MuiFormControl-root.from {
+    width: 100%;
+}
+.btn_info, .btn_book{
+	font-size: 16px;
+}
+.col_btn_info{
+	display: none;
+}
+.col_btn_info_show{
+	display: initial;
+}

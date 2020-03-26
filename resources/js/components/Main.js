@@ -6,18 +6,19 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  HashRouter
 } from "react-router-dom";
 import LayoutHome  from './LayoutUser/LayoutHome';
 import LayoutRegTick from './LayoutUser/LayoutRegTick';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 class Main extends React.Component{
     constructor(props){
         super(props);
     }
     render(){
         return (
-            <Router>
+            <HashRouter>
                 <div className="layout">
                     <div className="container">
                         <div className="header">
@@ -35,13 +36,13 @@ class Main extends React.Component{
                                                 <Link to="/alo"><i className="fas fa-tv" /> <p>Phần Mềm Nhà Xe</p></Link>
                                             </li>
                                             <li>
-                                                <Link to="/"><i className="fas fa-ticket-alt" /> <p>Quản Lý Vé</p></Link>
+                                                <Link to="/alo4"><i className="fas fa-ticket-alt" /> <p>Quản Lý Vé</p></Link>
                                             </li>
                                             <li>
-                                                <Link to="/"><i className="fas fa-globe-africa" /> <p>Viet Nam</p></Link>
+                                                <Link to="/alo2"><i className="fas fa-globe-africa" /> <p>Viet Nam</p></Link>
                                             </li>
                                             <li>
-                                                <Link to="/"><i className="fas fa-phone-volume" /><p>Call Now</p></Link>
+                                                <Link to="/alo3"><i className="fas fa-phone-volume" /><p>Call Now</p></Link>
                                             </li>
                                         </ul>
                                     </div>
@@ -53,12 +54,12 @@ class Main extends React.Component{
                         <Route exact path="/">
                             <LayoutHome  />
                         </Route>
-                         <Route  path="/alo">
+                         <Route path="/alo">
                             <LayoutRegTick />
                         </Route>
                    </Switch>
                 </div>
-            </Router>
+            </HashRouter>
         );
 
     }
