@@ -1,0 +1,1 @@
+export const INFO_LOCATION = "INFO_LOCATION";

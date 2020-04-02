@@ -15,4 +15,14 @@ $(document).ready(function(){
 		parent.find('.col_btn_info').toggleClass('col_btn_info_show');
 		console.log(parent);
 	});
+
+	//scroll horizontal fix 3 column
+	// $('#dtHorizontalVerticalExample').scroll(function(){
+	// 	// $('#dtHorizontalVerticalExample thead').each( (index, el) => {
+	// 	// 	var p = el.offsetLeft();
+	// 	// 	console.log(el);
+	// 	// });
+	// 	$('#dtHorizontalVerticalExample .alo').css({'position':'sticky', 'left': `${po_left} px`});
+	// 	// $('#dtHorizontalVerticalExample th:lt(3)').scrollLeft(10);
+	// });
 })

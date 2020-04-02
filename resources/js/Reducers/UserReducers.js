@@ -1,5 +1,11 @@
-export default function UserReducers (state=[], action){
+import * as type from './../Types';
+const initial = { info_location : [] }
+export default function UserReducers (state = initial,  action){
 	switch(action.type){
-		default : return 0;
+		case type.INFO_LOCATION :
+			let { value } = action;
+			state.info_location = value;
+			return state;
+		default : return state;
 	}
 } 

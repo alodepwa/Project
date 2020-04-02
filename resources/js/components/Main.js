@@ -7,10 +7,12 @@ import {
   Switch,
   Route,
   Link,
-  HashRouter
+  HashRouter,
+   withRouter,
 } from "react-router-dom";
 import LayoutHome  from './LayoutUser/LayoutHome';
 import LayoutRegTick from './LayoutUser/LayoutRegTick';
+import LayoutMangerTicket from './LayoutUser/LayoutMangerTicket';
 import { Provider } from 'react-redux';
 class Main extends React.Component{
     constructor(props){
@@ -33,10 +35,10 @@ class Main extends React.Component{
                                                 <Link to="/"><i className="fas fa-bus-alt" /><p>Vé Xe</p></Link>
                                             </li>
                                             <li>
-                                                <Link to="/alo"><i className="fas fa-tv" /> <p>Phần Mềm Nhà Xe</p></Link>
+                                                <Link to="/alo11"><i className="fas fa-tv" /> <p>Phần Mềm Nhà Xe</p></Link>
                                             </li>
                                             <li>
-                                                <Link to="/alo4"><i className="fas fa-ticket-alt" /> <p>Quản Lý Vé</p></Link>
+                                                <Link to="/manager-ticket"><i className="fas fa-ticket-alt" /> <p>Quản Lý Vé</p></Link>
                                             </li>
                                             <li>
                                                 <Link to="/alo2"><i className="fas fa-globe-africa" /> <p>Viet Nam</p></Link>
@@ -54,8 +56,11 @@ class Main extends React.Component{
                         <Route exact path="/">
                             <LayoutHome  />
                         </Route>
-                         <Route path="/alo">
+                        <Route path="/alo">
                             <LayoutRegTick />
+                        </Route>
+                         <Route path="/manager-ticket">
+                            <LayoutMangerTicket />
                         </Route>
                    </Switch>
                 </div>
@@ -65,12 +70,14 @@ class Main extends React.Component{
     }
 }
 
-export default Main;
+export default withRouter(Main);
+
 const myStore = createStore(myReducer);
 if (document.getElementById('vexe')) {
     ReactDOM.render(
         <Provider store = {myStore} >
             <Main />
-        </Provider>,
+        </Provider>
+        ,
          document.getElementById('vexe'));
 }
