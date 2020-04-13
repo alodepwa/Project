@@ -1,10 +1,10 @@
 import React from 'react';
+import * as common from './../../common';
 import { connect } from 'react-redux';
 import LayoutInfoTicket from './LayoutInfo-ticket';
 import LayoutInfoTicketFilter from './LayoutInfo-ticket-filter';
-import {
-  Link
-} from "react-router-dom";
+import { Link } from "react-router-dom";
+import { withRouter } from 'react-router';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import FormControl from '@material-ui/core/FormControl';
@@ -20,6 +20,7 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+import Axios from 'axios';
 function valuetext(value) {
   return `10°C`;
 }
@@ -28,16 +29,34 @@ class LayoutRegTick extends React.Component {
     super(props);
     this.state = {
       fromLocation: 1,
-      toLocation: 1,
-      dateSearch: new Date(),
-      trips: []
+      toLocation  : 1,
+      dateSearch  : new Date(),
+      trips       : [],
+      posts       : []
     }
   }
   componentDidMount(){
-    axios.get('http://127.0.0.1:8000/api/home').then( res => {
-			if(res.data)
-				this.setState({ trips : res.data });
-		}).catch(err => {throw err});
+    let { state } = this.props.history.location;
+    this.setState({
+      toLocation    : state.to,
+      fromLocation  : state.from,
+      dateSearch    : new Date(state.dateSearch)
+    });
+    let data = { 
+      toLocation    : state.to,
+      fromLocation  : state.from,
+      dateSearch    : state.dateSearch
+    };
+
+    //get posts
+    axios.post(`${common.HOST}home/get-post`, data)
+      .then( res => {
+        if(res.data)
+          this.setState({
+           posts : res.data
+          });
+      })
+      .catch( err => { throw err; } );
   }
   render() {
     return (
@@ -62,11 +81,11 @@ class LayoutRegTick extends React.Component {
                   className="inputSearch"
                   name="fromLocation"
                   labelId="demo-simple-select-label"
-                  value={this.props.fromLocation}
+                  value={this.state.fromLocation}
                 // onChange={e => this.onChangeInp(e)}
                 >
                   {
-                    this.state.trips.map((value, key) => {
+                    this.props.info_location.map((value, key) => {
                       return (
                         <MenuItem key={key} value={value.Trips_ID}>{value.Trips_Start}</MenuItem>
                       );
@@ -77,17 +96,17 @@ class LayoutRegTick extends React.Component {
               <FormControl >
                 <InputLabel id="demo-simple-select-label"><i className="fas iconLocation fa-map-marker-alt"></i></InputLabel>
                 <Select
-                  className="inputSearch"
-                  name="toLocation"
-                  labelId="demo-simple-select-label"
-                  value={this.state.toLocation}
+                  className = "inputSearch"
+                  name      = "toLocation"
+                  labelId   = "demo-simple-select-label"
+                  value     = {this.state.toLocation}
                 // onChange={e => this.onChangeInp(e)}
 
                 >
                   {
-                    this.state.trips.map((value, key) => {
+                    this.props.info_location.map((value, key) => {
                       return (
-                        <MenuItem value={key} key={key}>{value.Trips_Ends}</MenuItem>
+                        <MenuItem value={value.Trips_ID} key={key}>{value.Trips_Ends}</MenuItem>
                       );
                     })
                   }
@@ -144,7 +163,7 @@ class LayoutRegTick extends React.Component {
                     </div>
                   </div>
                   {/* card content */}
-                    <LayoutInfoTicket />
+                    <LayoutInfoTicket posts = { this.state.posts } />
                 </div>
               </div>
             </div>
@@ -248,4 +267,4 @@ const mapStateToProps = (state) => {
       info_location : state.User.info_location
     };
 }
-export default connect( mapStateToProps, null )( LayoutRegTick );
+export default connect( mapStateToProps, null )( withRouter( LayoutRegTick ));

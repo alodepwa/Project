@@ -13,7 +13,6 @@ $(document).ready(function(){
 		e.preventDefault();
 		let parent = $(this).parents('.card');
 		parent.find('.col_btn_info').toggleClass('col_btn_info_show');
-		console.log(parent);
 	});
 
 	//scroll horizontal fix 3 column

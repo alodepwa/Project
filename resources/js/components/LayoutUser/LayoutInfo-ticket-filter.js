@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
+import { connect } from 'react-redux';
 class LayoutInfoTicketFilter extends Component {
     render() {
         return (
@@ -114,17 +115,19 @@ class LayoutInfoTicketFilter extends Component {
                                         <InputLabel >Điểm Xuất Phát</InputLabel>
                                         <Select
                                             native
-                                            value={10}
+                                            value = {10}
                                             // onChange=""
                                             inputProps={{
                                                 name: 'age',
                                                 id: 'age-native-simple',
                                             }}
                                         >
-                                            <option aria-label="None" value="" />
-                                            <option value={10}>Ten</option>
-                                            <option value={20}>Twenty</option>
-                                            <option value={30}>Thirty</option>
+                                         { this.props.info_location.map((value, key) => {
+                                            return (
+                                            <option value = { value.Trips_ID } key = { key }>{value.Trips_Start}</option>
+                                            )
+                                            })   
+                                        }
                                         </Select>
                                     </FormControl>
                                 </div>
@@ -142,10 +145,12 @@ class LayoutInfoTicketFilter extends Component {
                                                 id: 'age-native-simple',
                                             }}
                                         >
-                                            <option aria-label="None" value="" />
-                                            <option value={10}>Ten</option>
-                                            <option value={20}>Twenty</option>
-                                            <option value={30}>Thirty</option>
+                                        { this.props.info_location.map((value, key) => {
+                                            return (
+                                            <option value = { value.Trips_ID } key = { key }>{value.Trips_Ends}</option>
+                                            )
+                                            })   
+                                        }
                                         </Select>
                                     </FormControl>
                                 </div>
@@ -157,5 +162,9 @@ class LayoutInfoTicketFilter extends Component {
         )
     }
 }
-
-export default LayoutInfoTicketFilter
+const mapStateToProps = (state) => {
+    return {
+      info_location : state.User.info_location
+    };
+}
+export default connect(mapStateToProps, null)(LayoutInfoTicketFilter);

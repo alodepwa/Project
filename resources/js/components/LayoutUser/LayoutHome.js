@@ -22,6 +22,7 @@ import Typography from '@material-ui/core/Typography';
 import {
   withRouter
 } from "react-router-dom";
+import moment from 'moment';
 
 class LayoutHome extends React.Component {
 	 constructor(props){
@@ -37,7 +38,17 @@ class LayoutHome extends React.Component {
 		this.onClickSearch 		= this.onClickSearch.bind(this);
 	}
 	onClickSearch(e){
-		this.props.history.push("/alo");
+		let { dateSearch } = this.state;
+		dateSearch = moment(dateSearch).format('YYYY-MM-DD');
+		this.props.history.push({
+			pathname 	: "/alo",
+			search 		: '?search_string',
+			state 		: {
+				to 			: this.state.toLocation,
+				from 		: this.state.fromLocation,
+				dateSearch	: dateSearch
+			}
+		});
 	}
 
     onChangeInp(e){
@@ -103,7 +114,7 @@ class LayoutHome extends React.Component {
 											{
 												this.state.trips.map( (value, key) => {
 													return (
-													<MenuItem value={key} key ={key}>{value.Trips_Ends}</MenuItem>
+													<MenuItem value={value.Trips_ID} key ={key}>{value.Trips_Ends}</MenuItem>
 													);
 												})
 											}
@@ -124,7 +135,6 @@ class LayoutHome extends React.Component {
 										/>
 									</MuiPickersUtilsProvider>
 						            <Button className="btnSearch" onClick={ (e) => this.onClickSearch(e) } variant="contained" disabled = {((this.state.fromLocation === 10) || (this.state.toLocation === 10)) ? true : false} color="primary" endIcon={<Icon>send</Icon>}>
-										{/* <Link to={{ pathname: "/alo", state : {to : this.state.toLocation, from : this.state.fromLocation, date: this.state.dateSearch} }}></Link>   */}
 										Tìm Vé Xe
 									</Button>
 						        </div>

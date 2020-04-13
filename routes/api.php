@@ -19,4 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::group([],function(){
     Route::resource('home', 'api\HomeController');
+    Route::POST('home/get-post', 'api\HomeController@getPost');
+    Route::GET('home/get-img-post/{id}', 'api\HomeController@getImagesWithID');
 });

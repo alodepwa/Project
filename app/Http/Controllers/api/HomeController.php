@@ -8,6 +8,30 @@ use DB;
 class HomeController extends Controller
 {
     /**
+     * Display a listing of the images with id post.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getImagesWithID($id){
+        $result = DB::select('exec getImagesWithID ?', [$id]);
+        return response()->json($result);
+    }
+
+    /**
+     * Display a listing of the posts.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPost(Request $request){
+        $data = [
+            $request->get('toLocation'),
+            $request->get('fromLocation'),
+            $request->get('dateSearch'),
+        ];
+        $result = DB::select('exec getPost ?, ?, ?', $data);
+        return response()->json($result);
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
