@@ -38,16 +38,19 @@ class LayoutHome extends React.Component {
 		this.onClickSearch 		= this.onClickSearch.bind(this);
 	}
 	onClickSearch(e){
-		let { dateSearch } = this.state;
+		let { dateSearch, toLocation, fromLocation, trips } = this.state;
+		let nameToLocation, nameFromLocation;
+		trips.forEach(element => {
+			if(element.Trips_ID == toLocation)
+				nameToLocation = element.Trips_Ends.replace(/ /g, '-')
+			if(element.Trips_ID == fromLocation)
+				nameFromLocation = element.Trips_Start.replace(/ /g, '-')
+		});
 		dateSearch = moment(dateSearch).format('YYYY-MM-DD');
 		this.props.history.push({
-			pathname 	: "/alo",
-			search 		: '?search_string',
-			state 		: {
-				to 			: this.state.toLocation,
-				from 		: this.state.fromLocation,
-				dateSearch	: dateSearch
-			}
+			pathname 	: "/search",
+			search 		: `?from=${nameFromLocation}to=${nameToLocation}date=`,
+			hash 		: `#${dateSearch}#${fromLocation}#${toLocation}`,
 		});
 	}
 
@@ -66,9 +69,10 @@ class LayoutHome extends React.Component {
 
 	componentDidMount(){
 		axios.get('http://127.0.0.1:8000/api/home').then( res => {
-			if(res.data)
+			if(res.data){	
 				this.setState({ trips : res.data });
 				this.props.info_location(res.data);
+			}			
 		}).catch(err => {throw err});
 	}
 

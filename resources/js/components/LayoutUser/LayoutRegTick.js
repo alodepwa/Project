@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import * as common from './../../common';
 import { connect } from 'react-redux';
 import LayoutInfoTicket from './LayoutInfo-ticket';
@@ -12,68 +13,133 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import DateFnsUtils from '@date-io/date-fns';
-import Typography from '@material-ui/core/Typography';
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Pagination from '@material-ui/lab/Pagination';
 
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-import Axios from 'axios';
+import axios from 'axios';
 function valuetext(value) {
   return `10°C`;
 }
+
 class LayoutRegTick extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      fromLocation: 1,
-      toLocation  : 1,
+      fromLocation: '',
+      toLocation  : '',
       dateSearch  : new Date(),
       trips       : [],
-      posts       : []
+      posts       : [],
+      postOnePage : [],
+      postPage    : [],
+      currentPage : 1,
+      page        : 0
     }
+    this.searchPosts          = this.searchPosts.bind(this);
+    this.onChangeInp          = this.onChangeInp.bind(this);
+    this.onChangeInpDate      = this.onChangeInpDate.bind(this);
+    this.handleChange         = this.handleChange.bind(this);
   }
-  componentDidMount(){
-    let { state } = this.props.history.location;
+
+  handleChange(event, value){
+    event.preventDefault();
+    let { posts } = this.state;
+    let postOnePage = posts.slice(((value -1 ) * 10 ),(value * 10 - 1)); 
     this.setState({
-      toLocation    : state.to,
-      fromLocation  : state.from,
-      dateSearch    : new Date(state.dateSearch)
+      postOnePage,
+      currentPage : value
+    })
+  }
+  onChangeInp(e){
+    e.preventDefault();
+    this.setState({
+      [e.target.name] : e.target.value
     });
-    let data = { 
-      toLocation    : state.to,
-      fromLocation  : state.from,
-      dateSearch    : state.dateSearch
+  }
+  onChangeInpDate(date){
+    let dateSearch = moment(date).format('YYYY-MM-DD');
+    this.setState({
+      dateSearch 
+    });
+  }
+  searchPosts(e){
+    e.preventDefault();
+    let data = {
+        toLocation    : this.state.toLocation,
+        fromLocation  : this.state.fromLocation,
+        dateSearch    : this.state.dateSearch
     };
+    axios.post(`${common.HOST}home/get-post`, data)
+      .then( res => {
+        if(res.data){
+          let numberPage = res.data.length / 10;
+          let { currentPage } = this.state;
+          let postOnePage = res.data.slice(((currentPage -1 ) * 10 ),(currentPage * 10 - 1)); 
+          this.setState({
+            postOnePage,
+            posts : res.data,
+            page : numberPage > 1 ? Math.ceil(numberPage) : 0
+           });
+        }
+      })
+      .catch( err => { throw err; } );
+  }
+
+  componentDidMount(){
+    let data=[];
+    let hash = this.props.history.location.hash ? this.props.location.hash :  '';
+    if(hash){
+      let arr = hash.split("#")
+      this.setState({
+        fromLocation  : arr[2],
+        toLocation    : arr[3],
+        dateSearch    : arr[1]
+      });
+      data = { 
+        toLocation    : arr[3],
+        fromLocation  : arr[2],
+        dateSearch    : arr[1]
+      };
+    }
 
     //get posts
     axios.post(`${common.HOST}home/get-post`, data)
       .then( res => {
-        if(res.data)
+        if(res.data){
+          let numberPage  = res.data.length / 10;
+          let { currentPage } = this.state;
+          let postOnePage = res.data.slice(((currentPage -1 ) * 10 ),(currentPage * 10 - 1)); 
           this.setState({
-           posts : res.data
-          });
+            postOnePage,
+            posts : res.data,
+            page : numberPage > 1 ? Math.ceil(numberPage) : 0
+           });
+        }
       })
       .catch( err => { throw err; } );
+
+      if(this.props.info_location.length == 0){
+        axios.get('http://127.0.0.1:8000/api/home').then( res => {
+          if(res.data){	
+            this.setState({ trips : res.data });
+          }			
+        }).catch(err => {throw err});
+      }else{
+        this.setState({
+          trips : this.props.info_location
+        })
+      }
   }
+
   render() {
     return (
       <div className="container">
-
+        <div className="loading"> </div>
         <div className="row">
           <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div className="title">
-              <Breadcrumbs aria-label="breadcrumb">
-                <Link color="inherit" to="" >
-                  Material-UI
-                  </Link>
-                <Link color="inherit" to="" >
-                  Core
-                  </Link>
-                <Typography color="textPrimary">Breadcrumb</Typography>
-              </Breadcrumbs></div>
             <div className="menu-search mt-4">
               <FormControl >
                 <InputLabel id="demo-simple-select-label"><i className="fas iconLocation fa-map-marker-alt"></i></InputLabel>
@@ -82,10 +148,10 @@ class LayoutRegTick extends React.Component {
                   name="fromLocation"
                   labelId="demo-simple-select-label"
                   value={this.state.fromLocation}
-                // onChange={e => this.onChangeInp(e)}
+                  onChange={e => this.onChangeInp(e)}
                 >
                   {
-                    this.props.info_location.map((value, key) => {
+                    this.state.trips.map((value, key) => {
                       return (
                         <MenuItem key={key} value={value.Trips_ID}>{value.Trips_Start}</MenuItem>
                       );
@@ -100,11 +166,11 @@ class LayoutRegTick extends React.Component {
                   name      = "toLocation"
                   labelId   = "demo-simple-select-label"
                   value     = {this.state.toLocation}
-                // onChange={e => this.onChangeInp(e)}
+                  onChange={e => this.onChangeInp(e)}
 
                 >
                   {
-                    this.props.info_location.map((value, key) => {
+                    this.state.trips.map((value, key) => {
                       return (
                         <MenuItem value={value.Trips_ID} key={key}>{value.Trips_Ends}</MenuItem>
                       );
@@ -120,13 +186,13 @@ class LayoutRegTick extends React.Component {
                   margin="normal"
                   id="date-picker-inline"
                   value={this.state.dateSearch}
-                  // onChange={this.onChangeInpDate}
+                  onChange={this.onChangeInpDate}
                   KeyboardButtonProps={{
                     'aria-label': 'change date',
                   }}
                 />
               </MuiPickersUtilsProvider>
-              <Button className="btnSearch" variant="contained" disabled={((this.state.fromLocation === 10) || (this.state.toLocation === 10)) ? true : false} color="primary" endIcon={<Icon>send</Icon>}>
+              <Button onClick = { (e) => this.searchPosts(e) } className="btnSearch" variant="contained" disabled={this.state.fromLocation && this.state.toLocation ? false : true} color="primary" endIcon={<Icon>send</Icon>}>
                 Tìm Vé Xe
               </Button>
             </div>
@@ -140,7 +206,7 @@ class LayoutRegTick extends React.Component {
             <div className="container mt-4">
               <div className="row">
                 {/* fileter */}
-                  <LayoutInfoTicketFilter />
+                  <LayoutInfoTicketFilter trips = {this.state.trips} to = {this.state.toLocation} from = {this.state.fromLocation} />
                 <div className="col-lg-9 ">
                   <div className="py-2">
                     <h4>Vé xe từ Đà Nẵng đi Ninh Bình: <span className="text-muted">15 chuyến</span> </h4>
@@ -163,7 +229,7 @@ class LayoutRegTick extends React.Component {
                     </div>
                   </div>
                   {/* card content */}
-                    <LayoutInfoTicket posts = { this.state.posts } />
+                    <LayoutInfoTicket posts = { this.state.postOnePage } />
                 </div>
               </div>
             </div>
@@ -172,13 +238,22 @@ class LayoutRegTick extends React.Component {
 
             {/* pagination */}
             <div className="container">
-              <div className="row">
-                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                  <div className="pagination">
-                    <Pagination count={10} color="primary" />
+              { this.state.page ? (
+                <div className="row">
+                  <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div className="pagination">
+                      <Pagination  count={ this.state.page } page = { this.state.currentPage } color="primary" onChange={this.handleChange}/>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : '' }
+              {/* <div className="row">
+                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div className="pagination">
+                    <Pagination  count={10} page = { this.state.currentPage } color="primary" onChange={this.handleChange}/>
+                  </div>
+                </div>
+              </div> */}
             </div>
 
 

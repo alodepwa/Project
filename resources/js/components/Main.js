@@ -14,6 +14,7 @@ import LayoutHome  from './LayoutUser/LayoutHome';
 import LayoutRegTick from './LayoutUser/LayoutRegTick';
 import LayoutMangerTicket from './LayoutUser/LayoutMangerTicket';
 import { Provider } from 'react-redux';
+import CircularProgress from '@material-ui/core/CircularProgress';
 class Main extends React.Component{
     constructor(props){
         super(props);
@@ -21,6 +22,9 @@ class Main extends React.Component{
     render(){
         return (
             <HashRouter>
+                {/* <div className="loading123">
+                    <CircularProgress disableShrink />
+                </div> */}
                 <div className="layout">
                     <div className="container">
                         <div className="header">
@@ -56,7 +60,7 @@ class Main extends React.Component{
                         <Route exact path="/">
                             <LayoutHome  />
                         </Route>
-                        <Route path="/alo">
+                        <Route path="/search">
                             <LayoutRegTick />
                         </Route>
                          <Route path="/manager-ticket">

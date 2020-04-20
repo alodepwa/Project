@@ -8,6 +8,28 @@ use DB;
 class HomeController extends Controller
 {
     /**
+     * insert data into table car_ticket (register seat car)
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function registerTicket(Request $request){
+        $id     = $request->get('id');
+        $name   = $request->get('name');
+        $phone  = $request->get('phone');
+        $from   = $request->get('from');
+        $to     = $request->get('to');
+        $address= $request->get('address');
+        $seats  = $request->get('seats');
+        $result = [];
+        for( $i = 0; $i < count($seats) ; $i++){
+            $data = [ $from, $to, $address, $seats[$i], $phone, (INTEGER)$id, $name];
+            $register = DB::select('exec registerTicket ?, ?, ?, ?, ?, ?, ?', $data);
+            isset($register[0]->result) ? ($result[$seats[$i]] = false) : ($result[$seats[$i]] = $register);
+        }
+        return response()->json($result);
+    }
+
+    /**
      * Display a listing of the images with id post.
      *
      * @return \Illuminate\Http\Response
@@ -16,6 +38,17 @@ class HomeController extends Controller
         $result = DB::select('exec getImagesWithID ?', [$id]);
         return response()->json($result);
     }
+
+     /**
+     * Display a listing of the images with id post.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getInfoSeatCar($id){
+        $result = DB::select('exec getInfoSeatCar ?', [$id]);
+        return response()->json($result);
+    }
+
 
     /**
      * Display a listing of the posts.
@@ -31,6 +64,17 @@ class HomeController extends Controller
         $result = DB::select('exec getPost ?, ?, ?', $data);
         return response()->json($result);
     }
+     /**
+     * Display a listing of the resource.
+     *
+     *
+     */
+    public function getCarsName()
+    {
+        $getCarNames = DB::select('exec getNameCars');
+        return response()->json($getCarNames);
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -41,70 +85,38 @@ class HomeController extends Controller
         $getLocation = DB::select('select * from Trips');
         return response()->json($getLocation);
     }
-
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function searchTicketUser(Request $request)
     {
-        //
+        $data   = [
+            $request->get('name'),
+            $request->get('phone'),
+        ];
+        $search = DB::select('exec ticketsOffUser ?, ?', $data);
+        return response()->json($search);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Display a listing of the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function comment(Request $request)
     {
-        //
+        $data   = [
+            $request->get('comment_name'),
+            $request->get('comment_content'),
+            $request->get('comment_phone'),
+            $request->get('comment_rate'),
+            $request->get('post_id')
+        ];
+        $comment = DB::select('exec comment ?, ?, ?, ?, ?', $data);
+        $check = $comment[0]->id_insert ? true : false;
+        return response()->json($check);
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    
 }

@@ -8,6 +8,50 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import { connect } from 'react-redux';
 class LayoutInfoTicketFilter extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            toLocation      : '',
+            fromLocation    : '',
+            trips           : [],
+            carsName        : [],
+            nameCar         : 'default'
+        }
+        this.onChangeCarName = this.onChangeCarName.bind(this);
+    }
+    onChangeCarName(e){
+        e.preventDefault();
+        console.log(e.target.value)
+    }
+    componentWillReceiveProps(props){
+        if(props.from && props.to){
+            this.setState({
+                toLocation      : props.to,
+                fromLocation    : props.from,
+            })
+        }
+    }
+
+    componentDidMount(){
+        if(this.props.info_location.length == 0){
+            axios.get('http://127.0.0.1:8000/api/home').then( res => {
+              if(res.data){	
+                this.setState({ trips : res.data });
+              }			
+            }).catch(err => {throw err});
+          }else{
+            this.setState({
+              trips : this.props.info_location
+            })
+        }
+        
+        axios.get('http://127.0.0.1:8000/api/home/get-name-cars').then( res => {
+            if(res.data){	
+              this.setState({ carsName : res.data });
+            }			
+          }).catch(err => {throw err});
+        
+    }
     render() {
         return (
             <div className="col-lg-3">
@@ -94,17 +138,16 @@ class LayoutInfoTicketFilter extends Component {
                                         <InputLabel >Nhà Xe</InputLabel>
                                         <Select
                                             native
-                                            value={10}
-                                            // onChange=""
-                                            inputProps={{
-                                                name: 'age',
-                                                id: 'age-native-simple',
-                                            }}
+                                            value       = { this.state.nameCar }
+                                            onChange    = { (e) => this.onChangeCarName(e)}
+                                            // inputProps={{
+                                            //     name: 'age',
+                                            //     id: 'age-native-simple',
+                                            // }}
                                         >
-                                            <option aria-label="None" value="" />
-                                            <option value={10}>Ten</option>
-                                            <option value={20}>Twenty</option>
-                                            <option value={30}>Thirty</option>
+                                            <option aria-label="None" value="default">Chọn nhà xe</option>
+                                            { this.state.carsName.map((value, key) =>  <option key = {key} value={ value.Passenger_Car_Id }>{value.Passenger_Car_Name}</option>)}
+                                            
                                         </Select>
                                     </FormControl>
                                 </div>
@@ -115,14 +158,14 @@ class LayoutInfoTicketFilter extends Component {
                                         <InputLabel >Điểm Xuất Phát</InputLabel>
                                         <Select
                                             native
-                                            value = {10}
+                                            value = {this.state.fromLocation}
                                             // onChange=""
                                             inputProps={{
                                                 name: 'age',
                                                 id: 'age-native-simple',
                                             }}
                                         >
-                                         { this.props.info_location.map((value, key) => {
+                                         { this.state.trips.map((value, key) => {
                                             return (
                                             <option value = { value.Trips_ID } key = { key }>{value.Trips_Start}</option>
                                             )
@@ -138,14 +181,11 @@ class LayoutInfoTicketFilter extends Component {
                                         <InputLabel >Điểm Kết Thúc</InputLabel>
                                         <Select
                                             native
-                                            value={10}
+                                            value={this.state.toLocation}
                                             // onChange=""
-                                            inputProps={{
-                                                name: 'age',
-                                                id: 'age-native-simple',
-                                            }}
+                                           
                                         >
-                                        { this.props.info_location.map((value, key) => {
+                                        { this.state.trips.map((value, key) => {
                                             return (
                                             <option value = { value.Trips_ID } key = { key }>{value.Trips_Ends}</option>
                                             )

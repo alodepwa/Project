@@ -103,13 +103,22 @@
 .btn_info, .btn_book{
 	font-size: 16px;
 }
-.col_btn_info{
+.col_btn_info, .col_btn_register, .col_input_info{
 	display: none;
 }
 .col_btn_info_show{
 	display: initial;
 }
-
+.iconChecked{
+    color: #212529;
+    cursor: no-drop !important;
+}
+.iconEmpty{
+    color: #0000ff;
+}
+.iconCheck{
+    color: rgba(244, 67, 54, 0.9);
+}
 .dtHorizontalVerticalExampleWrapper {
     max-width: 600px;
     margin: 0 auto;
