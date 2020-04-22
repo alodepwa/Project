@@ -3,18 +3,50 @@ import ReactDOM             from 'react-dom';
 import {createStore}        from 'redux';
 import {myReducer}          from './../Reducers';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  HashRouter,
-   withRouter,
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    HashRouter,
+    withRouter,
+    useHistory,
+    useLocation,
+    Redirect
 } from "react-router-dom";
 import LayoutHome  from './LayoutUser/LayoutHome';
 import LayoutRegTick from './LayoutUser/LayoutRegTick';
 import LayoutMangerTicket from './LayoutUser/LayoutMangerTicket';
+import LayoutLogin from './LayoutAdmin/LayoutLogin';
+import LayoutHomeAdmin  from './LayoutAdmin/LayoutHomeAdmin';
 import { Provider } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { useSelector  } from 'react-redux';
+
+
+
+function PrivateRoute({children, ...rest}){
+    var isLogin = useSelector(state => {
+        return sessionStorage.getItem('isLogin') ? sessionStorage.getItem('isLogin') : false;
+    });
+    return (
+        <Route
+            {...rest}
+            render = {({location}) => (
+                isLogin ? (
+                    children 
+                    ) : (
+                    <Redirect 
+                        to={{
+                            pathname : "/login",
+                            state    : { from : location }
+                        }}
+                    />
+                    )
+            ) }
+        />
+    );
+}
+
 class Main extends React.Component{
     constructor(props){
         super(props);
@@ -39,7 +71,7 @@ class Main extends React.Component{
                                                 <Link to="/"><i className="fas fa-bus-alt" /><p>Vé Xe</p></Link>
                                             </li>
                                             <li>
-                                                <Link to="/alo11"><i className="fas fa-tv" /> <p>Phần Mềm Nhà Xe</p></Link>
+                                                <Link to="/admin"><i className="fas fa-tv" /> <p>Phần Mềm Nhà Xe</p></Link>
                                             </li>
                                             <li>
                                                 <Link to="/manager-ticket"><i className="fas fa-ticket-alt" /> <p>Quản Lý Vé</p></Link>
@@ -63,9 +95,15 @@ class Main extends React.Component{
                         <Route path="/search">
                             <LayoutRegTick />
                         </Route>
-                         <Route path="/manager-ticket">
+                        <Route path="/manager-ticket">
                             <LayoutMangerTicket />
                         </Route>
+                        <Route path="/login">
+                            <LayoutLogin />
+                        </Route>
+                        <PrivateRoute path="/admin">
+                            <LayoutHomeAdmin />
+                        </PrivateRoute>
                    </Switch>
                 </div>
             </HashRouter>

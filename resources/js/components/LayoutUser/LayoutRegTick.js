@@ -67,11 +67,24 @@ class LayoutRegTick extends React.Component {
   }
   searchPosts(e){
     e.preventDefault();
+    let { toLocation, fromLocation, dateSearch, trips } = this.state;
+    let nameFromLocation,nameToLocation;
     let data = {
-        toLocation    : this.state.toLocation,
-        fromLocation  : this.state.fromLocation,
-        dateSearch    : this.state.dateSearch
+        toLocation,
+        fromLocation,
+        dateSearch
     };
+    trips.forEach(element => {
+			if(element.Trips_ID == toLocation)
+				nameToLocation = element.Trips_Ends.replace(/ /g, '-')
+			if(element.Trips_ID == fromLocation)
+				nameFromLocation = element.Trips_Start.replace(/ /g, '-')
+		});
+    this.props.history.push({
+      pathname 	: "/search",
+      search 		: `?from=${nameFromLocation}to=${nameToLocation}date=`,
+			hash 		: `#${dateSearch}#${fromLocation}#${toLocation}`
+    });
     axios.post(`${common.HOST}home/get-post`, data)
       .then( res => {
         if(res.data){
@@ -208,9 +221,7 @@ class LayoutRegTick extends React.Component {
                 {/* fileter */}
                   <LayoutInfoTicketFilter trips = {this.state.trips} to = {this.state.toLocation} from = {this.state.fromLocation} />
                 <div className="col-lg-9 ">
-                  <div className="py-2">
-                    <h4>Vé xe từ Đà Nẵng đi Ninh Bình: <span className="text-muted">15 chuyến</span> </h4>
-                  </div>
+                  
                   <div className="nav justify-content-between">
                     <div className="nav-item">
                       <p className="nav-link"><small>Sắp xếp theo:</small></p>

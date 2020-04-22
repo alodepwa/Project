@@ -26,4 +26,9 @@ Route::group([],function(){
     Route::GET('home/get-name-cars','api\HomeController@getCarsName');
     Route::POST('home/search-ticket-user', 'api\HomeController@searchTicketUser');
     Route::POST('home/comment', 'api\HomeController@comment');
+    Route::GET('home/get-comment/{id}', 'api\HomeController@getComments');
+});
+
+Route::group(['prefix' => 'admin'], function(){
+    Route::POST('login', 'api\AdminController@Login');
 });

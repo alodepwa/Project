@@ -138,3 +138,67 @@ table.dataTable thead .sorting_desc_disabled:after,
 table.dataTable thead .sorting_desc_disabled:before {
     bottom: .5em;
 }
+
+
+/* admin */
+
+#layoutSidenav_nav{
+    flex-basis: 20%;
+    height: 100vh;
+    
+}
+#layoutSidenav_content{
+    flex-basis: 80%;
+    position: relative;
+    
+} 
+/* #sb-sidenav-toggled .sb-sidenav {
+    flex-basis: 0;
+}
+#sb-sidenav-toggled #layoutSidenav_content {
+    flex-basis: 100%;
+} */
+
+/* .sb-sidenav {
+    position: absolute;
+    z-index: 1000;
+} */
+#layoutSidenav_content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+    flex-grow: 1;
+}
+
+@media only screen and (max-width: 992px){
+    
+    #layoutSidenav{
+        
+        position: relative;
+        display: flex;
+    }
+    
+    #layoutSidenav_nav{
+        flex-basis: 0%;
+        
+        
+    }
+    #layoutSidenav_content{
+        flex-basis: 100%;
+        
+        
+    }
+
+}
+@media screen and (max-width: 992px) {
+    .sb-sidenav {
+        position: absolute;
+        display: none;
+    }
+    #layoutSidenav_nav{
+        position: fixed;
+        z-index: 100;
+    }
+  }
+

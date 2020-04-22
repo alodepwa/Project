@@ -101,7 +101,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * comment ticket by user .
      *
      * @return \Illuminate\Http\Response
      */
@@ -118,5 +118,18 @@ class HomeController extends Controller
         $check = $comment[0]->id_insert ? true : false;
         return response()->json($check);
     }
+
+    /**
+     * get comment ticket with post_id .
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getComments($post_id)
+    {
+        
+        $get_comment = DB::select('exec getComments ?',[$post_id]);
+        return response()->json($get_comment);
+    }
+    
     
 }
