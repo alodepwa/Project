@@ -31,4 +31,13 @@ Route::group([],function(){
 
 Route::group(['prefix' => 'admin'], function(){
     Route::POST('login', 'api\AdminController@Login');
+    Route::GET('get-role', 'api\AdminController@getRole');
+    Route::POST('create-user','api\AdminController@createUser');
+    Route::GET('get-list-user/{id}', 'api\AdminController@getListUsers');
+    Route::POST('update-user', 'api\AdminController@updateUser');
+    Route::DELETE('delete-user/{id}', 'api\AdminController@deleteUser');
+    Route::GET('get-category-car','api\AdminController@getCategory');
+    Route::POST('create-car','api\AdminController@createCar');
+    Route::GET('get-list-car/{id}', 'api\AdminController@getListCar');
+    Route::POST('update-car','api\AdminController@updateCar');
 });

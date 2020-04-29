@@ -145,6 +145,7 @@ class LayoutInfoTicketFilter extends Component {
                                             //     id: 'age-native-simple',
                                             // }}
                                         >
+                                             <option value=''></option>
                                             <option aria-label="None" value="default">Chọn nhà xe</option>
                                             { this.state.carsName.map((value, key) =>  <option key = {key} value={ value.Passenger_Car_Id }>{value.Passenger_Car_Name}</option>)}
                                             
@@ -165,6 +166,7 @@ class LayoutInfoTicketFilter extends Component {
                                                 id: 'age-native-simple',
                                             }}
                                         >
+                                            <option value=''></option>
                                          { this.state.trips.map((value, key) => {
                                             return (
                                             <option value = { value.Trips_ID } key = { key }>{value.Trips_Start}</option>
@@ -185,6 +187,7 @@ class LayoutInfoTicketFilter extends Component {
                                             // onChange=""
                                            
                                         >
+                                            <option value=''></option>
                                         { this.state.trips.map((value, key) => {
                                             return (
                                             <option value = { value.Trips_ID } key = { key }>{value.Trips_Ends}</option>

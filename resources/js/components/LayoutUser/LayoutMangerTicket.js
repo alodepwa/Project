@@ -4,6 +4,8 @@ import moment from 'moment';
 import * as common from './../../common';
 import Rating from '@material-ui/lab/Rating';
 import Swal from 'sweetalert2';
+import Button from '@material-ui/core/Button';
+import Icon from '@material-ui/core/Icon';
 class LayoutMangerTicket extends React.Component {
     constructor(props) {
         super(props);
@@ -302,18 +304,23 @@ class LayoutMangerTicket extends React.Component {
                                                                 <td>
                                                                     {
                                                                         (moment(value.Trips_Passenger_Car_Date).format('YYYY-MM-DD') < this.state.date) ? (
-                                                                            // <div
-                                                                            //     className="btn btn-warning"
-                                                                            //     >
-                                                                            //     comment
-                                                                            // </div>
-                                                                            <button
-                                                                                type="button"
+                                                                            <Button
+                                                                            variant="contained"
+                                                                            color="primary"
+                                                                            endIcon={<Icon>send</Icon>}
+                                                                            type="button"
                                                                                 className="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
                                                                                 onClick={(e) => this.onClickComment(e, value.Passenger_Car_Id)}
-                                                                            >
-                                                                                Đánh giá xe
-                                                                            </button>
+                                                                          >
+                                                                            Đánh giá
+                                                                          </Button>
+                                                                            // <button
+                                                                            //     type="button"
+                                                                            //     className="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                                                                            //     onClick={(e) => this.onClickComment(e, value.Passenger_Car_Id)}
+                                                                            // >
+                                                                            //     Đánh giá xe
+                                                                            // </button>
                                                                         ) : ''
                                                                     }
 

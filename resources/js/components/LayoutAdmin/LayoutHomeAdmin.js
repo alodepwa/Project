@@ -1,136 +1,121 @@
-import React from 'react';
+import React                        from 'react';
+import Avatar                       from '@material-ui/core/Avatar';
+// import { useDispatch, useSelector } from 'react-redux';
+import PrivateRoute                 from './../PrivateRoute';
+import LayoutLogin                  from './LayoutLogin';
+import LayoutCreateUsers            from './LayoutCreateUsers';
+import LayoutListUsers              from './LayoutListUsers';
+import LayoutCreateCar              from './LayoutCreateCar';
+import LayoutListCar                from './LayoutListCar';
 import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    NavbarText,
-    Form,
-    FormControl,
-    Button,
-    Dropdown,
-    InputGroup
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    HashRouter,
+    withRouter,
+    useHistory,
+    useLocation,
+    Redirect,
+    
+} from "react-router-dom";
 
-} from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
 export default function LayoutHomeAdmin() {
-    const get_data = useSelector(state => console.log(state));
+    // const get_data = useSelector(state => console.log(state));
+    const user_name_login = JSON.parse(sessionStorage.getItem('tokens')).Admin_Name;
+    const user_role_login = JSON.parse(sessionStorage.getItem('tokens')).Roles_Id;
     return (
-        <div>
-            <Navbar bg="dark" variant="dark">
-                <Nav className="mr-auto ">
-                    <Navbar.Brand href="#">Admin</Navbar.Brand>
-                    <Button className="btn btn-link navbar-collapse" id="sidebarToggle" href="#">
-                        <i className="fas fa-bars text-light"></i>
-                    </Button>
-                </Nav>
+        <HashRouter>
+            <div className="admin">
+                <div className="row">
+                    <div className="col-xs-2 col-sm-2 col-md-2 col-lg-2 admin-left">
+                        <div>
+                            <ul className="block-menu">
+                                <li >
+                                    <a href="#" className="row menu-toggle">
+                                        <span className="iconAvatar col-1"><Avatar src="https://cdn4.iconfinder.com/data/icons/people-std-pack/512/boss-512.png" /></span>
+                                        <span className="col-7"><p>{ user_name_login }</p></span>
+                                        <span className="col-2">
+                                            <i className="fas icon-toggle fa-chevron-down hide-icon" />
+                                            <i className="fas icon-toggle  fa-chevron-right" />
+                                        </span>
+                                    </a>
+                                    <ul className="menu-child">
+                                        <li className="mb-3">
+                                            <Link to="/admin/logout" className="ml-5">Logout</Link>
+                                        </li>
 
-                <Nav>
-                    <Form inline>
-                        <InputGroup className="mb-3">
-                            <FormControl
-                                placeholder="Seach for..."
-                                aria-label="Seach for..."
-                                aria-describedby="basic-addon"
-                            />
-                            <InputGroup.Append>
-                                <Button variant="outline-secondary btn-warning"><i className="fas fa-search"></i></Button>
-                            </InputGroup.Append>
-                        </InputGroup>
-                    </Form>
-                    <Dropdown>
-                        <Dropdown.Toggle id="dropdown-basic">
-                            <i className="fas fa-user fa-fw"></i>
-                        </Dropdown.Toggle>
-
-                        <Dropdown.Menu className="dropdown-menu-right">
-                            <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">Logout</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </Nav>
-            </Navbar>
-            {/* end navbar */}
-            <div className="w-100">
-                <div className="w-100" id="layoutSidenav">
-                    <div className="sb-sidenav" id="menu-right">
-                        <div className="bg-dark" id="layoutSidenav_nav">
-                            <Navbar className="d-flex flex-column" id="sb-navbar">
-                                <Nav className="nav-link">
-                                    <Navbar.Brand href="#" className="text-light"><i className="fas fa-tachometer-alt mr-2"></i>Admin Mananger</Navbar.Brand>
-                                </Nav>
-                                <Nav className="d-flex flex-column nav-link">
-                                    <NavbarBrand href="#" className="text-light collapsed" data-toggle="collapse" data-target="#collapseLayoutOne"
-                                        aria-expanded="false" aria-controls="collapseLayoutOne"><i className="fas fa-columns mr-2"></i>Layout One</NavbarBrand>
-                                    <NavItem className="collapse" id="collapseLayoutOne" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                        <Nav className="d-flex flex-column">
-                                            <NavLink className="text-light">one</NavLink>
-                                            <NavLink className="text-light">two</NavLink>
-                                        </Nav>
-                                    </NavItem>
-                                </Nav>
-                                <Nav className="d-flex flex-column nav-link">
-                                    <NavbarBrand href="#" className="text-light collapsed" data-toggle="collapse" data-target="#collapseLayoutTwo"
-                                        aria-expanded="false" aria-controls="collapseLayoutTwo"><i className="fas fa-columns mr-2"></i>Layout One</NavbarBrand>
-                                    <NavItem className="collapse" id="collapseLayoutTwo" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                        <Nav className="d-flex flex-column">
-                                            <NavLink className="text-light">one</NavLink>
-                                            <NavLink className="text-light">two</NavLink>
-                                        </Nav>
-                                    </NavItem>
-                                </Nav>
-                                <Nav className="d-flex flex-column nav-link">
-                                    <NavbarBrand href="#" className="text-light collapsed" data-toggle="collapse" data-target="#collapseLayoutThree"
-                                        aria-expanded="false" aria-controls="collapseLayoutThree"><i className="fas fa-columns mr-2"></i>Layout One</NavbarBrand>
-                                    <NavItem className="collapse" id="collapseLayoutThree" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                        <Nav className="d-flex flex-column">
-                                            <NavLink className="text-light">one</NavLink>
-                                            <NavLink className="text-light">two</NavLink>
-                                        </Nav>
-                                    </NavItem>
-                                </Nav>
-
-                            </Navbar>
-
+                                    </ul>
+                                </li>
+                                <li >
+                                    <a href="#" className="row menu-toggle">
+                                        <span className="col-1"><i className="fas fa-home"></i></span>
+                                        <span className="col-7"><p> Dashboard</p></span>
+                                        <span className="col-2"></span>
+                                    </a>
+                                </li>
+                                <li >
+                                    <a href="#" className="row menu-toggle">
+                                        <span className="col-1"><i className="fas fa-user"></i></span>
+                                        <span className="col-7"><p> Users</p></span>
+                                        <span className="col-2">
+                                            <i className="fas icon-toggle fa-chevron-down hide-icon" />
+                                            <i className="fas icon-toggle  fa-chevron-right" />
+                                        </span>
+                                    </a>
+                                    <ul className="menu-child">
+                                        <li className="mb-3">
+                                            <Link to="/admin/create-user"  style = { (user_role_login == 2 || user_role_login == 1) ? null : {pointerEvents : 'none'} } className="ml-5">Create Users</Link>
+                                        </li>
+                                        <li className="mb-3">
+                                            <Link to="/admin/list-users" className="ml-5">List Users</Link>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li >
+                                    <a href="#" className="row menu-toggle">
+                                        <span className="col-1"><i className="fas fa-user"></i></span>
+                                        <span className="col-7"><p> Car</p></span>
+                                        <span className="col-2">
+                                            <i className="fas icon-toggle fa-chevron-down hide-icon" />
+                                            <i className="fas icon-toggle  fa-chevron-right" />
+                                        </span>
+                                    </a>
+                                    <ul className="menu-child">
+                                        <li className="mb-3">
+                                            <Link to="/admin/create-car"  style = {user_role_login == 2 ?  null : {pointerEvents : 'none' } } className="ml-5">Create Car</Link>
+                                        </li>
+                                        <li className="mb-3">
+                                            <Link to="/admin/list-cars" style = { user_role_login == 1 ? {pointerEvents : 'none' } : null }  className="ml-5">List Car</Link>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <div className="d-flex justify-content-between" id="layoutSidenav_content">
-                        <div className="mt-4" >
-                            <main>
-                                {/* <BrowserRouter>
-                                    <Switch>
-                                        <Route exact path="/" component={LayoutAdminContent} />
-
-
-                                    </Switch>
-                                </BrowserRouter> */}
-                            </main>
-                            <div className="py-4 bg-light mt-auto">
-                                <div className="container-fluid">
-                                    <div className="d-flex align-items-center justify-content-between small">
-                                        <div className="text-muted">Copyright &copy; Your Website 2020</div>
-                                        <div className="text-uppercase">
-                                            <a href="#">Contacts us</a>
-                                        &middot;
-                                        <a href="#">Toan &amp; Trung</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div className="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                        <div className="admin-right">
+                            <Switch>
+                                <Route path="/admin/logout">
+                                    <LayoutLogin />
+                                </Route>
+                                <PrivateRoute path="/admin/create-user">
+                                    <LayoutCreateUsers />
+                                </PrivateRoute>
+                                <PrivateRoute path="/admin/list-users">
+                                    <LayoutListUsers />
+                                </PrivateRoute>
+                                <PrivateRoute path="/admin/create-car">
+                                    <LayoutCreateCar />
+                                </PrivateRoute>
+                                <PrivateRoute path="/admin/list-cars">
+                                    <LayoutListCar />
+                                </PrivateRoute>
+                            </Switch>
                         </div>
                     </div>
                 </div>
-                {/* footer */}
             </div>
-
-        </div>
+        </HashRouter>
     )
 }

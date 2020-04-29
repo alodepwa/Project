@@ -4,6 +4,11 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import Rating from '@material-ui/lab/Rating';
 import Avatar from '@material-ui/core/Avatar';
+function format_money(data){
+    let format = data.replace(/,/g, '.');
+    return parseFloat(format);
+  }
+  
 class LayoutInfoTicket extends Component {
     constructor(props) {
         super(props);
@@ -527,7 +532,8 @@ class LayoutInfoTicket extends Component {
                                                                             </div>
                                                                             <div className="d-flex">
                                                                                 <p className="p-1 mr-2">Tổng cộng: <strong>
-                                                                                    {this.state.step1.length > 0 ? this.state.step1.length * value.Passenger_Car_fare : 0}đ</strong></p>
+                                                                                    {this.state.step1.length > 0 ? this.state.step1.length *
+                                                                                    format_money(value.Passenger_Car_fare) : 0}đ</strong></p>
                                                                                 <button
                                                                                     disabled={this.state.step1.length > 0 ? false : true}
                                                                                     style={{ cursor: this.state.step1.length > 0 ? '' : 'no-drop' }} className="btn submit-step1 btn-primary" >Tiếp tục</button>

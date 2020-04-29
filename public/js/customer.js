@@ -73,4 +73,14 @@ $(document).ready(function(){
 	// 	$('#dtHorizontalVerticalExample .alo').css({'position':'sticky', 'left': `${po_left} px`});
 	// 	// $('#dtHorizontalVerticalExample th:lt(3)').scrollLeft(10);
 	// });
+	$('.menu-child').hide();
+	$(document).ready(function(){
+		$('.menu-child').hide();
+		$(document).on('click', '.menu-toggle', function(e){
+			e.preventDefault();
+			$(this).find('.icon-toggle').toggleClass('hide-icon');
+			$(this).siblings('.menu-child').toggle();
+		})
+	});
+	
 })

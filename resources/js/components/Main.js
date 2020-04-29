@@ -20,32 +20,7 @@ import LayoutLogin from './LayoutAdmin/LayoutLogin';
 import LayoutHomeAdmin  from './LayoutAdmin/LayoutHomeAdmin';
 import { Provider } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { useSelector  } from 'react-redux';
-
-
-
-function PrivateRoute({children, ...rest}){
-    var isLogin = useSelector(state => {
-        return sessionStorage.getItem('isLogin') ? sessionStorage.getItem('isLogin') : false;
-    });
-    return (
-        <Route
-            {...rest}
-            render = {({location}) => (
-                isLogin ? (
-                    children 
-                    ) : (
-                    <Redirect 
-                        to={{
-                            pathname : "/login",
-                            state    : { from : location }
-                        }}
-                    />
-                    )
-            ) }
-        />
-    );
-}
+import PrivateRoute from './PrivateRoute';
 
 class Main extends React.Component{
     constructor(props){

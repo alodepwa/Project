@@ -117,6 +117,7 @@ class LayoutRegTick extends React.Component {
         dateSearch    : arr[1]
       };
     }
+    
 
     //get posts
     axios.post(`${common.HOST}home/get-post`, data)
