@@ -40,4 +40,7 @@ Route::group(['prefix' => 'admin'], function(){
     Route::POST('create-car','api\AdminController@createCar');
     Route::GET('get-list-car/{id}', 'api\AdminController@getListCar');
     Route::POST('update-car','api\AdminController@updateCar');
+    Route::POST('delete-car', 'api\AdminController@deleteCar');
+    Route::POST('create-trip-passenger-car','api\AdminController@createTripPassengerCar');
+    Route::GET('get-list-trips-passenger-car/{id}', 'api\AdminController@getListTripPassengerCar');
 });

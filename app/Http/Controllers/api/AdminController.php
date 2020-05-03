@@ -87,6 +87,47 @@ class AdminController extends Controller
     }
 
     function updateCar(Request $request){
-        dd($request);
+        $data = [
+            $request->get('id_car'),
+            $request->get('id_trip'),
+            $request->get('Car_Number'),
+            $request->get('Passenger_Car_Name'),
+            $request->get('phone'),
+            $request->get('Passenger_Car_fare'),
+            $request->get('Passenger_Car_Seats'),
+            $request->get('admin_id'),
+            $request->get('category_car'),
+            $request->get('name_admin'),
+            $request->get('Trips_Start'),
+            $request->get('Trips_Ends'),
+        ];
+        $update_car = DB::select('exec updateCar ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', $data);
+        return response()->json($update_car);
+    }
+
+    function deleteCar(Request $request){
+        $data = [
+            $request->get('id'),
+            $request->get('user_deleted')
+        ];
+        $delete_car = DB::select('exec deleteCar ?, ?', $data);
+        return response()->json($delete_car);
+    }
+
+    function createTripPassengerCar(Request $request){
+        $data = [
+            $request->get('id_car'),
+            $request->get('id_trip'),
+            $request->get('date'),
+            $request->get('timeStart'),
+            $request->get('timeEnd'),
+            
+        ];
+        $createTripPassenger = DB::select('exec createTripPassengerCar ?, ?, ?, ?, ?', $data);
+        return response()->json($createTripPassenger);
+    }
+    function getListTripPassengerCar($id){
+        $getListTripPassenger = DB::select('exec getListTripPassengerCar ?', [ $id ]);
+        return response()->json($getListTripPassenger);
     }
 }

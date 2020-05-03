@@ -7,24 +7,15 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-import DateFnsUtils from '@date-io/date-fns';
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
-import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import moment from 'moment';
 import InputLabel from '@material-ui/core/InputLabel';
 import * as CommonAlert from './../Common/ShowAlert';
 import Swal from 'sweetalert2';
-import {
-    MuiPickersUtilsProvider,
-    KeyboardDatePicker
-} from '@material-ui/pickers';
+
 const useStyles = makeStyles((theme) => ({
     root: {
         height: 300,
@@ -113,7 +104,7 @@ export default function LayoutListUsers() {
      * get list car by id
      */
     const fetchListCar = (async () => {
-        let parent_id = JSON.parse(sessionStorage.getItem('tokens')).Admin_ID;
+        let parent_id = JSON.parse(sessionStorage.getItem('tokens')).Parent_id ? JSON.parse(sessionStorage.getItem('tokens')).Parent_id : JSON.parse(sessionStorage.getItem('tokens')).Admin_ID ;
         await axios.get(`${common.HOST}admin/get-list-car/${parent_id}`)
             .then(res => { res.data ? setState({ ...state, data: res.data }) : null })
             .catch(err => { throw err; })
@@ -128,7 +119,18 @@ export default function LayoutListUsers() {
             let id = JSON.parse(sessionStorage.getItem('tokens')).Admin_ID;
             let updated_by = JSON.parse(sessionStorage.getItem('tokens')).Admin_Name;
             let data = {
-
+                id_car              : preUpdate.Passenger_Car_Id,
+                id_trip             : preUpdate.Trips_ID,
+                Car_Number          : values.carnumber,
+                Passenger_Car_Name  : values.name,
+                phone               : values.phone,
+                Passenger_Car_fare  : values.fare,
+                Passenger_Car_Seats : values.seat,
+                admin_id            : id,
+                category_car        : values.category_car,
+                name_admin          : updated_by,
+                Trips_Start         : values.from,
+                Trips_Ends          : values.to
             };
             let data1 = {
                 ...preUpdate,
@@ -200,6 +202,13 @@ export default function LayoutListUsers() {
      */
     const onClickButtonDelete = ((event, data) => {
         event.preventDefault();
+        let id = data.Passenger_Car_Id;
+        let name_admin = JSON.parse(sessionStorage.getItem('tokens')).Admin_Name;
+        let dataSendDelete = {
+            id           : id,
+            user_deleted : name_admin
+        };
+        
         Swal.fire({
             title: 'Are you Delete?',
             icon: 'question',
@@ -209,12 +218,16 @@ export default function LayoutListUsers() {
             confirmButtonText: 'Yes, delete it!'
         }).then(async (result) => {
             if (result.value) {
-                let id = data.id;
-                let dataPre = [...state.data];
-                let index = dataPre.indexOf(data);
-                dataPre.splice(index, 1);
+                let dataJustChange = {
+                    ...data,
+                    car_status : 1,
+                    deleted_by : name_admin,
+                    deleted_at : moment(new Date()).format('YYYY-MM-DD h:mm:ss')
+                };
+                let dataPre             = [...state.data];
+                dataPre[dataPre.indexOf(data)] = dataJustChange;
 
-                await axios.delete(`${common.HOST}admin/delete-user/${id}`)
+                await axios.post(`${common.HOST}admin/delete-car`, dataSendDelete)
                     .then(res => {
                         res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Delete fail!')
                             : (
@@ -223,7 +236,6 @@ export default function LayoutListUsers() {
                             )
                     })
                     .catch(err => { throw err; })
-
             }
         })
     })
@@ -242,9 +254,9 @@ export default function LayoutListUsers() {
 
         }
         if (event.target.name == "carnumber") {
-            let parrtenText = /^[0-9]{1,2}[A-Z][0-9][-][0-9]{3,6}$/
+            let parrtenText = /^[0-9]{1,2}[A-Z][0-9][-][0-9]{3,5}$/
             let errCarNumber = 'Car number isn\'t correct format!';
-            parrtenText.test(value) ? setValues({ ...values, [event.target.name]: value, errCarNumber: '' }) : setValues({ ...values, errCarNumber, err: '' });
+            parrtenText.test(value) ? setValues({ ...values, [event.target.name]: value, errCarNumber: '' }) : setValues({ ...values, errCarNumber, err : '' });
         }
         else{
             setValues({ ...values, [event.target.name] : event.target.value });
@@ -266,20 +278,20 @@ export default function LayoutListUsers() {
     return (
         <div className="container">
             <MaterialTable
-                title="List Users"
+                title="List Cars"
                 columns={state.columns}
                 data={state.data}
                 actions={[
                     {
                         icon: 'edit',
-                        tooltip: 'Update User',
+                        tooltip: 'Update Car',
                         onClick: (event, rowData) => {
                             onClickButtonUpdate(event, rowData)
                         }
                     },
-                    rowData => ((idLogin == '2') ? {
+                    rowData => ((idLogin == '2' && rowData.car_status == 0 ) ? {
                         icon: 'delete',
-                        tooltip: 'Delete User',
+                        tooltip: 'Delete Car',
                         onClick: (event, rowData) => {
                             onClickButtonDelete(event, rowData);
                         }
@@ -352,11 +364,11 @@ export default function LayoutListUsers() {
                                     <div className="form-group d-flex flex-column">
                                         <TextField
                                             error={values.errCarNumber ? true : false}
-                                            type="search"
+                                            type="text"
                                             variant="outlined"
                                             name="carnumber"
                                             value = {values.carnumber}
-                                            onChange={onChangeInput}
+                                            onChange = {onChangeInput}
                                             label={values.errCarNumber ? "Car number  incorrect format!  Example : '43H1-43136' " : "Car Number. Example : '43H1-43136'"}
                                         />
                                     </div>
@@ -419,7 +431,7 @@ export default function LayoutListUsers() {
                                         </FormControl>
                                     </div>
                                     <Button
-                                        // disabled = { values.seat && values.to && values.from && values.fare && values.name && values.phone && values.category_car  && !values.errName && !values.errPhone && !values.errCarNumber ? false :true }
+                                        disabled = { values.seat && values.to && values.from && values.fare && values.name && values.phone && values.category_car  && !values.errName && !values.errPhone && !values.errCarNumber ? false :true }
                                         variant="contained"
                                         color="primary"
                                         endIcon={<Icon>send</Icon>}

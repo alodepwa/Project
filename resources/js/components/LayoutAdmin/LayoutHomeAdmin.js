@@ -7,6 +7,7 @@ import LayoutCreateUsers            from './LayoutCreateUsers';
 import LayoutListUsers              from './LayoutListUsers';
 import LayoutCreateCar              from './LayoutCreateCar';
 import LayoutListCar                from './LayoutListCar';
+import LayoutListTrips              from './LayoutListTrips';
 import {
     BrowserRouter as Router,
     Switch,
@@ -90,6 +91,21 @@ export default function LayoutHomeAdmin() {
                                         </li>
                                     </ul>
                                 </li>
+                                <li >
+                                    <a href="#" className="row menu-toggle">
+                                        <span className="col-1"><i className="fas fa-user"></i></span>
+                                        <span className="col-7"><p> Trips</p></span>
+                                        <span className="col-2">
+                                            <i className="fas icon-toggle fa-chevron-down hide-icon" />
+                                            <i className="fas icon-toggle  fa-chevron-right" />
+                                        </span>
+                                    </a>
+                                    <ul className="menu-child">
+                                        <li className="mb-3">
+                                            <Link to="/admin/list-trips" style = { user_role_login == 1 ? {pointerEvents : 'none' } : null }  className="ml-5">List Trips</Link>
+                                        </li>
+                                    </ul>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -110,6 +126,9 @@ export default function LayoutHomeAdmin() {
                                 </PrivateRoute>
                                 <PrivateRoute path="/admin/list-cars">
                                     <LayoutListCar />
+                                </PrivateRoute>
+                                <PrivateRoute path="/admin/list-trips">
+                                    <LayoutListTrips />
                                 </PrivateRoute>
                             </Switch>
                         </div>
