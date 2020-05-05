@@ -43,4 +43,12 @@ Route::group(['prefix' => 'admin'], function(){
     Route::POST('delete-car', 'api\AdminController@deleteCar');
     Route::POST('create-trip-passenger-car','api\AdminController@createTripPassengerCar');
     Route::GET('get-list-trips-passenger-car/{id}', 'api\AdminController@getListTripPassengerCar');
+    Route::POST('update-trips-passenger-car', 'api\AdminController@updatetripPassengerCar');
+    Route::GET('get-list-car-post/{id}', 'api\AdminController@getListCarPost');
+    Route::POST('create-post', 'api\AdminController@createPost');
+    Route::POST('get-list-post','api\AdminController@getListPost');
+    Route::POST('update-post', 'api\AdminController@updatePost');
+    Route::DELETE('delete-post/{id}', 'api\AdminController@deletePost');
+    Route::GET('approve-post/{id}', 'api\AdminController@approvePost');
+    Route::GET('get-myprofile/{id}', 'api\AdminController@getMyProfile');
 });

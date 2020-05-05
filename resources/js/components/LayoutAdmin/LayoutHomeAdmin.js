@@ -8,6 +8,9 @@ import LayoutListUsers              from './LayoutListUsers';
 import LayoutCreateCar              from './LayoutCreateCar';
 import LayoutListCar                from './LayoutListCar';
 import LayoutListTrips              from './LayoutListTrips';
+import LayoutCreatePost             from './LayoutCreatePost';
+import LayoutListPost               from './LayoutListPost';
+import LayoutProfile                from './LayoutProfile';
 import {
     BrowserRouter as Router,
     Switch,
@@ -42,10 +45,12 @@ export default function LayoutHomeAdmin() {
                                         </span>
                                     </a>
                                     <ul className="menu-child">
-                                        <li className="mb-3">
+                                        {/* <li className="mb-3">
                                             <Link to="/admin/logout" className="ml-5">Logout</Link>
+                                        </li> */}
+                                        <li className="mb-3">
+                                            <Link to="/admin/profile" className="ml-5">My Profile</Link>
                                         </li>
-
                                     </ul>
                                 </li>
                                 <li >
@@ -106,6 +111,24 @@ export default function LayoutHomeAdmin() {
                                         </li>
                                     </ul>
                                 </li>
+                                <li >
+                                    <a href="#" className="row menu-toggle">
+                                        <span className="col-1"><i className="fas fa-user"></i></span>
+                                        <span className="col-7"><p> Posts</p></span>
+                                        <span className="col-2">
+                                            <i className="fas icon-toggle fa-chevron-down hide-icon" />
+                                            <i className="fas icon-toggle  fa-chevron-right" />
+                                        </span>
+                                    </a>
+                                    <ul className="menu-child">
+                                        <li className="mb-3">
+                                            <Link to="/admin/create-post" style = { user_role_login == 1 ? {pointerEvents : 'none' } : null }  className="ml-5">Create Posts</Link>
+                                        </li>
+                                        <li className="mb-3">
+                                            <Link to="/admin/list-posts"   className="ml-5">List Posts</Link>
+                                        </li>
+                                    </ul>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -129,6 +152,15 @@ export default function LayoutHomeAdmin() {
                                 </PrivateRoute>
                                 <PrivateRoute path="/admin/list-trips">
                                     <LayoutListTrips />
+                                </PrivateRoute>
+                                <PrivateRoute path="/admin/create-post">
+                                    <LayoutCreatePost />
+                                </PrivateRoute>
+                                <PrivateRoute path="/admin/list-posts">
+                                    <LayoutListPost />
+                                </PrivateRoute>
+                                <PrivateRoute path="/admin/profile">
+                                    <LayoutProfile />
                                 </PrivateRoute>
                             </Switch>
                         </div>

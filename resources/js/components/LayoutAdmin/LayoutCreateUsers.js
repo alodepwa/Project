@@ -128,7 +128,7 @@ export default function LayoutCreateUsers() {
                                 format="yyyy-MM-dd"
                                 margin="normal"
                                 id="date-picker-inline"
-                                label="Date picker inline"
+                                label="Date Off Birth"
                                 value={ values.dateOffBirth }
                                 onChange={handleDateChange}
                             

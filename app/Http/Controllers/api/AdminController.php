@@ -121,7 +121,6 @@ class AdminController extends Controller
             $request->get('date'),
             $request->get('timeStart'),
             $request->get('timeEnd'),
-            
         ];
         $createTripPassenger = DB::select('exec createTripPassengerCar ?, ?, ?, ?, ?', $data);
         return response()->json($createTripPassenger);
@@ -129,5 +128,65 @@ class AdminController extends Controller
     function getListTripPassengerCar($id){
         $getListTripPassenger = DB::select('exec getListTripPassengerCar ?', [ $id ]);
         return response()->json($getListTripPassenger);
+    }
+    function updatetripPassengerCar(Request $request){
+        $data = [
+            $request->get('id'),
+            $request->get('date'),
+            $request->get('timeStart'),
+            $request->get('timeEnd'),
+        ];
+        $update = DB::select('exec updateTripPassengerCar ?, ?, ?, ?', $data);
+        return response()->json($update);
+    }
+    function getListCarPost($id){
+        $list_car = DB::select('exec getListTripPassengerCarForPosts ?', [(int)$id]);
+        return response()->json($list_car);
+    }
+    function createPost(Request $request){
+        $data = [
+            $request->get('title'),
+            $request->get('content'),
+            $request->get('note'),
+            $request->get('car'),
+        ];
+        $create = DB::select('exec createPost ?, ?, ?, ?', $data);
+        return response()->json($create);
+    }
+    function getListPost(Request $request){
+        $role   = $request->get('role');
+        $parent = $request->get('parent');
+        if($role == '1'){
+            $list = DB::select('exec getListPost ?, ?', [$parent, 1]);
+        }else{
+            $list = DB::select('exec getListPost ?, ?', [$parent, 0]);
+        }
+        return response()->json($list);
+    }
+
+    function updatePost(Request $request){
+        $data = [
+            $request->get('id_post'),
+            $request->get('title'),
+            $request->get('content'),
+            $request->get('note'),
+        ];
+        $update = DB::select('exec updatePost ?, ?, ?, ?', $data);
+        return response()->json($update);
+    }
+
+    function deletePost($id){
+        $delete = DB::select('exec deletePost ?', [(int)$id]);
+        return response()->json($delete);
+    }
+
+    function approvePost($id){
+        $approve = DB::select('exec approvePost ?', [(int)$id]);
+        return response()->json($approve);
+    }
+
+    function getMyProfile($id){
+        $get = DB::select('exec getMyProfile ?', [(int)$id]);
+        return response()->json($get);
     }
 }

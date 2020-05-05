@@ -129,7 +129,8 @@ export default function LayoutListTrips() {
             };
             await axios.post(`${common.HOST}admin/create-trip-passenger-car`, data)
                 .then(res => {
-                    res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Create fail!')
+                    setValues({...values, modal : false });
+                    res.data[0].result == 'false' ? CommonAlert.showAlert('error', 'Create fail!')
                         : CommonAlert.showAlert('success', 'Create success!')
                 })
                 .catch(err => { throw err });
@@ -149,6 +150,9 @@ export default function LayoutListTrips() {
             category_car    : data.Category_Id,
             from            : data.Trips_Start,
             to              : data.Trips_Ends,
+            date            : data.Trips_Passenger_Car_Date ? data.Trips_Passenger_Car_Date : moment( new Date()).format('YYYY-MM-DD'),
+            timeStart       : data.Trips_Passenger_Car_Time_Start ? new Date(`${data.Trips_Passenger_Car_Date}:${data.Trips_Passenger_Car_Time_Start}`) : new Date() ,
+            timeEnd         : data.Trips_Passenger_Car_Time_End ? new Date(`${data.Trips_Passenger_Car_Date}:${data.Trips_Passenger_Car_Time_End}`) : new Date()
         });
         setPreUpdate(data);
     }
@@ -214,6 +218,26 @@ export default function LayoutListTrips() {
             .then(res => { res.data ? (setDataInfo({ data : res.data }), setIsClickInfo(true) ) : setIsClickInfo(false) })
             .catch(err => { throw err; })
     })
+    const onClickButtonSendUpdate = (async (event) =>{
+        event.preventDefault();
+        let data = {
+            id          : preUpdate.Trips_Passenger_Car_Id,
+            date        : values.date,
+            timeStart   : moment(values.timeStart).format('h:mm:ss'),
+            timeEnd     : moment(values.timeEnd).format('h:mm:ss')
+        };
+        let dataInfoPre    = [...dataInfo.data];
+        let dataPreUpd  = { ...preUpdate, Trips_Passenger_Car_Date : values.date, Trips_Passenger_Car_Time_End : moment(values.timeEnd).format('h:mm:ss'), Trips_Passenger_Car_Time_Start : moment(values.timeStart).format('h:mm:ss') };
+        dataInfoPre[dataInfoPre.indexOf(preUpdate)] = dataPreUpd;
+        
+        await axios.post(`${common.HOST}admin/update-trips-passenger-car`, data)
+            .then(res => {
+                setValues({...values, modal : false});
+                res.data[0].result == 'false' ? CommonAlert.showAlert('error', 'Create fail!')
+                    : ( CommonAlert.showAlert('success', 'Create success!'),setDataInfo({...dataInfo, data : dataInfoPre })  )
+            })
+            .catch(err => { throw err });
+    });
     /**
      * useEffect
      */
@@ -322,7 +346,7 @@ export default function LayoutListTrips() {
                                                 label   = "Date Start"
                                                 format  = "yyyy-MM-dd"
                                                 name    = "date"
-                                                value   = { !isClickInfo ? values.date : preUpdate ?  preUpdate.Trips_Passenger_Car_Date : new Date() }
+                                                value   = {  values.date }
                                                 onChange={handleDateChangeDate}
                                                 KeyboardButtonProps={{
                                                     'aria-label': 'change date',
@@ -336,7 +360,7 @@ export default function LayoutListTrips() {
                                                 margin="normal"
                                                 label="Time Start"
                                                 name    = "timeStart"
-                                                value   = { !isClickInfo ? values.timeStart : preUpdate ?  preUpdate.Trips_Passenger_Car_Time_Start : new Date() }
+                                                value   = {  values.timeStart  }
                                                 onChange={handleDateChangeTimeStart}
                                                 KeyboardButtonProps={{
                                                     'aria-label': 'change time',
@@ -345,7 +369,7 @@ export default function LayoutListTrips() {
                                             <KeyboardTimePicker
                                                 margin="normal"
                                                 label="Time End"
-                                                value   = { !isClickInfo ? values.timeEnd : preUpdate ?  preUpdate.Trips_Passenger_Car_Time_End : new Date() }
+                                                value   = { values.timeEnd  }
                                                 onChange={handleDateChangeTimeEnd}
                                                 name = "timeEnd"
                                                 KeyboardButtonProps={{
@@ -359,7 +383,7 @@ export default function LayoutListTrips() {
                                         variant="contained"
                                         color="primary"
                                         endIcon={<Icon>send</Icon>}
-                                        onClick={onClickButtonSend}
+                                        onClick={ !isClickInfo ? onClickButtonSend : onClickButtonSendUpdate }
                                     >
                                         Save
                                     </Button>
