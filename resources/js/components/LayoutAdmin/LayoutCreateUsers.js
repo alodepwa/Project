@@ -33,6 +33,7 @@ export default function LayoutCreateUsers() {
         errAddress: '',
         errDate: '',
     });
+    const role_id_login = JSON.parse(sessionStorage.getItem('tokens')).Roles_Id;
 
     const onChangeInput = (event) => {
         event.preventDefault();
@@ -80,6 +81,7 @@ export default function LayoutCreateUsers() {
     const onClickButtonSend = useCallback(
         async () => {
             let id = JSON.parse(sessionStorage.getItem('tokens')).Admin_ID;
+            let role_id_login = JSON.parse(sessionStorage.getItem('tokens')).Roles_Id;
             let data = {
                 name            : values.name,
                 phone           : values.phone,
@@ -90,6 +92,12 @@ export default function LayoutCreateUsers() {
                 id,
                 password        : md5(values.phone)
             };
+            if(role_id_login == 1){
+                data = {
+                    ...data,
+                    role_id_login
+                }
+            }
            await axios.post(`${common.HOST}admin/create-user`, data)
                 .then( res => {
                     res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Create fail!') : CommonAlert.showAlert('success', 'Create success!')
@@ -169,7 +177,12 @@ export default function LayoutCreateUsers() {
                         >
                             {
                                 values.role.map((role, key) => {
-                                    return <MenuItem value={ role.Roles_Id } key = { key } >{ role.Role_Chuc_vu }</MenuItem>
+                                    if(role_id_login == 2 && role.Roles_Id != 1 && role.Roles_Id != 2){
+                                        return <MenuItem value={ role.Roles_Id } key = { key } >{ role.Role_Chuc_vu }</MenuItem>
+                                    }
+                                    if(role_id_login == 1 && role.Roles_Id == 2){
+                                        return <MenuItem value={ role.Roles_Id } key = { key } >{ role.Role_Chuc_vu }</MenuItem>
+                                    }
                                 })
                             }
                         </Select>

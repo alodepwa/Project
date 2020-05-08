@@ -9,7 +9,10 @@ import * as common from './../../common';
 import axios from 'axios';
 import * as commonAlert from './../Common/ShowAlert';
 export default function LayoutCreateCar() {
-    const [trips, setTrips ]                = useState([]);
+    const [trips, setTrips ]                = useState({
+        end     : [],
+        start   : []
+    });
     const [categoryCar, setCategoryCar ]    = useState([]);
     const [values, setValues]               = useState({
         name            : '',
@@ -28,7 +31,7 @@ export default function LayoutCreateCar() {
     const getTrips = async () => {
         await axios.get(`${common.HOST}home`).then( res => {
 			if(res.data){	
-				setTrips(res.data);
+				setTrips({ end : res.data['end'] , start : res.data['start'] });
 			}			
 		}).catch(err => {throw err});
     }
@@ -180,7 +183,7 @@ export default function LayoutCreateCar() {
                             >
                                 <option aria-label="None" value="" />
                                 {
-                                    trips.map((value, key)=> {
+                                    trips.start.map((value, key)=> {
                                     return <option value={value.Trips_Start} key = {key}>{ value.Trips_Start }</option>
                                     })
                                 }
@@ -198,7 +201,7 @@ export default function LayoutCreateCar() {
                             >
                                 <option aria-label="None" value="" />
                                 {
-                                    trips.map((value, key)=> {
+                                    trips.end.map((value, key)=> {
                                     return <option value={value.Trips_Ends} key = {key}>{ value.Trips_Ends }</option>
                                     })
                                 }

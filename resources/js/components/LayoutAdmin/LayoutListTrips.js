@@ -49,12 +49,14 @@ export default function LayoutListTrips() {
     const classes                       = useStyles();
     const [idLogin, setIdLogin]         = useState('');
     const [isClickInfo, setIsClickInfo] = useState(false);
+    const [isClickShow, setIsClickShow] = useState(false);
     const [dataInfo, setDataInfo]       = useState({
         data : [],
         Car_Number : '',
         Passenger_Car_Name : '',
         Trips_Start : ''
     });
+    const [dataShow, setDataShow] = useState([]);
     const [preUpdate, setPreUpdate]     = useState();
     const [state, setState] = React.useState({
         columns: [
@@ -77,6 +79,19 @@ export default function LayoutListTrips() {
             { title: 'Time Start', field: 'Trips_Passenger_Car_Time_Start' },
             { title: 'Time End', field: 'Trips_Passenger_Car_Time_End' },
         ],
+        columnsShow: [
+            { title: 'Tên Khách Hàng', field: 'Car_Ticket_Name_User' },
+            { title: 'SĐT', field: 'Car_Ticket_Phone' },
+            { title: 'Ngày ĐVé', field: 'created_at' },
+            { title: 'Ngày Đi', field: 'Trips_Passenger_Car_Date' },
+            { title: 'Ghế', field: '' },
+            { title: 'Điểm Đi', field: 'Trips_Start' },
+            { title: 'Điểm Đến', field: 'Trips_Ends ' },
+            { title: 'Chú Thích', field: 'Car_Ticket_Note' },
+            { title: 'Giá Vé', field: 'Passenger_Car_fare' },
+            { title: 'Số Vé', field: '' },
+            { title: 'Tổng Tiền', field: '' },
+        ],
         data: []
     });
     const [values, setValues] = useState({
@@ -92,6 +107,7 @@ export default function LayoutListTrips() {
         timeEnd     : new Date()
 
     });
+
     /**
      * get list car by id
      */
@@ -204,6 +220,11 @@ export default function LayoutListTrips() {
             }
         })
     })
+    const onClickButtonShowTicket = ((event, data) => {
+        event.preventDefault();
+        setIsClickShow(true);
+        setIsClickInfo(false);
+    })
 
     const onClickRowTable = ((event, dataRow) => {
         event.preventDefault();
@@ -252,19 +273,34 @@ export default function LayoutListTrips() {
     return (
         <div className="container">
             <MaterialTable
-                title={ !isClickInfo ? "List Trips" : <div className="btn btn-primary" onClick = {(event)=>{event.preventDefault(); setIsClickInfo(false);} }> Back List Trips </div> }
-                columns={  !isClickInfo ? state.columns : state.columnsInfo }
-                data={ !isClickInfo ? state.data : dataInfo.data }
+                title={ 
+                    isClickShow 
+                    ?   <div className="d-flex flex-row align-items-center justify-content-between
+                    "  style={{width : '120%'}}>
+                            <div className="btn" style={{fontSize : '20px'}} onClick = {(event)=>{event.preventDefault(); setIsClickShow(false),setIsClickInfo(true);} }> <i className="fas fa-arrow-circle-left"></i></div> 
+                            <div><u>Biển số xe </u>: 012341234</div>
+                            <div style={{width : '50%'}}><u>Tổng tiền</u> : 1000,000 đ</div>
+                        </div> 
+                    :   !isClickInfo ? "List Trips" 
+                    : 
+                    <div className="d-flex flex-row align-items-center">
+                        <div className="btn" style={{fontSize : '20px'}} onClick = {(event)=>{event.preventDefault(); setIsClickInfo(false);} }> <i className="fas fa-arrow-circle-left"></i> </div> 
+                        <h5>List Trips With Passenger Car</h5>
+                    </div>
+                        
+                }
+                columns={ isClickShow ? state.columnsShow : !isClickInfo ? state.columns : state.columnsInfo  }
+                data={ isClickShow ? dataShow : !isClickInfo ? state.data : dataInfo.data }
                 onRowClick={(event, selectRow) => onClickRowTable(event, selectRow)}
                 actions={[
-                    rowData => ((1 == 1 && !isClickInfo) ? {
+                    rowData => ((1 == 1 && !isClickInfo && !isClickShow) ? {
                         icon: 'info',
                         tooltip: 'Info Trip',
                         onClick: (event, rowData) => {
                             onClickButtonInfo(event, rowData)
                         }
                     } : null),    
-                    rowData => ((1 == 1 && !isClickInfo) ? {
+                    rowData => ((1 == 1 && !isClickInfo && !isClickShow) ? {
                         icon: 'add',
                         tooltip: 'Add Trip',
                         onClick: (event, rowData) => {
@@ -276,6 +312,13 @@ export default function LayoutListTrips() {
                         tooltip: 'Update Trip',
                         onClick: (event, rowData) => {
                             onClickButtonUpdate(event, rowData);
+                        }
+                    } : null),
+                    rowData => ((isClickInfo) ? {
+                        icon: 'visibility',
+                        tooltip: 'Show Ticket',
+                        onClick: (event, rowData) => {
+                            onClickButtonShowTicket(event, rowData);
                         }
                     } : null)
                 ]}

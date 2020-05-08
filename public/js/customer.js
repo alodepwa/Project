@@ -55,6 +55,14 @@ $(document).ready(function(){
 	});
 
 	/*
+	 * TrungLV click button close  
+	 */
+	$(document).on('click', '.closeToggle', function(e){
+		e.preventDefault();
+		$('.col_btn_info, .col_btn_register, .col_input_info').removeClass('col_btn_info_show');
+	});
+
+	/*
 	* TrungLV  when click btn roll back register ticket step 2
 	*/
 	$(document).on('click','.btn-rollback', function(e){

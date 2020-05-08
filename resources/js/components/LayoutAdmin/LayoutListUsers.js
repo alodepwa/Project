@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LayoutListUsers() {
     const classes = useStyles();
+    const role_id_login = JSON.parse(sessionStorage.getItem('tokens')).Roles_Id;
     const [idLogin, setIdLogin] = useState('');
     const [preUpdate, setPreUpdate ] = useState();
     const [state, setState] = React.useState({
@@ -361,7 +362,12 @@ export default function LayoutListUsers() {
                                         >
                                             {
                                                 values.role.map((role, key) => {
-                                                    return <MenuItem value={role.Roles_Id} key={key} >{role.Role_Chuc_vu}</MenuItem>
+                                                    if(role_id_login == 2 && role.Roles_Id != 1 && role.Roles_Id != 2){
+                                                        return <MenuItem value={ role.Roles_Id } key = { key } >{ role.Role_Chuc_vu }</MenuItem>
+                                                    }
+                                                    if(role_id_login == 1 && role.Roles_Id == 2){
+                                                        return <MenuItem value={ role.Roles_Id } key = { key } >{ role.Role_Chuc_vu }</MenuItem>
+                                                    }
                                                 })
                                             }
                                         </Select>

@@ -316,7 +316,7 @@ class LayoutInfoTicket extends Component {
                                                     <div className="col-lg-12">
                                                         <div className="d-flex flex-column ">
                                                             <div className="d-flex">
-                                                                <strong>{value.Passenger_Car_Name}</strong>
+                                                                <strong className="formatOverText" title={value.Passenger_Car_Name}>{value.Passenger_Car_Name}</strong>
                                                                 {/* <span><i className="far fa-star" />4.0</span>
                                                                 <li  className="text-muted">32 đánh giá</li> */}
                                                             </div>
@@ -329,7 +329,7 @@ class LayoutInfoTicket extends Component {
                                                                 <p>
                                                                     <i className="far fa-dot-circle" />
                                                                     <strong>{value.Trips_Passenger_Car_Time_Start}</strong>
-                                                                    <span data-toggle="tooltip" data-placement="top" title="Nam Tran-Thanh Tinh">&nbsp;{value.Trips_Start}</span>
+                                                                    <span data-toggle="tooltip" data-placement="top" title="Nam Tran-Thanh Tinh">&nbsp;--- &nbsp;{value.Trips_Start}</span>
                                                                 </p>
                                                             </div>
                                                             <div>
@@ -339,7 +339,7 @@ class LayoutInfoTicket extends Component {
                                                                 <p>
                                                                     <i className="fas fa-map-marker-alt" />
                                                                     <strong>{value.Trips_Passenger_Car_Time_End}</strong>
-                                                                    <span data-toggle="tooltip" data-placement="top" title="Tran Nhan Tong Street, Ninh Phuc Ward"> &nbsp;{value.Trips_Ends}</span>
+                                                                    <span data-toggle="tooltip" data-placement="top" title="Tran Nhan Tong Street, Ninh Phuc Ward"> &nbsp;--- &nbsp;{value.Trips_Ends}</span>
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -350,7 +350,12 @@ class LayoutInfoTicket extends Component {
                                                 <div className="row">
                                                     <div className="col-lg-12">
                                                         <div className="d-flex justify-content-start">
-                                                            <h3><strong>{value.Passenger_Car_fare} &nbsp;đ</strong></h3>
+                                                            <p><u>Giá Vé </u>: <strong>{value.Passenger_Car_fare}&nbsp;đ</strong></p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-lg-12">
+                                                        <div className="d-flex justify-content-start">
+                                                            <p><u>Ngày Đi</u> : <strong>{value.Trips_Passenger_Car_Date}</strong></p>
                                                         </div>
                                                     </div>
                                                     <div className="col-lg-12">
@@ -380,7 +385,8 @@ class LayoutInfoTicket extends Component {
                                                     <a className="nav-link active" href="#" data-toggle="tab" data-target={`#imagesId${key}`}>Hình ảnh</a>
                                                     <a className="nav-link" href="#" data-toggle="tab" data-target={`#map${key}`}>Điểm đón trả</a>
                                                     <a className="nav-link" href="#" data-toggle="tab" data-target={`#danhgia${key}`} onClick={e => this.onClickComment(e, value.Post_Id)} >Đánh giá</a>
-                                                    <a className="nav-link" href="#" data-toggle="tab" data-target={`#info${key}`}>Thông tin khác</a>
+                                                    <a className="nav-link" href="#" data-toggle="tab" data-target={`#info${key}`}>Thông tin bài post</a>
+                                                    <div className="btn btn-danger text-center closeToggle"><i className="far fa-times-circle" ></i></div>
                                                 </nav>
                                                 <div className="tab-content mt-3">
                                                     <div className="container tab-pane active" id={`imagesId${key}`}>
@@ -434,63 +440,20 @@ class LayoutInfoTicket extends Component {
                                                             })
                                                         }
                                                     </div>
-                                                    {/* <div className="container tab-pane">
-                                                        <div className="row">
-                                                            <div className="col-lg-12">
-                                                                <div className="d-flex justify-content-start">
-                                                                    <p><span><i className="far fa-star" />4.0</span></p>
-                                                                    <div className="mx-3 color">
-                                                                        <span><i className="far fa-star" /></span>
-                                                                        <span><i className="far fa-star" /></span>
-                                                                        <span><i className="far fa-star" /></span>
-                                                                        <span><i className="far fa-star" /></span>
-                                                                        <span><i className="far fa-star" /></span>
-                                                                    </div>
-                                                                    <p /><li>32 đánh giá</li><p />
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-lg-12">
-                                                                <div className="row">
-                                                                    <div className="col-lg-4">
-                                                                        <div className="d-flex flex-column">
-                                                                            <div>
-                                                                                <p>chất lượng xe</p>
-                                                                            </div>
-                                                                            <div className="progress" style={{ height: '10px' }}>
-                                                                                <span className="progress-bar" style={{ width: '50%' }}>70%</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className="col-lg-4">
-                                                                        <div className="d-flex flex-column">
-                                                                            <div>
-                                                                                <p>Đúng giờ</p>
-                                                                            </div>
-                                                                            <div className="progress" style={{ height: '10px' }}>
-                                                                                <span className="progress-bar" style={{ width: '50%' }}>70%</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className="col-lg-4">
-                                                                        <div className="d-flex flex-column">
-                                                                            <div>
-                                                                                <p>Thái độ phục vụ</p>
-                                                                            </div>
-                                                                            <div className="progress" style={{ height: '10px' }}>
-                                                                                <span className="progress-bar" style={{ width: '50%' }}>70%</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-lg-12">
-                                                                
-                                                            </div>
-                                                        </div>
-                                                    </div> */}
+                                                   
                                                     <div className="container tab-pane" id={`info${key}`}>
-                                                        <p>Các mốc thời gian đón, trả bên dưới là thời gian dự kiến.
-                                                        Lịch này có thể thay đổi tùy tình hình thưc tế.</p>
+                                                        <div className="row">
+                                                            <p><strong>Tiêu đề : </strong> &nbsp;</p>
+                                                            <p>{ value.Post_Title}</p>
+                                                        </div>
+                                                        <div className="row">
+                                                            <p><strong>Nội dung : </strong> &nbsp;</p>
+                                                            <p>{ value.Post_Content}</p>
+                                                        </div>
+                                                        <div className="row">
+                                                            <p><strong>Chú ý : </strong> &nbsp;</p>
+                                                            <p>{ value.Post_note}</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

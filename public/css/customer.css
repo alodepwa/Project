@@ -141,6 +141,11 @@ table.dataTable thead .sorting_desc_disabled:before {
     bottom: .5em;
 }
 
+strong.formatOverText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 /* admin */
 body{
@@ -184,7 +189,9 @@ body{
     width: 24px !important;
     height: 24px !important;
 }
-
+.admin .MTableToolbar-title-47{
+  width: 50%;
+}
 
 .MuiButtonBase-root svg.MuiSvgIcon-root {
   font-size: 18px;

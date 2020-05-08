@@ -1,16 +1,16 @@
-import React                        from 'react';
-import Avatar                       from '@material-ui/core/Avatar';
+import React from 'react';
+import Avatar from '@material-ui/core/Avatar';
 // import { useDispatch, useSelector } from 'react-redux';
-import PrivateRoute                 from './../PrivateRoute';
-import LayoutLogin                  from './LayoutLogin';
-import LayoutCreateUsers            from './LayoutCreateUsers';
-import LayoutListUsers              from './LayoutListUsers';
-import LayoutCreateCar              from './LayoutCreateCar';
-import LayoutListCar                from './LayoutListCar';
-import LayoutListTrips              from './LayoutListTrips';
-import LayoutCreatePost             from './LayoutCreatePost';
-import LayoutListPost               from './LayoutListPost';
-import LayoutProfile                from './LayoutProfile';
+import PrivateRoute from './../PrivateRoute';
+import LayoutLogin from './LayoutLogin';
+import LayoutCreateUsers from './LayoutCreateUsers';
+import LayoutListUsers from './LayoutListUsers';
+import LayoutCreateCar from './LayoutCreateCar';
+import LayoutListCar from './LayoutListCar';
+import LayoutListTrips from './LayoutListTrips';
+import LayoutCreatePost from './LayoutCreatePost';
+import LayoutListPost from './LayoutListPost';
+import LayoutProfile from './LayoutProfile';
 import {
     BrowserRouter as Router,
     Switch,
@@ -21,7 +21,7 @@ import {
     useHistory,
     useLocation,
     Redirect,
-    
+
 } from "react-router-dom";
 
 export default function LayoutHomeAdmin() {
@@ -38,7 +38,7 @@ export default function LayoutHomeAdmin() {
                                 <li >
                                     <a href="#" className="row menu-toggle">
                                         <span className="iconAvatar col-1"><Avatar src="https://cdn4.iconfinder.com/data/icons/people-std-pack/512/boss-512.png" /></span>
-                                        <span className="col-7"><p>{ user_name_login }</p></span>
+                                        <span className="col-7"><p>{user_name_login}</p></span>
                                         <span className="col-2">
                                             <i className="fas icon-toggle fa-chevron-down hide-icon" />
                                             <i className="fas icon-toggle  fa-chevron-right" />
@@ -63,54 +63,76 @@ export default function LayoutHomeAdmin() {
                                 <li >
                                     <a href="#" className="row menu-toggle">
                                         <span className="col-1"><i className="fas fa-user"></i></span>
-                                        <span className="col-7"><p> Users</p></span>
+                                        <span className="col-7"><p> Customers</p></span>
                                         <span className="col-2">
                                             <i className="fas icon-toggle fa-chevron-down hide-icon" />
                                             <i className="fas icon-toggle  fa-chevron-right" />
                                         </span>
                                     </a>
                                     <ul className="menu-child">
-                                        <li className="mb-3">
-                                            <Link to="/admin/create-user"  style = { (user_role_login == 2 || user_role_login == 1) ? null : {pointerEvents : 'none'} } className="ml-5">Create Users</Link>
-                                        </li>
+                                        {
+                                            (user_role_login == 2 || user_role_login == 1) ? (
+                                                <li className="mb-3">
+                                                    <Link to="/admin/create-user" className="ml-5">Create Users</Link>
+                                                </li>
+                                            ) :
+                                                null
+                                        }
                                         <li className="mb-3">
                                             <Link to="/admin/list-users" className="ml-5">List Users</Link>
                                         </li>
                                     </ul>
                                 </li>
-                                <li >
-                                    <a href="#" className="row menu-toggle">
-                                        <span className="col-1"><i className="fas fa-user"></i></span>
-                                        <span className="col-7"><p> Car</p></span>
-                                        <span className="col-2">
-                                            <i className="fas icon-toggle fa-chevron-down hide-icon" />
-                                            <i className="fas icon-toggle  fa-chevron-right" />
-                                        </span>
-                                    </a>
-                                    <ul className="menu-child">
-                                        <li className="mb-3">
-                                            <Link to="/admin/create-car"  style = {user_role_login == 2 ?  null : {pointerEvents : 'none' } } className="ml-5">Create Car</Link>
+                                {
+                                    user_role_login == 1 ? null : (
+                                        <li >
+                                            <a href="#" className="row menu-toggle">
+                                                <span className="col-1"><i className="fas fa-user"></i></span>
+                                                <span className="col-7"><p> Car</p></span>
+                                                <span className="col-2">
+                                                    <i className="fas icon-toggle fa-chevron-down hide-icon" />
+                                                    <i className="fas icon-toggle  fa-chevron-right" />
+                                                </span>
+                                            </a>
+                                            <ul className="menu-child">
+                                                {
+                                                    user_role_login == 2 ? (
+                                                        <li className="mb-3">
+                                                            <Link to="/admin/create-car" className="ml-5">Create Car</Link>
+                                                        </li>
+                                                    ) : null
+                                                }
+                                                {
+                                                    user_role_login != 1 ? (
+                                                        <li className="mb-3">
+                                                            <Link to="/admin/list-cars" className="ml-5">List Car</Link>
+                                                        </li>
+                                                    ) : null
+                                                }
+
+                                            </ul>
                                         </li>
-                                        <li className="mb-3">
-                                            <Link to="/admin/list-cars" style = { user_role_login == 1 ? {pointerEvents : 'none' } : null }  className="ml-5">List Car</Link>
+                                    )
+                                }
+                                {
+                                    user_role_login == 1 ? null : (
+                                        <li >
+                                            <a href="#" className="row menu-toggle">
+                                                <span className="col-1"><i className="fas fa-user"></i></span>
+                                                <span className="col-7"><p> Trips</p></span>
+                                                <span className="col-2">
+                                                    <i className="fas icon-toggle fa-chevron-down hide-icon" />
+                                                    <i className="fas icon-toggle  fa-chevron-right" />
+                                                </span>
+                                            </a>
+                                            <ul className="menu-child">
+                                                <li className="mb-3">
+                                                    <Link to="/admin/list-trips" className="ml-5">List Trips</Link>
+                                                </li>
+                                            </ul>
                                         </li>
-                                    </ul>
-                                </li>
-                                <li >
-                                    <a href="#" className="row menu-toggle">
-                                        <span className="col-1"><i className="fas fa-user"></i></span>
-                                        <span className="col-7"><p> Trips</p></span>
-                                        <span className="col-2">
-                                            <i className="fas icon-toggle fa-chevron-down hide-icon" />
-                                            <i className="fas icon-toggle  fa-chevron-right" />
-                                        </span>
-                                    </a>
-                                    <ul className="menu-child">
-                                        <li className="mb-3">
-                                            <Link to="/admin/list-trips" style = { user_role_login == 1 ? {pointerEvents : 'none' } : null }  className="ml-5">List Trips</Link>
-                                        </li>
-                                    </ul>
-                                </li>
+                                    )
+                                }
                                 <li >
                                     <a href="#" className="row menu-toggle">
                                         <span className="col-1"><i className="fas fa-user"></i></span>
@@ -121,11 +143,15 @@ export default function LayoutHomeAdmin() {
                                         </span>
                                     </a>
                                     <ul className="menu-child">
+                                        {
+                                            user_role_login != 2 ? null : (
+                                                <li className="mb-3">
+                                                    <Link to="/admin/create-post" className="ml-5">Create Posts</Link>
+                                                </li>
+                                            )
+                                        }
                                         <li className="mb-3">
-                                            <Link to="/admin/create-post" style = { user_role_login == 1 ? {pointerEvents : 'none' } : null }  className="ml-5">Create Posts</Link>
-                                        </li>
-                                        <li className="mb-3">
-                                            <Link to="/admin/list-posts"   className="ml-5">List Posts</Link>
+                                            <Link to="/admin/list-posts" className="ml-5">List Posts</Link>
                                         </li>
                                     </ul>
                                 </li>

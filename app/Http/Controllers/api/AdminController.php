@@ -31,7 +31,12 @@ class AdminController extends Controller
             (int)$request->get('id'),
             $request->get('password')
         ];
-        $create_user = DB::select('exec createUser ?, ?, ?, ?, ?, ?, ?, ?', $data);
+        $check = $request->get('role_id_login') ? $request->get('role_id_login') : null;
+        if($check){
+            $create_user = DB::select('exec createUserByAdmin ?, ?, ?, ?, ?, ?, ?, ?', $data);
+        }else{
+            $create_user = DB::select('exec createUser ?, ?, ?, ?, ?, ?, ?, ?', $data);
+        }
         return response()->json($create_user);
     }
 

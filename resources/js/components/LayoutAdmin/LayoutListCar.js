@@ -46,7 +46,10 @@ const useStyles = makeStyles((theme) => ({
 export default function LayoutListUsers() {
     const classes                           = useStyles();
     const [idLogin, setIdLogin]             = useState('');
-    const [trips, setTrips ]                = useState([]);
+    const [trips, setTrips ]                = useState({
+        end     : [],
+        start : []
+    });
     const [categoryCar, setCategoryCar ]    = useState([]);
     const [preUpdate, setPreUpdate ] = useState();
     const [state, setState] = React.useState({
@@ -87,7 +90,7 @@ export default function LayoutListUsers() {
     const getTrips = async () => {
         await axios.get(`${common.HOST}home`).then( res => {
 			if(res.data){	
-				setTrips(res.data);
+				setTrips({ end : res.data['end'], start : res.data['start']});
 			}			
 		}).catch(err => {throw err});
     }
@@ -405,7 +408,7 @@ export default function LayoutListUsers() {
                                             >
                                                 <option aria-label="None" value="" />
                                                 {
-                                                    trips.map((value, key) => {
+                                                    trips.start.map((value, key) => {
                                                         return <option value={value.Trips_Start} key={key}>{value.Trips_Start}</option>
                                                     })
                                                 }
@@ -423,7 +426,7 @@ export default function LayoutListUsers() {
                                             >
                                                 <option aria-label="None" value="" />
                                                 {
-                                                    trips.map((value, key) => {
+                                                    trips.end.map((value, key) => {
                                                         return <option value={value.Trips_Ends} key={key}>{value.Trips_Ends}</option>
                                                     })
                                                 }
