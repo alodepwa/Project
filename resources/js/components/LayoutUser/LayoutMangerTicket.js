@@ -62,8 +62,8 @@ class LayoutMangerTicket extends React.Component {
                 { title: 'Ngày Đi', field: 'Trips_Passenger_Car_Date' },
                 { title: 'Giá Vé', field: 'Passenger_Car_fare' },
                 { title: 'Ghế', field: 'Seats_Position' },
-                { title: 'Điểm Đi', field: 'phCar_Ticket_Start_Pointone' },
-                { title: 'Điểm Đến', field: 'Trips_Start' },
+                { title: 'Điểm Đi', field: 'Trips_Start' },
+                { title: 'Điểm Đến', field: 'Trips_Ends ' },
                 { title: 'Chú Thích', field: 'Car_Ticket_Note' },
                 { title: 'Tên Xe', field: 'Passenger_Car_Name' },
                 { title: 'Biển Số', field: 'Car_Number' },
@@ -259,34 +259,10 @@ class LayoutMangerTicket extends React.Component {
 
     onClickButtonDelete(event, data){
         event.preventDefault();
+        console.log(data.phone);
         Swal.fire({
-            title: 'Are you Delete?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then(async (result) => {
-            if (result.value) {
-                let dataJustChange = {
-                    ...data,
-                    car_status : 1,
-                    deleted_by : name_admin,
-                    deleted_at : moment(new Date()).format('YYYY-MM-DD h:mm:ss')
-                };
-                let dataPre             = [...state.data];
-                dataPre[dataPre.indexOf(data)] = dataJustChange;
-
-                // await axios.post(`${common.HOST}admin/delete-car`, dataSendDelete)
-                //     .then(res => {
-                //         res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Delete fail!')
-                //             : (
-                //                 setState({ ...state, data: dataPre }),
-                //                 CommonAlert.showAlert('success', 'Create success!')
-                //             )
-                //     })
-                //     .catch(err => { throw err; })
-            }
+            title: `Chức năng này chưa được sử dụng. Vui lòng liên hệ ${data.phone} để được hủy vé!`,
+            icon: 'warning',
         })
     }
 
