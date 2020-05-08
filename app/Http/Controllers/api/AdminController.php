@@ -189,4 +189,18 @@ class AdminController extends Controller
         $get = DB::select('exec getMyProfile ?', [(int)$id]);
         return response()->json($get);
     }
+
+    function updateMyProfile(Request $request){
+        $data = [
+            $request->get('id'),
+            $request->get('name'),
+            $request->get('phone'),
+            $request->get('address'),
+            $request->get('dateOfBirth'),
+            $request->get('sex'),
+            $request->get('password'),
+        ];
+        $update = DB::select('exec updateMyProfile ?, ?, ?, ?, ?, ?, ?',$data);
+        return response()->json($update);
+    }
 }

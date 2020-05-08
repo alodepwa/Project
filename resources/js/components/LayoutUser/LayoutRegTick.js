@@ -4,7 +4,6 @@ import * as common from './../../common';
 import { connect } from 'react-redux';
 import LayoutInfoTicket from './LayoutInfo-ticket';
 import LayoutInfoTicketFilter from './LayoutInfo-ticket-filter';
-import { Link } from "react-router-dom";
 import { withRouter } from 'react-router';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
@@ -14,16 +13,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import DateFnsUtils from '@date-io/date-fns';
 import Pagination from '@material-ui/lab/Pagination';
-
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import axios from 'axios';
-function valuetext(value) {
-  return `10°C`;
-}
-
 class LayoutRegTick extends React.Component {
   constructor(props) {
     super(props);
@@ -36,7 +30,9 @@ class LayoutRegTick extends React.Component {
       postOnePage : [],
       postPage    : [],
       currentPage : 1,
-      page        : 0
+      page        : 0,
+      end         : [],
+      start       : []
     }
     this.searchPosts          = this.searchPosts.bind(this);
     this.onChangeInp          = this.onChangeInp.bind(this);
@@ -67,24 +63,26 @@ class LayoutRegTick extends React.Component {
   }
   searchPosts(e){
     e.preventDefault();
-    let { toLocation, fromLocation, dateSearch, trips } = this.state;
+    let { toLocation, fromLocation, dateSearch, end, start } = this.state;
     let nameFromLocation,nameToLocation;
     let data = {
         toLocation,
         fromLocation,
         dateSearch
     };
-    trips.forEach(element => {
-			if(element.Trips_ID == toLocation)
+    end.forEach(element => {
+			if(element.Trips_Ends == toLocation)
 				nameToLocation = element.Trips_Ends.replace(/ /g, '-')
-			if(element.Trips_ID == fromLocation)
+		});
+		start.forEach(element => {
+			if(element.Trips_Start == fromLocation)
 				nameFromLocation = element.Trips_Start.replace(/ /g, '-')
 		});
     this.props.history.push({
-      pathname 	: "/search",
-      search 		: `?from=${nameFromLocation}to=${nameToLocation}date=`,
-			hash 		: `#${dateSearch}#${fromLocation}#${toLocation}`
-    });
+			pathname 	: `/search`,
+			// search 		: `${dateSearch}?${nameFromLocation}?${nameToLocation}`
+			hash 		: `#${dateSearch}#${nameFromLocation}#${nameToLocation}`,
+		});
     axios.post(`${common.HOST}home/get-post`, data)
       .then( res => {
         if(res.data){
@@ -101,26 +99,25 @@ class LayoutRegTick extends React.Component {
       .catch( err => { throw err; } );
   }
 
-  componentDidMount(){
+  async componentDidMount(){
     let data=[];
     let hash = this.props.history.location.hash ? this.props.location.hash :  '';
     if(hash){
       let arr = hash.split("#")
       this.setState({
-        fromLocation  : arr[2],
-        toLocation    : arr[3],
+        fromLocation  : arr[2].replace(/-/g, ' '),
+        toLocation    : arr[3].replace(/-/g, ' '),
         dateSearch    : arr[1]
       });
       data = { 
-        toLocation    : arr[3],
-        fromLocation  : arr[2],
+        fromLocation  : arr[2].replace(/-/g, ' '),
+        toLocation    : arr[3].replace(/-/g, ' '),
         dateSearch    : arr[1]
       };
     }
     
-
     //get posts
-    axios.post(`${common.HOST}home/get-post`, data)
+    await axios.post(`${common.HOST}home/get-post`, data)
       .then( res => {
         if(res.data){
           let numberPage  = res.data.length / 10;
@@ -138,12 +135,13 @@ class LayoutRegTick extends React.Component {
       if(this.props.info_location.length == 0){
         axios.get('http://127.0.0.1:8000/api/home').then( res => {
           if(res.data){	
-            this.setState({ trips : res.data });
+            this.setState({ end : res.data['end'], start : res.data['start'] });
           }			
         }).catch(err => {throw err});
       }else{
         this.setState({
-          trips : this.props.info_location
+          end   : this.props.info_location['end'],
+          start : this.props.info_location['start']
         })
       }
   }
@@ -153,7 +151,7 @@ class LayoutRegTick extends React.Component {
       <div className="container">
         <div className="loading"> </div>
         <div className="row">
-          <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
             <div className="menu-search mt-4">
               <FormControl >
                 <InputLabel id="demo-simple-select-label"><i className="fas iconLocation fa-map-marker-alt"></i></InputLabel>
@@ -165,9 +163,9 @@ class LayoutRegTick extends React.Component {
                   onChange={e => this.onChangeInp(e)}
                 >
                   {
-                    this.state.trips.map((value, key) => {
+                    this.state.start.map((value, key) => {
                       return (
-                        <MenuItem key={key} value={value.Trips_ID}>{value.Trips_Start}</MenuItem>
+                        <MenuItem key={key} value={value.Trips_Start}>{value.Trips_Start}</MenuItem>
                       );
                     })
                   }
@@ -184,9 +182,9 @@ class LayoutRegTick extends React.Component {
 
                 >
                   {
-                    this.state.trips.map((value, key) => {
+                    this.state.end.map((value, key) => {
                       return (
-                        <MenuItem value={value.Trips_ID} key={key}>{value.Trips_Ends}</MenuItem>
+                        <MenuItem value={value.Trips_Ends} key={key}>{value.Trips_Ends}</MenuItem>
                       );
                     })
                   }
@@ -220,7 +218,7 @@ class LayoutRegTick extends React.Component {
             <div className="container mt-4">
               <div className="row">
                 {/* fileter */}
-                  <LayoutInfoTicketFilter trips = {this.state.trips} to = {this.state.toLocation} from = {this.state.fromLocation} />
+                  <LayoutInfoTicketFilter end = {this.state.end} start = { this.state.start } to = {this.state.toLocation} from = {this.state.fromLocation} />
                 <div className="col-lg-9 ">
                   
                   <div className="nav justify-content-between">

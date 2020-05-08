@@ -51,4 +51,5 @@ Route::group(['prefix' => 'admin'], function(){
     Route::DELETE('delete-post/{id}', 'api\AdminController@deletePost');
     Route::GET('approve-post/{id}', 'api\AdminController@approvePost');
     Route::GET('get-myprofile/{id}', 'api\AdminController@getMyProfile');
+    Route::POST('update-profile', 'api\AdminController@updateMyProfile');
 });

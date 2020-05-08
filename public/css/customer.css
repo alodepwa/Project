@@ -48,9 +48,11 @@
 	justify-content: space-between;
 
 }
-.body .center .content img{
-	width: 90%;
+.body .center .content img, .imageFilter{
+  width: 100%;
+  object-fit: cover;
 }
+
 .body .center .title, .body .bottom .title {
     width: 30%;
     margin: auto;
@@ -184,6 +186,12 @@ body{
 }
 
 
+.MuiButtonBase-root svg.MuiSvgIcon-root {
+  font-size: 18px;
+}
+.body .MuiButtonBase-root svg.MuiSvgIcon-root, .menu-search .MuiButtonBase-root svg.MuiSvgIcon-root {
+  font-size: 40px;
+}
 
 body {
     background: #F1F3FA;

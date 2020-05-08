@@ -57,8 +57,8 @@ class HomeController extends Controller
      */
     public function getPost(Request $request){
         $data = [
-            $request->get('toLocation'),
             $request->get('fromLocation'),
+            $request->get('toLocation'),
             $request->get('dateSearch'),
         ];
         $result = DB::select('exec getPost ?, ?, ?', $data);
@@ -82,8 +82,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $getLocation = DB::select('select * from Trips');
-        return response()->json($getLocation);
+        $start  = DB::select('select distinct Trips_Start from Trips');
+        $end    = DB::select('select distinct Trips_Ends from Trips');
+        return response()->json(['start' => $start, 'end' => $end]);
     }
     /**
      * Display a listing of the resource.
@@ -93,8 +94,8 @@ class HomeController extends Controller
     public function searchTicketUser(Request $request)
     {
         $data   = [
-            $request->get('name'),
             $request->get('phone'),
+            $request->get('name') ? $request->get('name')  : '' ,
         ];
         $search = DB::select('exec ticketsOffUser ?, ?', $data);
         return response()->json($search);

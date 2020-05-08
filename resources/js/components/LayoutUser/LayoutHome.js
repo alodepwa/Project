@@ -31,26 +31,29 @@ class LayoutHome extends React.Component {
         	dateSearch   : new Date(),
         	toLocation   : 10,
 			fromLocation : 10,
-			trips        : []
+			start        : [],
+			end			 : []
         };
         this.onChangeInp  		= this.onChangeInp.bind(this);
 		this.onChangeInpDate  	= this.onChangeInpDate.bind(this);
 		this.onClickSearch 		= this.onClickSearch.bind(this);
 	}
 	onClickSearch(e){
-		let { dateSearch, toLocation, fromLocation, trips } = this.state;
+		let { dateSearch, toLocation, fromLocation, end, start } = this.state;
 		let nameToLocation, nameFromLocation;
-		trips.forEach(element => {
-			if(element.Trips_ID == toLocation)
+		end.forEach(element => {
+			if(element.Trips_Ends == toLocation)
 				nameToLocation = element.Trips_Ends.replace(/ /g, '-')
-			if(element.Trips_ID == fromLocation)
+		});
+		start.forEach(element => {
+			if(element.Trips_Start == fromLocation)
 				nameFromLocation = element.Trips_Start.replace(/ /g, '-')
 		});
 		dateSearch = moment(dateSearch).format('YYYY-MM-DD');
 		this.props.history.push({
-			pathname 	: "/search",
-			search 		: `?from=${nameFromLocation}to=${nameToLocation}date=`,
-			hash 		: `#${dateSearch}#${fromLocation}#${toLocation}`,
+			pathname 	: `/search`,
+			// search 		: `${dateSearch}?${nameFromLocation}?${nameToLocation}`
+			hash 		: `#${dateSearch}#${nameFromLocation}#${nameToLocation}`,
 		});
 	}
 
@@ -70,7 +73,7 @@ class LayoutHome extends React.Component {
 	componentDidMount(){
 		axios.get('http://127.0.0.1:8000/api/home').then( res => {
 			if(res.data){	
-				this.setState({ trips : res.data });
+				this.setState({ start : res.data['start'] , end : res.data['end']});
 				this.props.info_location(res.data);
 			}			
 		}).catch(err => {throw err});
@@ -93,12 +96,14 @@ class LayoutHome extends React.Component {
 									        labelId		= "demo-simple-select-label"
 									        id 			= "demo-simple-select"
 									        value 		= {this.state.fromLocation}
-									        onChange 	= { e => this.onChangeInp(e) }
+											onChange 	= { e => this.onChangeInp(e) }
+											
 									    >
 										{
-											this.state.trips.map( (value, key) => { 
+											
+											this.state.start.map( (value, key) => { 
 												return (
-													<MenuItem key = {key} value={value.Trips_ID}>{value.Trips_Start}</MenuItem> 
+													<MenuItem key = {key} value={value.Trips_Start}>{value.Trips_Start}</MenuItem> 
 												); 
 											})
 										}
@@ -116,9 +121,9 @@ class LayoutHome extends React.Component {
 
 										>
 											{
-												this.state.trips.map( (value, key) => {
+												this.state.end.map( (value, key) => {
 													return (
-													<MenuItem value={value.Trips_ID} key ={key}>{value.Trips_Ends}</MenuItem>
+													<MenuItem value={value.Trips_Ends} key ={key}>{value.Trips_Ends}</MenuItem>
 													);
 												})
 											}
@@ -127,18 +132,18 @@ class LayoutHome extends React.Component {
 						            <MuiPickersUtilsProvider utils={DateFnsUtils}>
 										<KeyboardDatePicker
 											disableToolbar
-											variant		="inline"
-											format		="MM/dd/yyyy"
-											margin		="normal"
-											id			="date-picker-inline"
-											value		=  {this.state.dateSearch}
+											variant		= "inline"
+											format		= "MM/dd/yyyy"
+											margin		= "normal"
+											id			= "dateIcon"
+											value		= {this.state.dateSearch}
 											onChange    = {this.onChangeInpDate}
 											KeyboardButtonProps={{
 											'aria-label': 'change date',
 											}}
 										/>
 									</MuiPickersUtilsProvider>
-						            <Button className="btnSearch" onClick={ (e) => this.onClickSearch(e) } variant="contained" disabled = {((this.state.fromLocation === 10) || (this.state.toLocation === 10)) ? true : false} color="primary" endIcon={<Icon>send</Icon>}>
+						            <Button className="btnSearch" onClick={ (e) => this.onClickSearch(e) } variant="contained" disabled = {((this.state.fromLocation === 10 ) || (this.state.toLocation === 10)) ? true : false} color="primary" endIcon={<Icon>send</Icon>}>
 										Tìm Vé Xe
 									</Button>
 						        </div>
@@ -161,7 +166,7 @@ class LayoutHome extends React.Component {
 								          component="img"
 								          alt="Contemplative Reptile"
 								          height="140"
-								          image="https://images5.alphacoders.com/374/374077.jpg"
+								          image="https://static.vexere.com/production/banners/330/banner-trang-chu-ok.png"
 								          title="Contemplative Reptile"
 								        />
 								        <CardContent>
@@ -193,7 +198,7 @@ class LayoutHome extends React.Component {
 								          component="img"
 								          alt="Contemplative Reptile"
 								          height="140"
-								          image="https://images5.alphacoders.com/374/374077.jpg"
+								          image="https://static.vexere.com/blog/uploads/2020/03/gps1.jpg"
 								          title="Contemplative Reptile"
 								        />
 								        <CardContent>
@@ -225,7 +230,7 @@ class LayoutHome extends React.Component {
 								          component="img"
 								          alt="Contemplative Reptile"
 								          height="140"
-								          image="https://images5.alphacoders.com/374/374077.jpg"
+								          image="https://static.vexere.com/blog/uploads/2020/05/be1.png"
 								          title="Contemplative Reptile"
 								        />
 								        <CardContent>

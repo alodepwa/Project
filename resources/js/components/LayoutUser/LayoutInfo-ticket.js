@@ -4,11 +4,14 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import Rating from '@material-ui/lab/Rating';
 import Avatar from '@material-ui/core/Avatar';
-function format_money(data){
-    let format = data.replace(/,/g, '.');
-    return parseFloat(format);
-  }
-  
+import NumberFormat from 'react-number-format';
+function format_money(money, seat) {
+    let format = money.replace(/,/g, '');
+    let total = seat * format;
+    // let parse =  new Intl.NumberFormat.format(total);
+    return total;
+}
+
 class LayoutInfoTicket extends Component {
     constructor(props) {
         super(props);
@@ -172,10 +175,10 @@ class LayoutInfoTicket extends Component {
     }
 
     regiterPosition(floor, seat, statusSeat) {
+        let { step1 } = this.state;
         var ClickStep1 = (e, valueSeat) => {
             e.preventDefault();
             let a = e.target;
-            let { step1 } = this.state;
             let check = step1.indexOf(valueSeat);
             if (check == -1)
                 step1.push(valueSeat);
@@ -194,9 +197,16 @@ class LayoutInfoTicket extends Component {
                         <div key={i} className="iconBus iconChecked btn" ><i className="fas fa-bus" /></div>
                     );
                 else
-                    layout.push(
-                        <div title={` Ghế số ${i} `} data-id={i} key={i} className="iconBus iconEmpty btn" onClick={(e) => ClickStep1(e, i)}><i className="fas fa-bus" /></div>
-                    );
+                        if(step1.indexOf(i) === -1){
+                            layout.push(
+                                <div title={` Ghế số ${i} `} data-id={i} key={i} className="iconBus iconEmpty btn" onClick={(e) => ClickStep1(e, i)}><i className="fas fa-bus" /></div>
+                            );
+                        }else{
+                            layout.push(
+                                <div title={` Ghế số ${i} `} data-id={i} key={i} className="iconBus iconCheck btn" onClick={(e) => ClickStep1(e, i)}><i className="fas fa-bus" /></div>
+                            );
+                        }
+                   
             }
             return layout;
         }
@@ -218,7 +228,7 @@ class LayoutInfoTicket extends Component {
                 {
                     floor == 1 ? (
                         <div className="d-flex flex-column" >
-                            <p className="flex-fill text-center"><strong >Tầng 2</strong></p>
+                            <p className="flex-fill text-center"><strong >Tầng 1</strong></p>
                             <div className="g-icon-bus">
                                 <LayoutIconBus number={1} />
                             </div>
@@ -319,17 +329,17 @@ class LayoutInfoTicket extends Component {
                                                                 <p>
                                                                     <i className="far fa-dot-circle" />
                                                                     <strong>{value.Trips_Passenger_Car_Time_Start}</strong>
-                                                                    <span data-toggle="tooltip" data-placement="top" title="Nam Tran-Thanh Tinh">{value.Trips_Start}</span>
+                                                                    <span data-toggle="tooltip" data-placement="top" title="Nam Tran-Thanh Tinh">&nbsp;{value.Trips_Start}</span>
                                                                 </p>
                                                             </div>
                                                             <div>
-                                                                <p data-toggle="tooltip" data-placement="top" title="Strips time about"><small>9h15m</small></p>
+                                                                <p data-toggle="tooltip" data-placement="top" title="Strips time about"><small>-------------</small></p>
                                                             </div>
                                                             <div>
                                                                 <p>
                                                                     <i className="fas fa-map-marker-alt" />
                                                                     <strong>{value.Trips_Passenger_Car_Time_End}</strong>
-                                                                    <span data-toggle="tooltip" data-placement="top" title="Tran Nhan Tong Street, Ninh Phuc Ward">{value.Trips_Ends}</span>
+                                                                    <span data-toggle="tooltip" data-placement="top" title="Tran Nhan Tong Street, Ninh Phuc Ward"> &nbsp;{value.Trips_Ends}</span>
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -340,7 +350,7 @@ class LayoutInfoTicket extends Component {
                                                 <div className="row">
                                                     <div className="col-lg-12">
                                                         <div className="d-flex justify-content-start">
-                                                            <h3><strong>{value.Passenger_Car_fare}đ</strong></h3>
+                                                            <h3><strong>{value.Passenger_Car_fare} &nbsp;đ</strong></h3>
                                                         </div>
                                                     </div>
                                                     <div className="col-lg-12">
@@ -389,14 +399,14 @@ class LayoutInfoTicket extends Component {
                                                         {
                                                             this.state.comments.map((value, key) => {
                                                                 return (
-                                                                    <div key = { key } className="mt-3 border border-bottom-0 border-right-0 border-left-0">
+                                                                    <div key={key} className="mt-3 border border-bottom-0 border-right-0 border-left-0">
                                                                         <div className="row mt-3">
                                                                             <div className="col-lg-4">
                                                                                 <div className="d-flex flex-column text-center" style={{ alignItems: 'center' }}>
                                                                                     <div>
                                                                                         <Avatar src="" />
                                                                                     </div>
-                                                                                    <p className="mt-1">{ value.name_user }</p>
+                                                                                    <p className="mt-1">{value.name_user}</p>
                                                                                 </div>
                                                                             </div>
                                                                             <div className="col-lg-8">
@@ -405,11 +415,11 @@ class LayoutInfoTicket extends Component {
                                                                                         <div className="color">
                                                                                             <Rating
                                                                                                 name="comment_rate"
-                                                                                                value={ parseInt(value.Comment_Number_of_Stars) }
+                                                                                                value={parseInt(value.Comment_Number_of_Stars)}
                                                                                                 readOnly
                                                                                             />
                                                                                         </div>
-                                                                                        <p className="text-muted">{ value.created_at }</p>
+                                                                                        <p className="text-muted">{value.created_at}</p>
                                                                                     </div>
                                                                                     <div>
                                                                                         <p>
@@ -480,7 +490,7 @@ class LayoutInfoTicket extends Component {
                                                     </div> */}
                                                     <div className="container tab-pane" id={`info${key}`}>
                                                         <p>Các mốc thời gian đón, trả bên dưới là thời gian dự kiến.
-                                            Lịch này có thể thay đổi tùy tình hình thưc tế.</p>
+                                                        Lịch này có thể thay đổi tùy tình hình thưc tế.</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -506,7 +516,7 @@ class LayoutInfoTicket extends Component {
                                                                         <div className="row">
                                                                             <div className="col-lg-4">
                                                                                 <p><strong>Chú thích</strong></p>
-                                                                                <p><i className="fas fa-bus" style={{ color: 'gray' }} />&nbsp; Đang đặt </p>
+                                                                                <p><i className="fas fa-bus" style={{ color: 'rgba(244, 67, 54, 0.9)' }} />&nbsp; Đang đặt </p>
                                                                                 <p><i className="fas fa-bus " style={{ color: 'black' }} />&nbsp; Đã đặt</p>
                                                                                 <p><i className="fas fa-bus " style={{ color: 'blue' }} />&nbsp; Chưa đặt</p>
                                                                             </div>
@@ -532,8 +542,12 @@ class LayoutInfoTicket extends Component {
                                                                             </div>
                                                                             <div className="d-flex">
                                                                                 <p className="p-1 mr-2">Tổng cộng: <strong>
-                                                                                    {this.state.step1.length > 0 ? this.state.step1.length *
-                                                                                    format_money(value.Passenger_Car_fare) : 0}đ</strong></p>
+                                                                                    {this.state.step1.length > 0 ?
+                                                                                        <NumberFormat
+                                                                                            value={format_money(value.Passenger_Car_fare, this.state.step1.length)}
+                                                                                            displayType={'text'} thousandSeparator={true}
+                                                                                        />
+                                                                                        : 0 }&nbsp;đ</strong></p>
                                                                                 <button
                                                                                     disabled={this.state.step1.length > 0 ? false : true}
                                                                                     style={{ cursor: this.state.step1.length > 0 ? '' : 'no-drop' }} className="btn submit-step1 btn-primary" >Tiếp tục</button>
@@ -577,7 +591,12 @@ class LayoutInfoTicket extends Component {
                                                                             }
                                                                         </div>
                                                                         <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-center">
-                                                                            <strong>Giá</strong> : {this.state.step1.length > 0 ? this.state.step1.length * value.Passenger_Car_fare : 0} đ
+                                                                            <strong>Giá</strong> : {this.state.step1.length > 0 ?
+                                                                                <NumberFormat
+                                                                                    value={format_money(value.Passenger_Car_fare, this.state.step1.length)}
+                                                                                    displayType={'text'} thousandSeparator={true}
+                                                                                />
+                                                                                : 0 } &nbsp;đ
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -608,7 +627,7 @@ class LayoutInfoTicket extends Component {
                                                                                     </select>
                                                                                     <input type="number" step={0}
                                                                                         required
-                                                                                        className="form-control phone" onBlur={
+                                                                                        className="form-control phone" onChange={
                                                                                             (e) => this.onChangeInputPhone(e)
                                                                                         }
                                                                                     ></input>

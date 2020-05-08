@@ -58,7 +58,6 @@ export default function LayoutCreatePost() {
         await axios.get(`${common.HOST}admin/get-list-car-post/${parent_id}`)
             .then(res => { res.data ? setCar( res.data ) : null })
             .catch(err => { throw err; })
-
     });
 
     useEffect(() => {

@@ -4,94 +4,151 @@ import moment from 'moment';
 import * as common from './../../common';
 import Rating from '@material-ui/lab/Rating';
 import Swal from 'sweetalert2';
-import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
+import MaterialTable from 'material-table';
+import { withStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+const useStyles =(theme) => ({
+    root: {
+        height: 300,
+        flexGrow: 1,
+        minWidth: 500,
+        transform: 'translateZ(0)',
+        // The position fixed scoping doesn't work in IE 11.
+        // Disable this demo to preserve the others.
+        '@media all and (-ms-high-contrast: none)': {
+            display: 'none',
+        },
+    },
+    modal: {
+        display: 'flex',
+        padding: theme.spacing(1),
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    paper: {
+        width: 600,
+        backgroundColor: theme.palette.background.paper,
+        border: '1px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+    },
+});
 class LayoutMangerTicket extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name                : '',
-            phone               : '',
-            isChecked           : false,
-            dataSearch          : [],
-            errName             : '',
-            errPhone            : '',
-            date                : moment(new Date()).format('YYYY-MM-DD'),
-            comment_rate        : 1,
-            comment_content     : '',
-            comment_name        : '',
-            comment_phone       : '',
-            err_cm_name         : '',
-            err_cm_phone        : '',
-            err_cm_content      : '',
-            post_id             : ''
-
+            modal : false,
+            name: '',
+            phone: '',
+            isChecked: false,
+            dataSearch: [],
+            errName: '',
+            errPhone: '',
+            date: moment(new Date()).format('YYYY-MM-DD'),
+            comment_rate: 1,
+            comment_content: '',
+            comment_name: '',
+            comment_phone: '',
+            err_cm_name: '',
+            err_cm_phone: '',
+            err_cm_content: '',
+            post_id: '',
+            columns: [
+                { title: 'Tên Khách Hàng', field: 'Car_Ticket_Name_User' },
+                { title: 'SĐT', field: 'Car_Ticket_Phone' },
+                { title: 'Ngày ĐVé', field: 'created_at' },
+                { title: 'Ngày Đi', field: 'Trips_Passenger_Car_Date' },
+                { title: 'Giá Vé', field: 'Passenger_Car_fare' },
+                { title: 'Ghế', field: 'Seats_Position' },
+                { title: 'Điểm Đi', field: 'phCar_Ticket_Start_Pointone' },
+                { title: 'Điểm Đến', field: 'Trips_Start' },
+                { title: 'Chú Thích', field: 'Car_Ticket_Note' },
+                { title: 'Tên Xe', field: 'Passenger_Car_Name' },
+                { title: 'Biển Số', field: 'Car_Number' },
+                { title: 'Thời Gian Đi', field: 'Trips_Passenger_Car_Time_Start' },
+            ],
+            data: []
         }
-        this.onChangeInput          = this.onChangeInput.bind(this);
-        this.onChangeCheckBox       = this.onChangeCheckBox.bind(this);
-        this.onClickSearch          = this.onClickSearch.bind(this);
-        this.onClickComment         = this.onClickComment.bind(this);
-        this.onChangeRate           = this.onChangeRate.bind(this);
-        this.onClickSaveComment     = this.onClickSaveComment.bind(this);
-        this.onClickCloseModal      = this.onClickCloseModal.bind(this);
+        this.onChangeInput = this.onChangeInput.bind(this);
+        this.onChangeCheckBox = this.onChangeCheckBox.bind(this);
+        this.onClickSearch = this.onClickSearch.bind(this);
+        this.onClickComment = this.onClickComment.bind(this);
+        this.onChangeRate = this.onChangeRate.bind(this);
+        this.onClickSaveComment = this.onClickSaveComment.bind(this);
+        this.onClickCloseModal = this.onClickCloseModal.bind(this);
+        this.onClickExitModal  = this.onClickExitModal.bind(this);
+        this.onClickButtonDelete    = this.onClickButtonDelete.bind(this);
     }
-
-    onClickCloseModal(e){
+    onClickExitModal(e){
         e.preventDefault();
         this.setState({
-            comment_rate        : 1,
-            comment_content     : '',
-            comment_name        : '',
-            comment_phone       : '',
-            err_cm_name         : '',
-            err_cm_phone        : '',
-            err_cm_content      : '',
-            post_id             : ''
+            modal : false
+        })
+    }
+
+    onClickCloseModal(e) {
+        e.preventDefault();
+        this.setState({
+            comment_rate: 1,
+            comment_content: '',
+            comment_name: '',
+            comment_phone: '',
+            err_cm_name: '',
+            err_cm_phone: '',
+            err_cm_content: '',
+            post_id: ''
         });
     }
 
-    onClickSaveComment(e){
+    onClickSaveComment(e) {
         e.preventDefault();
         let { comment_name, comment_phone, comment_rate, comment_content, post_id } = this.state;
         let data = { comment_name, comment_content, comment_phone, comment_rate, post_id };
         axios.post(`${common.HOST}home/comment`, data)
-        .then( res => {
-            console.log(res.data)
-            res.data ? (Swal.fire({
-                icon: 'success',
-                text: `Bạn đã đánh giá thành công!`,
-                timer: 2000
-            })) : (Swal.fire({
-                icon: 'error',
-                text: `Bạn đã đánh giá không thành công thành công!`,
-                timer: 2000
-            }));
-            $()
-        })
-        .catch( err => { throw err; })
+            .then(res => {
+                this.setState({
+                    modal : false,
+                    comment_content: '',
+                    comment_name: '',
+                    comment_phone: '',
+                })
+                res.data == true ? (Swal.fire({
+                    icon: 'success',
+                    text: `Bạn đã đánh giá thành công!`,
+                    timer: 2000
+                })) : (Swal.fire({
+                    icon: 'error',
+                    text: `Bạn đã đánh giá không thành công thành công!`,
+                    timer: 2000
+                }));
+                $()
+            })
+            .catch(err => { throw err; })
     }
 
-    onChangeRate(event, value){
+    onChangeRate(event, value) {
         event.preventDefault();
         this.setState({
-            comment_rate : value
+            comment_rate: value
         })
     }
 
-    onChangeInput(e){
+    onChangeInput(e) {
         e.preventDefault();
-        let { value }           = e.target;
-        let parrtenNumber       = /^0[1-9][0-9]{7,9}$/;
-        let parrtenText         = /^[^!~`@#@\$%^&\*()\+_\-=\\|}{}\]\["';?\/><0-9]*$/;
-        let parrtenComment      = /^[^!~`@#@\$%^&\*()\+_\-=\\|}{}\]\["';?\/><]*$/;
-        switch(e.target.name){
-            case 'comment_name' : {
+        let { value } = e.target;
+        let parrtenNumber = /^0[1-9][0-9]{7,9}$/;
+        let parrtenText = /^[^!~`@#@\$%^&\*()\+_\-=\\|}{}\]\["';?\/><0-9]*$/;
+        let parrtenComment = /^[^!~`@#@\$%^&\*()\+_\-=\\|}{}\]\["';?\/><]*$/;
+        switch (e.target.name) {
+            case 'comment_name': {
                 let err_cm_name = 'Tên không chứa kí tự đặt biệt hoặc số!';
                 if (parrtenText.test(value)) {
                     this.setState({
                         [e.target.name]: value,
                         err_cm_name: ''
-    
+
                     });
                 } else {
                     this.setState({
@@ -102,7 +159,7 @@ class LayoutMangerTicket extends React.Component {
                 break;
                 break;
             }
-            case 'comment_phone' : {
+            case 'comment_phone': {
                 let err_cm_phone = 'SĐT không đúng định dạng!'
                 if (parrtenNumber.test(value)) {
                     this.setState({
@@ -118,13 +175,13 @@ class LayoutMangerTicket extends React.Component {
                 break;
                 break;
             }
-            case 'comment_content' : {
+            case 'comment_content': {
                 let err_cm_content = 'Nội dung đánh giá không chứa kí tự đặt biệt hoặc số!';
                 if (parrtenComment.test(value)) {
                     this.setState({
                         [e.target.name]: value,
                         err_cm_content: ''
-    
+
                     });
                 } else {
                     this.setState({
@@ -134,13 +191,13 @@ class LayoutMangerTicket extends React.Component {
                 }
                 break;
             }
-            case 'name' : {
+            case 'name': {
                 let errName = 'Tên không chứa kí tự đặt biệt hoặc số!';
                 if (parrtenText.test(value)) {
                     this.setState({
                         [e.target.name]: value,
                         errName: ''
-    
+
                     });
                 } else {
                     this.setState({
@@ -150,7 +207,7 @@ class LayoutMangerTicket extends React.Component {
                 }
                 break;
             }
-            case 'phone' : {
+            case 'phone': {
                 let errPhone = 'SĐT không đúng định dạng!'
                 if (parrtenNumber.test(value)) {
                     this.setState({
@@ -165,15 +222,16 @@ class LayoutMangerTicket extends React.Component {
                 }
                 break;
             }
-            
+
         }
     }
 
-    onClickComment(e, car_id) {
+    onClickComment(e, data) {
         e.preventDefault();
         this.setState({
-            post_id : car_id
-        })
+            post_id: data.Passenger_Car_Id,
+            modal : true
+        });
     }
 
     onChangeCheckBox(e) {
@@ -199,10 +257,44 @@ class LayoutMangerTicket extends React.Component {
             })
     }
 
+    onClickButtonDelete(event, data){
+        event.preventDefault();
+        Swal.fire({
+            title: 'Are you Delete?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then(async (result) => {
+            if (result.value) {
+                let dataJustChange = {
+                    ...data,
+                    car_status : 1,
+                    deleted_by : name_admin,
+                    deleted_at : moment(new Date()).format('YYYY-MM-DD h:mm:ss')
+                };
+                let dataPre             = [...state.data];
+                dataPre[dataPre.indexOf(data)] = dataJustChange;
+
+                // await axios.post(`${common.HOST}admin/delete-car`, dataSendDelete)
+                //     .then(res => {
+                //         res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Delete fail!')
+                //             : (
+                //                 setState({ ...state, data: dataPre }),
+                //                 CommonAlert.showAlert('success', 'Create success!')
+                //             )
+                //     })
+                //     .catch(err => { throw err; })
+            }
+        })
+    }
 
     render() {
+        const { classes } = this.props;
         return (
             <div>
+
                 <div className="">
                     <div className="row mt-4">
                         <div className="col-lg-3 col-md-12">
@@ -257,177 +349,134 @@ class LayoutMangerTicket extends React.Component {
                         </div>
                         <div className="col-lg-9 col-md-12">
                             <div className="card border-0">
+
                                 {this.state.dataSearch.length == 0 ? (<div className="alert alert-success" role="alert">
                                     <h6 className="alert-heading text-center">Vui lòng nhập thông tin và bấm kiểm tra vé</h6>
                                     <p className="mb-0" />
                                 </div>) :
                                     (
-                                        <div className="card-body">
-                                            <table id="dtHorizontalVerticalExample" className="table table-striped table-bordered table-responsive table-sm " cellSpacing={0} width="100%">
-                                                <thead>
-                                                    <tr id="thead-table" className="text-muted">
-                                                        <th >Mã vé</th>
-                                                        <th >Tên khách hàng</th>
-                                                        <th>Số điện thoại</th>
-                                                        <th>Ngày đặt vé</th>
-                                                        <th>Ngày đi</th>
-                                                        <th>Giá vé</th>
-                                                        <th>Ghế</th>
-                                                        <th>Điểm đi</th>
-                                                        <th>Điểm đến</th>
-                                                        <th>Chú thích</th>
-                                                        <th>Tên xe</th>
-                                                        <th>Biển số xe</th>
-                                                        <th>Thời gian đi</th>
-                                                        <th>Thời gian đến</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {
-                                                        this.state.dataSearch.map((value, key) => {
-                                                            return (<tr key={key} >
-                                                                <td>{value.Car_Ticket_Id}</td>
-                                                                <td>{value.Car_Ticket_Name_User}</td>
-                                                                <td>{value.Car_Ticket_Phone}</td>
-                                                                <td>{value.created_at}</td>
-                                                                <td>{value.Trips_Passenger_Car_Date}</td>
-                                                                <td>{value.Passenger_Car_fare}</td>
-                                                                <td>{value.Seats_Position}</td>
-                                                                <td>{value.Car_Ticket_Start_Point}</td>
-                                                                <td>{value.Car_Ticket_End_Point}</td>
-                                                                <td>{value.Car_Ticket_Note}</td>
-                                                                <td>{value.Passenger_Car_Name}</td>
-                                                                <td>{value.Passenger_Car_Id}</td>
-                                                                <td>{value.Trips_Passenger_Car_Time_End}</td>
-                                                                <td>{value.Trips_Passenger_Car_Time_Start}</td>
-                                                                <td>
-                                                                    {
-                                                                        (moment(value.Trips_Passenger_Car_Date).format('YYYY-MM-DD') < this.state.date) ? (
-                                                                            <Button
-                                                                            variant="contained"
-                                                                            color="primary"
-                                                                            endIcon={<Icon>send</Icon>}
-                                                                            type="button"
-                                                                                className="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-                                                                                onClick={(e) => this.onClickComment(e, value.Passenger_Car_Id)}
-                                                                          >
-                                                                            Đánh giá
-                                                                          </Button>
-                                                                            // <button
-                                                                            //     type="button"
-                                                                            //     className="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-                                                                            //     onClick={(e) => this.onClickComment(e, value.Passenger_Car_Id)}
-                                                                            // >
-                                                                            //     Đánh giá xe
-                                                                            // </button>
-                                                                        ) : ''
-                                                                    }
-
-                                                                </td>
-                                                            </tr>
-                                                            )
-                                                        })
+                                        <MaterialTable
+                                            title={"List Ticket"}
+                                            columns={this.state.columns}
+                                            data={this.state.dataSearch}
+                                            onRowClick={(event, selectRow) => onClickRowTable(event, selectRow)}
+                                            actions={[
+                                                rowData => ((moment(rowData.Trips_Passenger_Car_Date).format('YYYY-MM-DD') < this.state.date) ? {
+                                                    icon: 'comment',
+                                                    tooltip: 'Comment',
+                                                    onClick: (event, rowData) => {
+                                                        this.onClickComment(event, rowData)
                                                     }
-
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                } : null),
+                                                rowData => ((moment(rowData.Trips_Passenger_Car_Date).format('YYYY-MM-DD') > this.state.date) ? {
+                                                    icon: 'delete',
+                                                    tooltip: 'Delete Ticket',
+                                                    onClick: (event, rowData) => {
+                                                        this.onClickButtonDelete(event, rowData)
+                                                    }
+                                                } : null),
+                                            ]}
+                                        />
                                     )
                                 }
                                 <div className="card-footer">
                                     <h6 className="text-center">Thông tin danh sách vé <strong>{this.state.phone}</strong></h6>
                                 </div>
 
-                                <div>
-                                    <div>
-                                        <div className="modal fade" id="exampleModal" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div className="modal-dialog" role="document">
-                                                <div className="modal-content">
-                                                    <div className="modal-header">
-                                                        <h5 className="modal-title" id="exampleModalLabel">Đánh Giá Xe</h5>
-                                                        <button 
-                                                            type="button" 
-                                                            className="close" 
-                                                            data-dismiss="modal" 
-                                                            aria-label="Close"
-                                                            onClick = { e => this.onClickCloseModal(e)}
-                                                            >
-                                                            <span aria-hidden="true">×</span>
-                                                        </button>
-                                                    </div>
-                                                    <div className="modal-body">
-                                                        <form>
+                                <div className={classes.root}>
+                                    <Modal
+                                        aria-labelledby="transition-modal-title"
+                                        aria-describedby="transition-modal-description"
+                                        open={this.state.modal}
+                                        onClose={this.onClickExitModal}
+                                        closeAfterTransition
+                                        className={classes.modal}
+                                        BackdropComponent={Backdrop}
+                                        BackdropProps={{
+                                            timeout: 500,
+                                        }}
+                                    >
+                                        <Fade in={this.state.modal}>
+                                            <div className={classes.paper}>
+                                                <h4 id="transition-modal-title">Add Comment</h4>
+                                                <div className="row">
+                                                    <div className="col-12 ">
+                                                    <form>
                                                             <div className="form-group">
-                                                                <label >Tên <span style={{color:'red'}}>*</span> &nbsp;&nbsp;&nbsp; 
-                                                                <span style={{color:'red'}}>{this.state.err_cm_name}</span>
+                                                                <label >Tên <span style={{ color: 'red' }}>*</span> &nbsp;&nbsp;&nbsp;
+                                                                <span style={{ color: 'red' }}>{this.state.err_cm_name}</span>
                                                                 </label>
-                                                                <input 
-                                                                    type="text" 
-                                                                    name="comment_name" 
-                                                                    className="form-control" aria-describedby="emailHelp" 
-                                                                    placeholder="Tên của bạn..." 
-                                                                    onBlur = { (e) => this.onChangeInput(e) }
+                                                                <input
+                                                                    type="text"
+                                                                    name="comment_name"
+                                                                    className="form-control" aria-describedby="emailHelp"
+                                                                    placeholder="Tên của bạn..."
+                                                                    onBlur={(e) => this.onChangeInput(e)}
                                                                 />
                                                             </div>
                                                             <div className="form-group">
-                                                                <label >Số điện thoại <span style={{color:'red'}}>*</span> 
-                                                                <span style={{color:'red'}}>{this.state.err_cm_phone}</span>
+                                                                <label >Số điện thoại <span style={{ color: 'red' }}>*</span>
+                                                                    <span style={{ color: 'red' }}>{this.state.err_cm_phone}</span>
                                                                 </label>
-                                                                <input 
-                                                                    type="number" 
-                                                                    name="comment_phone"  
-                                                                    className="form-control" 
-                                                                    placeholder="Số điện thoại của bạn..." 
-                                                                    onBlur = { (e) => this.onChangeInput(e) }
+                                                                <input
+                                                                    type="number"
+                                                                    name="comment_phone"
+                                                                    className="form-control"
+                                                                    placeholder="Số điện thoại của bạn..."
+                                                                    onChange={(e) => this.onChangeInput(e)}
                                                                 />
                                                             </div>
                                                             <div className="form-group">
-                                                                <label >Độ hài lòng <span style={{color:'red'}}>*</span> </label>
+                                                                <label >Độ hài lòng <span style={{ color: 'red' }}>*</span> </label>
                                                                 <div className="rate">
                                                                     <Rating
-                                                                        name="comment_rate" 
-                                                                        value={ this.state.comment_rate }
-                                                                        onChange = { this.onChangeRate }
+                                                                        name="comment_rate"
+                                                                        value={this.state.comment_rate}
+                                                                        onChange={this.onChangeRate}
                                                                     />
                                                                 </div>
                                                             </div>
                                                             <div className="form-group">
-                                                                <label >Đánh giá <span style={{color:'red'}}>*</span> 
-                                                                <span style={{color:'red'}}>{this.state.err_cm_content}</span>
+                                                                <label >Đánh giá <span style={{ color: 'red' }}>*</span>
+                                                                    <span style={{ color: 'red' }}>{this.state.err_cm_content}</span>
                                                                 </label>
-                                                                <textarea 
-                                                                    type="text" 
-                                                                    name="comment_content" 
-                                                                    className="form-control" 
-                                                                    placeholder="Đánh giá của bạn..." 
-                                                                    onBlur = { (e) => this.onChangeInput(e) }
+                                                                <textarea
+                                                                    type="text"
+                                                                    name="comment_content"
+                                                                    className="form-control"
+                                                                    placeholder="Đánh giá của bạn..."
+                                                                    onBlur={(e) => this.onChangeInput(e)}
                                                                 />
                                                             </div>
                                                         </form>
-                                                    </div>
-                                                    <div className="modal-footer">
-                                                        <button 
-                                                            type="button" 
+                                                        <div className="modal-footer">
+                                                        <button
+                                                            type="button"
                                                             className="btn btn-primary"
-                                                            disabled = { 
+                                                            disabled={
                                                                 !this.state.err_cm_content && !this.state.err_cm_phone
-                                                                && !this.state.err_cm_name && this.state.comment_name
-                                                                && this.state.comment_content && this.state.comment_rate
-                                                                && this.state.comment_phone ? false : true 
+                                                                    && !this.state.err_cm_name && this.state.comment_name
+                                                                    && this.state.comment_content && this.state.comment_rate
+                                                                    && this.state.comment_phone ? false : true
                                                             }
-                                                            onClick = { (e) => this.onClickSaveComment(e) }
+                                                            onClick={(e) => this.onClickSaveComment(e)}
                                                         >
-                                                        Lưu đánhh giá
+                                                            Lưu đánhh giá
                                                         </button>
+                                                        <button
+                                                            type="button"
+                                                            className="btn btn-danger"
+                                                            onClick={(e) => this.onClickExitModal(e)}
+                                                        >
+                                                            Exit
+                                                        </button>
+                                                    </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-
+                                        </Fade>
+                                    </Modal>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -436,4 +485,4 @@ class LayoutMangerTicket extends React.Component {
         )
     }
 }
-export default LayoutMangerTicket;
+export default withStyles(useStyles)(LayoutMangerTicket);
