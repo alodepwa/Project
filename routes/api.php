@@ -52,4 +52,5 @@ Route::group(['prefix' => 'admin'], function(){
     Route::GET('approve-post/{id}', 'api\AdminController@approvePost');
     Route::GET('get-myprofile/{id}', 'api\AdminController@getMyProfile');
     Route::POST('update-profile', 'api\AdminController@updateMyProfile');
+    Route::GET('get-ticket-by-car/{id}','api\AdminController@getTicketByCar');
 });

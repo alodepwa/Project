@@ -72,23 +72,12 @@ $(document).ready(function(){
 		parent.find('.col_btn_register').toggleClass('col_btn_info_show');
 	});
 
-	//scroll horizontal fix 3 column
-	// $('#dtHorizontalVerticalExample').scroll(function(){
-	// 	// $('#dtHorizontalVerticalExample thead').each( (index, el) => {
-	// 	// 	var p = el.offsetLeft();
-	// 	// 	console.log(el);
-	// 	// });
-	// 	$('#dtHorizontalVerticalExample .alo').css({'position':'sticky', 'left': `${po_left} px`});
-	// 	// $('#dtHorizontalVerticalExample th:lt(3)').scrollLeft(10);
-	// });
-	$('.menu-child').hide();
+	//show tag child home admin when click tag menu
 	$(document).ready(function(){
-		$('.menu-child').hide();
 		$(document).on('click', '.menu-toggle', function(e){
 			e.preventDefault();
 			$(this).find('.icon-toggle').toggleClass('hide-icon');
-			$(this).siblings('.menu-child').toggle();
+			$(this).siblings('.menu-child-toggle').toggle();
 		})
 	});
-	
 })

@@ -250,13 +250,13 @@ export default function LayoutListUsers() {
             let errPhone = 'Phone isn\'t correctly!'
             parrtenPhone.test(value) ? setValues({ ...values, [event.target.name]: value, errPhone: '' }) : setValues({ ...values, errPhone, err: '' });
         }
-        if (event.target.name == "name") {
+        else if (event.target.name == "name") {
             let parrtenText = /^[^!~`@#@\$%^&\*()\+_\-=\\|}{}\]\["';?\/><]*$/;
             let errName = 'Name isn\'t correctly format!';
             parrtenText.test(value) ? setValues({ ...values, [event.target.name]: value, errName: '' }) : setValues({ ...values, errName, err: '' });
 
         }
-        if (event.target.name == "carnumber") {
+        else if (event.target.name == "carnumber") {
             let parrtenText = /^[0-9]{1,2}[A-Z][0-9][-][0-9]{3,5}$/
             let errCarNumber = 'Car number isn\'t correct format!';
             parrtenText.test(value) ? setValues({ ...values, [event.target.name]: value, errCarNumber: '' }) : setValues({ ...values, errCarNumber, err : '' });

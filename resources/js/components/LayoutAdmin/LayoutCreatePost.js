@@ -66,8 +66,8 @@ export default function LayoutCreatePost() {
 
     return (
         <div className="container">
-            <div className="row">
-                <div className="col-5">
+            <div className="row justify-content-center">
+                <div className="col-xs-12 col-sm-10 col-md-9 col-lg-5 text-center">
                     <div className="form-group d-flex flex-column">
                         <TextField
                             // error       = { values.errName ? true : false }

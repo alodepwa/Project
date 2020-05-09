@@ -32,7 +32,7 @@ export default function LayoutHomeAdmin() {
         <HashRouter>
             <div className="admin">
                 <div className="row">
-                    <div className="col-xs-2 col-sm-2 col-md-2 col-lg-2 admin-left">
+                    <div className="col-xs-12 col-sm-3 col-md-3 col-lg-2 admin-left">
                         <div>
                             <ul className="block-menu">
                                 <li >
@@ -44,7 +44,7 @@ export default function LayoutHomeAdmin() {
                                             <i className="fas icon-toggle  fa-chevron-right" />
                                         </span>
                                     </a>
-                                    <ul className="menu-child">
+                                    <ul className="menu-child menu-child-toggle">
                                         {/* <li className="mb-3">
                                             <Link to="/admin/logout" className="ml-5">Logout</Link>
                                         </li> */}
@@ -69,7 +69,7 @@ export default function LayoutHomeAdmin() {
                                             <i className="fas icon-toggle  fa-chevron-right" />
                                         </span>
                                     </a>
-                                    <ul className="menu-child">
+                                    <ul className="menu-child menu-child-toggle">
                                         {
                                             (user_role_login == 2 || user_role_login == 1) ? (
                                                 <li className="mb-3">
@@ -87,14 +87,14 @@ export default function LayoutHomeAdmin() {
                                     user_role_login == 1 ? null : (
                                         <li >
                                             <a href="#" className="row menu-toggle">
-                                                <span className="col-1"><i className="fas fa-user"></i></span>
+                                                <span className="col-1"><i className="fas fa-car"></i></span>
                                                 <span className="col-7"><p> Car</p></span>
                                                 <span className="col-2">
                                                     <i className="fas icon-toggle fa-chevron-down hide-icon" />
                                                     <i className="fas icon-toggle  fa-chevron-right" />
                                                 </span>
                                             </a>
-                                            <ul className="menu-child">
+                                            <ul className="menu-child menu-child-toggle">
                                                 {
                                                     user_role_login == 2 ? (
                                                         <li className="mb-3">
@@ -118,14 +118,14 @@ export default function LayoutHomeAdmin() {
                                     user_role_login == 1 ? null : (
                                         <li >
                                             <a href="#" className="row menu-toggle">
-                                                <span className="col-1"><i className="fas fa-user"></i></span>
+                                                <span className="col-1"><i class="fas fa-map-marker-alt"></i></span>
                                                 <span className="col-7"><p> Trips</p></span>
                                                 <span className="col-2">
                                                     <i className="fas icon-toggle fa-chevron-down hide-icon" />
                                                     <i className="fas icon-toggle  fa-chevron-right" />
                                                 </span>
                                             </a>
-                                            <ul className="menu-child">
+                                            <ul className="menu-child menu-child-toggle">
                                                 <li className="mb-3">
                                                     <Link to="/admin/list-trips" className="ml-5">List Trips</Link>
                                                 </li>
@@ -135,14 +135,14 @@ export default function LayoutHomeAdmin() {
                                 }
                                 <li >
                                     <a href="#" className="row menu-toggle">
-                                        <span className="col-1"><i className="fas fa-user"></i></span>
+                                        <span className="col-1"><i class="fas fa-mail-bulk"></i></span>
                                         <span className="col-7"><p> Posts</p></span>
                                         <span className="col-2">
                                             <i className="fas icon-toggle fa-chevron-down hide-icon" />
                                             <i className="fas icon-toggle  fa-chevron-right" />
                                         </span>
                                     </a>
-                                    <ul className="menu-child">
+                                    <ul className="menu-child menu-child-toggle">
                                         {
                                             user_role_login != 2 ? null : (
                                                 <li className="mb-3">
@@ -158,7 +158,7 @@ export default function LayoutHomeAdmin() {
                             </ul>
                         </div>
                     </div>
-                    <div className="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                    <div className="col-xs-12 col-sm-9 col-md-9 col-lg-10">
                         <div className="admin-right">
                             <Switch>
                                 <Route path="/admin/logout">

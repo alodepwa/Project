@@ -84,13 +84,11 @@ export default function LayoutListTrips() {
             { title: 'SĐT', field: 'Car_Ticket_Phone' },
             { title: 'Ngày ĐVé', field: 'created_at' },
             { title: 'Ngày Đi', field: 'Trips_Passenger_Car_Date' },
-            { title: 'Ghế', field: '' },
-            { title: 'Điểm Đi', field: 'Trips_Start' },
-            { title: 'Điểm Đến', field: 'Trips_Ends ' },
-            { title: 'Chú Thích', field: 'Car_Ticket_Note' },
+            { title: 'Ghế', field: 'Seats_Position' },
             { title: 'Giá Vé', field: 'Passenger_Car_fare' },
-            { title: 'Số Vé', field: '' },
-            { title: 'Tổng Tiền', field: '' },
+            { title: 'Điểm Đi', field: 'Car_Ticket_Start_Point' },
+            { title: 'Điểm Đến', field: 'Car_Ticket_End_Point ' },
+            { title: 'Chú Thích', field: 'Car_Ticket_Note' },
         ],
         data: []
     });
@@ -220,10 +218,14 @@ export default function LayoutListTrips() {
             }
         })
     })
-    const onClickButtonShowTicket = ((event, data) => {
+    const onClickButtonShowTicket = (async (event, data) => {
         event.preventDefault();
-        setIsClickShow(true);
-        setIsClickInfo(false);
+        setIsClickShow(true),
+        setIsClickInfo(false)
+        await axios.get(`${common.HOST}admin/get-ticket-by-car/${data.Trips_Passenger_Car_Id}`)
+        .then(res => { res.data ?(setDataShow( res.data ))  : null })
+        
+        .catch(err => { throw err; })
     })
 
     const onClickRowTable = ((event, dataRow) => {

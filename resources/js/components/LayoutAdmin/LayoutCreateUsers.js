@@ -38,19 +38,19 @@ export default function LayoutCreateUsers() {
     const onChangeInput = (event) => {
         event.preventDefault();
         let { value } = event.target;
-        if (event.target.name == "phone") {
+        if (event.target.name === "phone") {
             let parrtenPhone = /^[0][1-9][0-9]{7,9}$/;
             let errPhone = 'Phone isn\'t correctly!'
             parrtenPhone.test(value) ? setValues({ ...values, [event.target.name]: value, errPhone: '' }) : setValues({ ...values, errPhone, err: '' });
         }
-        if (event.target.name == "name") {
-            let parrtenText = /^[^!~`@#@\$%^&\*()\+_\-=\\|}{}\]\["';?\/><]*$/;
+        if (event.target.name === "name") {
+            let parrtenText = /^[^!~`@#@\$%^&\*()\+_\-=\\|}{}\]\["';?\/><0-9]*$/;
             let errName = 'Name isn\'t correctly format!';
             parrtenText.test(value) ? setValues({ ...values, [event.target.name]: value, errName: '' }) : setValues({ ...values, errName, err: '' });
 
         }
-        if (event.target.name == "address") {
-            let parrtenText = /^[^!~`@#@\$%^&\*()\+_\-=\\|}{}\]\["';?\/><0-9]*$/;
+        if (event.target.name === "address") {
+            let parrtenText = /^[^!~`@#@\$%^&\*()\+_\-=\\|}{}\]\["';?\/><]*$/;
             let errAddress = 'Address isn\'t correct format!';
             parrtenText.test(value) ? setValues({ ...values, [event.target.name]: value, errAddress: '' }) : setValues({ ...values, errAddress, err: '' });
         }
@@ -108,8 +108,8 @@ export default function LayoutCreateUsers() {
 
     return (
         <div className="container">
-            <div className="row">
-                <div className="col-5">
+            <div className="row justify-content-center">
+                <div className="col-xs-12 col-sm-10 col-md-9 col-lg-5 text-center">
                     <div className="form-group d-flex flex-column">
                         <TextField
                             error={values.errName ? true : false}
@@ -117,6 +117,9 @@ export default function LayoutCreateUsers() {
                             name="name"
                             label={values.errName ? "Name  incorrect format! " : 'Name'}
                             onChange = {onChangeInput}
+                            inputProps={{
+                                // maxLength: 2,
+                            }}
                         />
                     </div>
                     <div className="form-group d-flex flex-column">

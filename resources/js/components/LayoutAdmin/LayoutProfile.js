@@ -101,8 +101,8 @@ export default function LayoutProfile() {
     }, [])
 
     return (
-        <div className="row profile">
-            <div className="col-md-6">
+        <div className="row profile justify-content-center">
+            <div className="col-xs-12 col-sm-10 col-md-9 col-lg-5 text-center">
                 <div className="profile-sidebar">
                     {/* SIDEBAR USERPIC */}
                     <div className="profile-userpic">

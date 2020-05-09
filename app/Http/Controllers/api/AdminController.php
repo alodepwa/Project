@@ -208,4 +208,8 @@ class AdminController extends Controller
         $update = DB::select('exec updateMyProfile ?, ?, ?, ?, ?, ?, ?',$data);
         return response()->json($update);
     }
+    function getTicketByCar($id){
+        $get = DB::select('exec getListTicketOfCar ?', [(int)$id]);
+        return response()->json($get);
+    }
 }

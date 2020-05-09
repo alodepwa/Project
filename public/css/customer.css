@@ -176,6 +176,10 @@ body{
  .hide-icon, .hide{
     visibility: hidden;
  }
+ .menu-child-toggle{
+   display: none;
+ }
+ 
  .icon-toggle{
     position: absolute;
     font-size: 12px !important;
@@ -192,9 +196,14 @@ body{
 .admin .MTableToolbar-title-47{
   width: 50%;
 }
-
+.admin-right .MuiFormControl-root{
+  width: 100%;
+}
 .MuiButtonBase-root svg.MuiSvgIcon-root {
   font-size: 18px;
+}
+.MuiButton-contained.Mui-disabled,button.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary{
+  width: 100%;
 }
 .body .MuiButtonBase-root svg.MuiSvgIcon-root, .menu-search .MuiButtonBase-root svg.MuiSvgIcon-root {
   font-size: 40px;
