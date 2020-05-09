@@ -52,7 +52,7 @@ class LayoutInfoTicketFilter extends Component {
     }
     render() {
         return (
-            <div className="col-lg-3">
+            <div >
                 <div className="d-flex justify-content-between">
                     <p className="nav-link"><strong>Bộ lọc tìm kiếm</strong></p>
                     <a className="nav-link" href="#"><small>Xóa lọc</small></a>

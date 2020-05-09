@@ -308,10 +308,10 @@ class LayoutInfoTicket extends Component {
                                 <div className="card hover-content">
                                     <div className="card-body">
                                         <div className="row">
-                                            <div className="col-lg-3 col-12">
+                                            <div className="col-xs-12 col-sm-12 col-md-4 col-lg-3">
                                                 <img className="image" src="images/xe_khach_1_1.jpg" alt={value.Name_Image} height="170px" width="100%" />
                                             </div>
-                                            <div className="col-lg-5 col-12">
+                                            <div className="col-xs-12 col-sm-6 col-md-4 col-lg-5">
                                                 <div className="row">
                                                     <div className="col-lg-12">
                                                         <div className="d-flex flex-column ">
@@ -328,7 +328,7 @@ class LayoutInfoTicket extends Component {
                                                             <div>
                                                                 <p>
                                                                     <i className="far fa-dot-circle" />
-                                                                    <strong>{value.Trips_Passenger_Car_Time_Start}</strong>
+                                                                    <strong>&nbsp;{value.Trips_Passenger_Car_Time_Start}</strong>
                                                                     <span data-toggle="tooltip" data-placement="top" title="Nam Tran-Thanh Tinh">&nbsp;--- &nbsp;{value.Trips_Start}</span>
                                                                 </p>
                                                             </div>
@@ -338,7 +338,7 @@ class LayoutInfoTicket extends Component {
                                                             <div>
                                                                 <p>
                                                                     <i className="fas fa-map-marker-alt" />
-                                                                    <strong>{value.Trips_Passenger_Car_Time_End}</strong>
+                                                                    <strong>&nbsp;{value.Trips_Passenger_Car_Time_End}</strong>
                                                                     <span data-toggle="tooltip" data-placement="top" title="Tran Nhan Tong Street, Ninh Phuc Ward"> &nbsp;--- &nbsp;{value.Trips_Ends}</span>
                                                                 </p>
                                                             </div>
@@ -346,8 +346,8 @@ class LayoutInfoTicket extends Component {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="col-lg-4 col-12">
-                                                <div className="row">
+                                            <div className="col-xs-12 col-sm-6 col-md-4 col-lg-4 ">
+                                                <div className="row d-flex" style={{height : '100%'}}>
                                                     <div className="col-lg-12">
                                                         <div className="d-flex justify-content-start">
                                                             <p><u>Giá Vé </u>: <strong>{value.Passenger_Car_fare}&nbsp;đ</strong></p>
@@ -386,7 +386,7 @@ class LayoutInfoTicket extends Component {
                                                     <a className="nav-link" href="#" data-toggle="tab" data-target={`#map${key}`}>Điểm đón trả</a>
                                                     <a className="nav-link" href="#" data-toggle="tab" data-target={`#danhgia${key}`} onClick={e => this.onClickComment(e, value.Post_Id)} >Đánh giá</a>
                                                     <a className="nav-link" href="#" data-toggle="tab" data-target={`#info${key}`}>Thông tin bài post</a>
-                                                    <div className="btn btn-danger text-center closeToggle"><i className="far fa-times-circle" ></i></div>
+                                                    <div className="btn btn-danger text-center closeToggle"><i className="far fa-times-circle" style={{paddingTop:'6px'}} ></i></div>
                                                 </nav>
                                                 <div className="tab-content mt-3">
                                                     <div className="container tab-pane active" id={`imagesId${key}`}>

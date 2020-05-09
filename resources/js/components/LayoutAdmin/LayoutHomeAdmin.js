@@ -118,7 +118,7 @@ export default function LayoutHomeAdmin() {
                                     user_role_login == 1 ? null : (
                                         <li >
                                             <a href="#" className="row menu-toggle">
-                                                <span className="col-1"><i class="fas fa-map-marker-alt"></i></span>
+                                                <span className="col-1"><i className="fas fa-map-marker-alt"></i></span>
                                                 <span className="col-7"><p> Trips</p></span>
                                                 <span className="col-2">
                                                     <i className="fas icon-toggle fa-chevron-down hide-icon" />
@@ -135,7 +135,7 @@ export default function LayoutHomeAdmin() {
                                 }
                                 <li >
                                     <a href="#" className="row menu-toggle">
-                                        <span className="col-1"><i class="fas fa-mail-bulk"></i></span>
+                                        <span className="col-1"><i className="fas fa-mail-bulk"></i></span>
                                         <span className="col-7"><p> Posts</p></span>
                                         <span className="col-2">
                                             <i className="fas icon-toggle fa-chevron-down hide-icon" />

@@ -201,9 +201,9 @@ class AdminController extends Controller
             $request->get('name'),
             $request->get('phone'),
             $request->get('address'),
-            $request->get('dateOfBirth'),
+            $request->get('dateOffBirth'),
             $request->get('sex'),
-            $request->get('password'),
+            $request->get('password')
         ];
         $update = DB::select('exec updateMyProfile ?, ?, ?, ?, ?, ?, ?',$data);
         return response()->json($update);

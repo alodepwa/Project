@@ -87,11 +87,11 @@ export default function LayoutProfile() {
                 address         : values.address,
                 dateOffBirth    : values.dateOffBirth,
                 sex             : values.sex,
-                password        : md5(values.phone)
+                password        : md5(values.password)
             };
            await axios.post(`${common.HOST}admin/update-profile`, data)
                 .then( res => {
-                    res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Create fail!') : CommonAlert.showAlert('success', 'Create success!')
+                    res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Update fail!') : CommonAlert.showAlert('success', 'Update success!')
                 })
                 .catch(err => { throw err });
         }
