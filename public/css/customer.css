@@ -221,7 +221,7 @@ body{
 .dashboard .MuiCardActions-root{
   flex-direction: row-reverse;
 }
-.dashboard .makeStyles-root-8{
+.dashboard .MuiPaper-root{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
