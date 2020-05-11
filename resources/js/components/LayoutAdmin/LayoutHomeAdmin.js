@@ -10,6 +10,7 @@ import LayoutListCar from './LayoutListCar';
 import LayoutListTrips from './LayoutListTrips';
 import LayoutCreatePost from './LayoutCreatePost';
 import LayoutListPost from './LayoutListPost';
+import LayoutDashboard from './LayoutDashboard';
 import LayoutProfile from './LayoutProfile';
 import {
     BrowserRouter as Router,
@@ -55,11 +56,11 @@ export default function LayoutHomeAdmin() {
                                     </ul>
                                 </li>
                                 <li >
-                                    <a href="#" className="row menu-toggle">
+                                    <Link to="/admin" className="row menu-toggle">
                                         <span className="col-1"><i className="fas fa-home"></i></span>
-                                        <span className="col-7"><p> Dashboard</p></span>
+                                        <span className="col-7"><p> Trang Chủ</p></span>
                                         <span className="col-2"></span>
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li >
                                     <a href="#" className="row menu-toggle">
@@ -165,6 +166,9 @@ export default function LayoutHomeAdmin() {
                                 <Route path="/admin/logout">
                                     <LayoutLogin />
                                 </Route>
+                                <PrivateRoute exact path="/admin">
+                                    <LayoutDashboard />
+                                </PrivateRoute>
                                 <PrivateRoute path="/admin/create-user">
                                     <LayoutCreateUsers />
                                 </PrivateRoute>
