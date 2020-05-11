@@ -26,8 +26,9 @@ import {
 
 export default function LayoutHomeAdmin() {
     // const get_data = useSelector(state => console.log(state));
-    const user_name_login = JSON.parse(sessionStorage.getItem('tokens')).Admin_Name;
-    const user_role_login = JSON.parse(sessionStorage.getItem('tokens')).Roles_Id;
+    const user_name_login = sessionStorage.getItem('tokens') ? JSON.parse(sessionStorage.getItem('tokens')).Admin_Name : '';
+    const user_role_login = sessionStorage.getItem('tokens') ? JSON.parse(sessionStorage.getItem('tokens')).Roles_Id : '';
+    
     return (
         <HashRouter>
             <div className="admin">
@@ -45,9 +46,9 @@ export default function LayoutHomeAdmin() {
                                         </span>
                                     </a>
                                     <ul className="menu-child menu-child-toggle">
-                                        {/* <li className="mb-3">
-                                            <Link to="/admin/logout" className="ml-5">Logout</Link>
-                                        </li> */}
+                                        <li className="mb-3">
+                                            <Link to="/login" className="ml-5">Đăng Xuất</Link>
+                                        </li>
                                         <li className="mb-3">
                                             <Link to="/admin/profile" className="ml-5">My Profile</Link>
                                         </li>

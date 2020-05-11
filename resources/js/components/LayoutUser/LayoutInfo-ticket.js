@@ -296,8 +296,6 @@ class LayoutInfoTicket extends Component {
             })
             .catch(err => { throw err; });
     }
-
-
     render() {
         return (
             <div>
