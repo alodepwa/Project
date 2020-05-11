@@ -55,7 +55,7 @@ export default function LayoutHomeAdmin() {
                                                     <Link to="/admgin/logout" className="ml-5">Logout</Link>
                                                 </li> */}
                                                 <li className="nav-link link">
-                                                    <Link to="/admin/profile" className="ml-2"><p>Thông Tin Tài Khoản</p></Link>g
+                                                    <Link to="/admin/profile" className="ml-2"><p>Thông Tin Tài Khoản</p></Link>
                                                 </li>
                                             </ul>
                                         </li>
