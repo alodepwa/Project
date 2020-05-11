@@ -47,7 +47,10 @@ export default function LayoutLogin() {
         })
         .catch( err => { throw err })
     }
-
+    useEffect(()=>{
+        sessionStorage.setItem('tokens','');
+        sessionStorage.setItem('isLogin', false);
+    }, [])
     return (
         <div className="layout-login">
                 <div className="container form-login">
