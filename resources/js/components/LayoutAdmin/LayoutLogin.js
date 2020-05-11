@@ -53,47 +53,72 @@ export default function LayoutLogin() {
     }, [])
     return (
         <div className="layout-login">
-            <div className="col-3 form-login">
-                <form>
-                    <div className="form-group">
-                        <label style={{color : 'red'}}>{ values.err ? values.err : values.errPhone ? values.errPhone : '' }</label>
-                        <TextField
-                            label="Phone number..."
-                            type = 'number'
-                            name = 'phone'
-                            InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                <AccountCircle />
-                                </InputAdornment>
-                            ),
-                            }}
-                            onChange = { onChangeInput }
-                        />
+                <div className="container form-login">
+                    <div className="card">
+                        <div className="card-body">
+                        <div className="row bg-light">
+                            <div className="col-lg-6">
+                                <div className="">
+                                    <img className="card-img" src="https://dailysg.vn/wp-content/uploads/2017/10/DailySG.vn-xe-khach-29-34-cho-samco-isuzu-1.png"></img>
+                                </div>
+                            </div>
+                            <div className="col-lg-6 row">
+                                <div  className="col-lg-12">
+                                    <div className="d-flex flex-column">
+                                        <div className="text-center">
+                                            <h1 className="h4 text-gray-900 my-4">Welcome User</h1>
+                                        </div>
+                                        <form >
+                                            <div className="form-group">
+                                                <label style={{color : 'red'}}>{ values.err ? values.err : values.errPhone ? values.errPhone : '' }</label>
+                                                <TextField className="form-control bg-light"
+                                                    label="Phone number..."
+                                                    type = 'number'
+                                                    name = 'phone'
+                                                    InputProps={{
+                                                    startAdornment: (
+                                                        <InputAdornment position="start">
+                                                        <AccountCircle />
+                                                        </InputAdornment>
+                                                    ),
+                                                    }}
+                                                    onChange = { onChangeInput }
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <TextField className="form-control bg-light"
+                                                    label="Your password..."
+                                                    name = 'password'
+                                                    type = 'password'
+                                                    onChange = { onChangeInput }
+                                                    InputProps={{
+                                                    startAdornment: (
+                                                        <InputAdornment position="start">
+                                                        <AccountCircle />
+                                                        </InputAdornment>
+                                                    ),
+                                                    }}
+                                                />
+                                            </div>
+                                            <div className="d-flex justify-content-between">
+                                                <button 
+                                                    type="submit"  
+                                                    className="btn btn-primary"
+                                                    disabled = { values.password && values.phone && !values.errPhone && !values.errPassword ? false : true }
+                                                    // style = {{  values.password &&  }}
+                                                    onClick = { onClickButtonLogin }
+                                                >Login</button>
+                                                <a href="#">Forgot PassWord!</a>
+                                            </div>
+
+                                        </form>
+                                        </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        </div>
                     </div>
-                    <div className="form-group">
-                        <TextField
-                            label="Your password..."
-                            name = 'password'
-                            type = 'password'
-                            onChange = { onChangeInput }
-                            InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                <AccountCircle />
-                                </InputAdornment>
-                            ),
-                            }}
-                        />
-                    </div>
-                    <button 
-                        type="submit"  
-                        className="btn btn-primary"
-                        disabled = { values.password && values.phone && !values.errPhone && !values.errPassword ? false : true }
-                        // style = {{  values.password &&  }}
-                        onClick = { onClickButtonLogin }
-                    >Login</button>
-                </form>
             </div>
         </div>
     )

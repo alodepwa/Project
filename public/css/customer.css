@@ -26,7 +26,7 @@
     width: 100%;
     background-repeat: no-repeat;
     background-size: auto;
-    background-image: url(https://images5.alphacoders.com/374/374077.jpg);
+    background-image: url(https://thuthuatnhanh.com/wp-content/uploads/2018/07/hinh-anh-thien-nhien-phong-canh-dep-nhat.jpg);
     position: relative;
     overflow: hidden;
 }
@@ -193,18 +193,6 @@ body{
 .menu-search .MuiFormControl-root, .menu-search .MuiInput-formControl{
   width: 100%;
 }
-.admin-right .MuiToolbar-root.MuiToolbar-regular .MuiFormControl-root{
-  width: 30% !important;
-}
-.admin-right .MuiTypography-h6{
-  font-weight: 400;
-  font-size: 18px;
-  color: #fff;
-}
-.admin-right .MuiButton-label{
-  font-weight: 400;
-  color: #fff;
-}
 .iconAvatar .MuiAvatar-root {
     width: 24px !important;
     height: 24px !important;
@@ -218,15 +206,6 @@ body{
      height: auto; 
   }
 }
-.dashboard .MuiCardActions-root{
-  flex-direction: row-reverse;
-}
-.dashboard .makeStyles-root-8{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-}
 .admin .MTableToolbar-title-47{
   width: 50%;
 }
@@ -236,8 +215,11 @@ body{
 .MuiButtonBase-root svg.MuiSvgIcon-root {
   font-size: 18px;
 }
-.admin .MuiButton-contained.Mui-disabled,button.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary{
+.admin .MuiButton-contained .Mui-disabled,button.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary{
   width: 100%;
+}
+.admin-right .MuiToolbar-root.MuiToolbar-regular .MuiFormControl-root{
+  width: 30% !important;
 }
 
 .body .MuiButtonBase-root svg.MuiSvgIcon-root, .menu-search .MuiButtonBase-root svg.MuiSvgIcon-root {
@@ -352,4 +334,16 @@ body {
     padding: 20px;
     background: #fff;
     min-height: 460px;
+  }
+
+
+
+  @media (max-width: 576px){
+    .hide-title{
+      display: none;
+    }
+    .link{ 
+        margin-left: 60px;
+        
+    }
   }
