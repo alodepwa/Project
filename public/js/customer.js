@@ -6,4 +6,4 @@ $(document).ready(function(){
 	  	movementStrength:'50'
 	});
 
-})git
+})
