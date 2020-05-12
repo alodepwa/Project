@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { useSelector , useState } from 'react-redux';
+import { useSelector  } from 'react-redux';
 import {
     Route,
     Redirect
@@ -13,7 +13,7 @@ export default function PrivateRoute({children, ...rest}){
         <Route
             {...rest}
             render = {({location}) => (
-                isLogin === "true" ? (
+                isLogin ? (
                     children 
                     ) : (
                     <Redirect 
