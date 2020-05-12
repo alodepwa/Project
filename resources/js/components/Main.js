@@ -3,21 +3,35 @@ import ReactDOM             from 'react-dom';
 import {createStore}        from 'redux';
 import {myReducer}          from './../Reducers';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    HashRouter,
+    withRouter,
+    useHistory,
+    useLocation,
+    Redirect
 } from "react-router-dom";
 import LayoutHome  from './LayoutUser/LayoutHome';
 import LayoutRegTick from './LayoutUser/LayoutRegTick';
-import {Provider} from 'react-redux';
+import LayoutMangerTicket from './LayoutUser/LayoutMangerTicket';
+import LayoutLogin from './LayoutAdmin/LayoutLogin';
+import LayoutHomeAdmin  from './LayoutAdmin/LayoutHomeAdmin';
+import { Provider } from 'react-redux';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import PrivateRoute from './PrivateRoute';
+
 class Main extends React.Component{
     constructor(props){
         super(props);
     }
     render(){
         return (
-            <Router>
+            <HashRouter>
+                {/* <div className="loading123">
+                    <CircularProgress disableShrink />
+                </div> */}
                 <div className="layout">
                     <div className="container">
                         <div className="header">
@@ -32,16 +46,16 @@ class Main extends React.Component{
                                                 <Link to="/"><i className="fas fa-bus-alt" /><p>Vé Xe</p></Link>
                                             </li>
                                             <li>
-                                                <Link to="/alo"><i className="fas fa-tv" /> <p>Phần Mềm Nhà Xe</p></Link>
+                                                <Link to="/admin"><i className="fas fa-tv" /> <p>Phần Mềm Nhà Xe</p></Link>
                                             </li>
                                             <li>
-                                                <Link to="/"><i className="fas fa-ticket-alt" /> <p>Quản Lý Vé</p></Link>
+                                                <Link to="/manager-ticket"><i className="fas fa-ticket-alt" /> <p>Quản Lý Vé</p></Link>
                                             </li>
                                             <li>
-                                                <Link to="/"><i className="fas fa-globe-africa" /> <p>Viet Nam</p></Link>
+                                                <Link to="/alo2"><i className="fas fa-globe-africa" /> <p>Viet Nam</p></Link>
                                             </li>
                                             <li>
-                                                <Link to="/"><i className="fas fa-phone-volume" /><p>Call Now</p></Link>
+                                                <Link to="/alo3"><i className="fas fa-phone-volume" /><p>Call Now</p></Link>
                                             </li>
                                         </ul>
                                     </div>
@@ -53,23 +67,34 @@ class Main extends React.Component{
                         <Route exact path="/">
                             <LayoutHome  />
                         </Route>
-                         <Route  path="/alo">
+                        <Route path="/search">
                             <LayoutRegTick />
                         </Route>
+                        <Route path="/manager-ticket">
+                            <LayoutMangerTicket />
+                        </Route>
+                        <Route path="/login">
+                            <LayoutLogin />
+                        </Route>
+                        <PrivateRoute path="/admin">
+                            <LayoutHomeAdmin />
+                        </PrivateRoute>
                    </Switch>
                 </div>
-            </Router>
+            </HashRouter>
         );
 
     }
 }
 
-export default Main;
+export default withRouter(Main);
+
 const myStore = createStore(myReducer);
 if (document.getElementById('vexe')) {
     ReactDOM.render(
         <Provider store = {myStore} >
             <Main />
-        </Provider>,
+        </Provider>
+        ,
          document.getElementById('vexe'));
 }
