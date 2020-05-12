@@ -59,12 +59,12 @@ export default function LayoutHomeAdmin() {
                                         </li>
                                     </ul>
                                 </li>
-                                <li >
-                                    <a href="#" className="row menu-toggle">
+                                <li className="">
+                                    <Link to="/admin" className="row menu-toggle">
                                         <span className="col-1"><i className="fas fa-home"></i></span>
                                         <span className="col-7"><p> Dashboard</p></span>
                                         <span className="col-2"></span>
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li >
                                     <a href="#" className="row menu-toggle">
@@ -84,13 +84,7 @@ export default function LayoutHomeAdmin() {
                                         }
                                      </ul>
                                 </li>
-                                <li className="">
-                                    <Link className="row menu-toggle">
-                                        <span className="col-1"><i className="fas fa-home"></i></span>
-                                        <span className="col-7"><p> Dashboard</p></span>
-                                        <span className="col-2"></span>
-                                    </Link>
-                                </li>
+                               
                                 <li className="">
                                     <a href="#" className="row menu-toggle">
                                         <span className="col-1"><i className="fas fa-user"></i></span>
