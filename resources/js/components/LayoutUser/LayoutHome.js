@@ -185,20 +185,19 @@ class LayoutHome extends React.Component {
 												/>
 												<CardContent>
 													<Typography gutterBottom variant="h5" component="h2">
-														Lizard
+														Dùng Ngay App
 								          </Typography>
 													<Typography variant="body2" color="textSecondary" component="p">
-														Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-														across all continents except Antarctica
+														Với nhiều hẫng xe chất lượng cùng đội ngũ tài xuế chuyên nghiệp bạn hay uyên tâm đi
 								          </Typography>
 												</CardContent>
 											</CardActionArea>
 											<CardActions>
 												<Button size="small" color="primary">
-													Share
+													Chia Sẽ
 								        </Button>
 												<Button size="small" color="primary">
-													Learn More
+													Nhiều Hơn
 								        </Button>
 											</CardActions>
 										</Card>
@@ -217,20 +216,19 @@ class LayoutHome extends React.Component {
 												/>
 												<CardContent>
 													<Typography gutterBottom variant="h5" component="h2">
-														Lizard
+														Tìm Vị Trí
 								          </Typography>
 													<Typography variant="body2" color="textSecondary" component="p">
-														Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-														across all continents except Antarctica
+														Ứng dụng có thể biết vị trí của bạn thông qua google map để đón bạn lên xe
 								          </Typography>
 												</CardContent>
 											</CardActionArea>
 											<CardActions>
 												<Button size="small" color="primary">
-													Share
+													Chia Sẽ
 								        </Button>
 												<Button size="small" color="primary">
-													Learn More
+													Nhiều Hơn
 								        </Button>
 											</CardActions>
 										</Card>
@@ -249,20 +247,19 @@ class LayoutHome extends React.Component {
 												/>
 												<CardContent>
 													<Typography gutterBottom variant="h5" component="h2">
-														Lizard
+														Ưu Đải Sốc
 								          </Typography>
 													<Typography variant="body2" color="textSecondary" component="p">
-														Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-														across all continents except Antarctica
+														Tải ứng dụng để nhận ngay nhiều ưu đãi đặc biệt từ hệ thống bán vé
 								          </Typography>
 												</CardContent>
 											</CardActionArea>
 											<CardActions>
 												<Button size="small" color="primary">
-													Share
+													Chia Sẽ
 								        </Button>
 												<Button size="small" color="primary">
-													Learn More
+													Nhiều Hơn
 								        </Button>
 											</CardActions>
 										</Card>
@@ -278,26 +275,52 @@ class LayoutHome extends React.Component {
 							<div className="title">
 								<h4>Hệ thống vé xe trên cả nước Việt Nam.</h4>
 							</div>
-							<div className="row">
-								<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 content">
-									<div className="block d-flex">
-										<a href="#"><i className="fas fa-map-marked-alt" /></a>
-										<a href="#"><h4>5000+</h4><br />Tuyến đường</a>
-									</div>
-									<div className="block d-flex">
-										<a href="#"><i className="fas fa-toggle-on" /></a>
-										<a href="#"><h4>5000+</h4><br />Tuyến đường</a>
-									</div>
-									<div className="block d-flex">
-										<a href="#"><i className="fas fa-toggle-on" /></a>
-										<a href="#"><h4>5000+</h4><br />Tuyến đường</a>
-									</div>
-									<div className="block d-flex">
-										<a href="#"><i className="fas fa-toggle-on" /></a>
-										<a href="#"><h4>5000+</h4><br />Tuyến đường</a>
+							<div className="card">
+								<div className="card-header">
+									<div className="row">
+										<div className="col-xs-3 col-md-3 col-lg-3 col-sm-3 content">
+											<div className="d-flex">
+												<a href="#">
+													<img className="card-img" src="https://image.plo.vn/Uploaded/2020/cqjwqcdwp/2019_08_14/8-bxmd-1_qltc.jpg" alt=""></img>
+												</a>
+											</div>
+										</div>
+										<div className="col-xs-3 col-md-3 col-lg-3 col-sm-3 content">
+											<div className=" d-flex">
+												<a href="#">
+													<img className="card-img" src="https://image.plo.vn/Uploaded/2020/cqjwqcdwp/2019_08_14/8-bxmd-1_qltc.jpg" alt=""></img>
+												</a>
+											</div>
+										</div>
+										<div className="col-xs-3 col-md-3 col-lg-3 col-sm-3 content">
+											<div className=" d-flex">
+												<a href="#">
+													<img className="card-img" src="https://image.plo.vn/Uploaded/2020/cqjwqcdwp/2019_08_14/8-bxmd-1_qltc.jpg" alt=""></img>
+												</a>
+											</div>
+										</div>
+										<div className="col-xs-3 col-md-3 col-lg-3 col-sm-3 content">
+											<div className=" d-flex">
+												<a href="#">
+													<img className="card-img" src="https://image.plo.vn/Uploaded/2020/cqjwqcdwp/2019_08_14/8-bxmd-1_qltc.jpg" alt=""></img>
+												</a>
+											</div>
+										</div>
+
 									</div>
 								</div>
 							</div>
+						</div>
+					</div>
+				</div>
+				<div className="bg-light">
+					<div className="container">
+						<div className="d-flex justify-content-around py-4">
+							<div>Bùi Tấn Toán</div>
+							<div>Lê Văn Trung</div>
+							<div>Lê Quang Khanh</div>
+							<div>NGuyễn Đình Quang</div>
+							<div>Võ Hoàng Kim</div>
 						</div>
 					</div>
 				</div>

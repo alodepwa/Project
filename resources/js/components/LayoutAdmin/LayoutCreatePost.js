@@ -68,19 +68,25 @@ export default function LayoutCreatePost() {
         <div className="container">
             <div className="row justify-content-center">
                 <div className="col-xs-12 col-sm-10 col-md-9 col-lg-5 text-center">
+                {/* form tạo post */}
+                    <div className="card">
+                        <div className="card-body">
+                    <div className="form-group">
+                        <h5 className="my-2 text-center">Thêm Bài Viết</h5>
+                    </div>
                     <div className="form-group d-flex flex-column">
                         <TextField
                             // error       = { values.errName ? true : false }
                             type        = "search"
                             variant     = "outlined"
-                            name        = "title"
-                            label       = {values.errName ? "Post Title incorrect format!" : "Post Title *"}
+                            name        = "Tiêu Đề"
+                            label       = {values.errName ? "Tiêu đề không đúng định dạng!" : "Tiêu Đề *"}
                             onChange    = {onChangeInput}
                         />
                     </div>
                     <div className="form-group d-flex flex-column">
                         <TextField
-                            label       = "Post Content * "
+                            label       = "Nội Dung * "
                             type        = "text"
                             step        = {1}
                             variant     = "outlined"
@@ -90,7 +96,7 @@ export default function LayoutCreatePost() {
                     </div>
                     <div className="form-group d-flex flex-column">
                         <TextField
-                            label       = "Post Note"
+                            label       = "Ghi Chú"
                             type        = "text"
                             variant     = "outlined"
                             name        = "note"
@@ -99,13 +105,13 @@ export default function LayoutCreatePost() {
                     </div>
                     <div className="form-group d-flex flex-column">
                         <FormControl variant="outlined" >
-                            <InputLabel htmlFor="outlined-age-native-simple">Category Car</InputLabel>
+                            <InputLabel htmlFor="outlined-age-native-simple">Loại Xe</InputLabel>
                             <Select
                                 native
                                 // value       = { values.category_car   }
                                 onChange    = {onChangeInput}
                                 name        = "car"
-                                label       = "Passenger Car"
+                                label       = "Loại Xe"
                             >
                                 <option aria-label="None" value="" />
                                 {
@@ -126,8 +132,12 @@ export default function LayoutCreatePost() {
                         endIcon={<Icon>send</Icon>}
                         onClick = { onClickButtonSend }
                     >
-                        Save
+                        Lưu
                     </Button>
+                    
+                        </div>
+                    </div>
+                    {/* end form */}
                 </div>
             </div>
         </div>

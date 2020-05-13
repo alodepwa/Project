@@ -66,13 +66,13 @@ export default function LayoutLogin() {
                                 <div  className="col-lg-12">
                                     <div className="d-flex flex-column">
                                         <div className="text-center">
-                                            <h1 className="h4 text-gray-900 my-4">Welcome User</h1>
+                                            <h1 className="h4 text-gray-900 my-4">Chào Mừng Bạn</h1>
                                         </div>
                                         <form >
                                             <div className="form-group">
                                                 <label style={{color : 'red'}}>{ values.err ? values.err : values.errPhone ? values.errPhone : '' }</label>
                                                 <TextField className="form-control bg-light"
-                                                    label="Phone number..."
+                                                    label="Số Điện Thoại..."
                                                     type = 'number'
                                                     name = 'phone'
                                                     InputProps={{
@@ -87,7 +87,7 @@ export default function LayoutLogin() {
                                             </div>
                                             <div className="form-group">
                                                 <TextField className="form-control bg-light"
-                                                    label="Your password..."
+                                                    label="Mật Khẩu..."
                                                     name = 'password'
                                                     type = 'password'
                                                     onChange = { onChangeInput }
@@ -107,8 +107,8 @@ export default function LayoutLogin() {
                                                     disabled = { values.password && values.phone && !values.errPhone && !values.errPassword ? false : true }
                                                     // style = {{  values.password &&  }}
                                                     onClick = { onClickButtonLogin }
-                                                >Login</button>
-                                                <a href="#">Forgot PassWord!</a>
+                                                >Đăng Nhập</button>
+                                                <a href="#">Quên Mật Khẩu!</a>
                                             </div>
 
                                         </form>

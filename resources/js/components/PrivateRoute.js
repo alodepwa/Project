@@ -9,6 +9,8 @@ export default function PrivateRoute({children, ...rest}){
     var isLogin = useSelector(state => {
         return sessionStorage.getItem('isLogin') ? sessionStorage.getItem('isLogin') : false;
     });
+    // let login = sessionStorage.getItem('isLogin') ? sessionStorage.getItem('isLogin') : false ;
+    console.log(typeof isLogin)
     return (
         <Route
             {...rest}

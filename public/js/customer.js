@@ -80,4 +80,11 @@ $(document).ready(function(){
 			$(this).siblings('.menu-child-toggle').toggle();
 		})
 	});
+	//menu admin
+	$(document).ready(function(){
+		$(document).on('click', '.navbar-toggler', function(e){
+			e.preventDefault();
+			$(this).siblings('#content').toggle();
+		})
+	});
 })

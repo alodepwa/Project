@@ -54,21 +54,21 @@ export default function LayoutListUsers() {
     const [preUpdate, setPreUpdate ] = useState();
     const [state, setState] = React.useState({
         columns: [
-            { title: 'Car ID', field: 'Car_Number' },
-            { title: 'Car Name', field: 'Passenger_Car_Name' },
-            { title: 'Fare', field: 'Passenger_Car_fare' },
-            { title: 'Seats', field: 'Passenger_Car_Seats' },
-            { title: 'Category', field: 'Category_Style' },
-            { title: 'Floor', field: 'Category_Floor' },
-            { title: 'Phone', field: 'phone' },
-            { title: 'From', field: 'Trips_Start' },
-            { title: 'To', field: 'Trips_Ends' },
-            { title: 'Created At', field: 'created_at'},
-            { title: 'Created By', field: 'created_by' },
-            { title: 'Updated At', field: 'updated_at' },
-            { title: 'Updated By', field: 'updated_by' },
-            { title: 'Deleted At', field: 'deleted_at' },
-            { title: 'Deleted By', field: 'deleted_by' }
+            { title: 'Số Xe', field: 'Car_Number' },
+            { title: 'Tên Xe', field: 'Passenger_Car_Name' },
+            { title: 'Giá Vé', field: 'Passenger_Car_fare' },
+            { title: 'Số Ghế', field: 'Passenger_Car_Seats' },
+            { title: 'Kiểu Xe', field: 'Category_Style' },
+            { title: 'Tầng', field: 'Category_Floor' },
+            { title: 'Số Điện Thoại', field: 'phone' },
+            { title: 'Nơi Đi', field: 'Trips_Start' },
+            { title: 'Nơi Đến', field: 'Trips_Ends' },
+            { title: 'Ngày Tạo', field: 'created_at'},
+            { title: 'Người Tạo', field: 'created_by' },
+            { title: 'Ngày Cập Nhật', field: 'updated_at' },
+            { title: 'NGười Cập Nhật', field: 'updated_by' },
+            { title: 'Ngày Xóa', field: 'deleted_at' },
+            { title: 'Người Xóa', field: 'deleted_by' }
         ],
         data: [],
     });
@@ -153,11 +153,11 @@ export default function LayoutListUsers() {
             dataPre[dataPre.indexOf(data_pre_update)] = data1;
             await axios.post(`${common.HOST}admin/update-car`, data)
                 .then(res => {
-                    res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Create fail!')
+                    res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Thất bại!')
                         : (
                             setValues({ ...values, modal: false }),
                             setState({ ...state, data: dataPre }),
-                            CommonAlert.showAlert('success', 'Create success!')
+                            CommonAlert.showAlert('success', 'Thành công!')
                         )
                 })
                 .catch(err => { throw err });
@@ -213,12 +213,12 @@ export default function LayoutListUsers() {
         };
         
         Swal.fire({
-            title: 'Are you Delete?',
+            title: 'Banh Có Muốn Xóa?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Có, Xóa Ngay!'
         }).then(async (result) => {
             if (result.value) {
                 let dataJustChange = {
@@ -232,10 +232,10 @@ export default function LayoutListUsers() {
 
                 await axios.post(`${common.HOST}admin/delete-car`, dataSendDelete)
                     .then(res => {
-                        res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Delete fail!')
+                        res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Xóa thất bại!')
                             : (
                                 setState({ ...state, data: dataPre }),
-                                CommonAlert.showAlert('success', 'Create success!')
+                                CommonAlert.showAlert('success', 'Tạo thành công!')
                             )
                     })
                     .catch(err => { throw err; })
@@ -279,22 +279,22 @@ export default function LayoutListUsers() {
 
 
     return (
-        <div className="container">
+        <div className="container-fluid">
             <MaterialTable
-                title="List Cars"
+                title="Danh Sách Xe"
                 columns={state.columns}
                 data={state.data}
                 actions={[
                     {
                         icon: 'edit',
-                        tooltip: 'Update Car',
+                        tooltip: 'Cập Nhật',
                         onClick: (event, rowData) => {
                             onClickButtonUpdate(event, rowData)
                         }
                     },
                     rowData => ((idLogin == '2' && rowData.car_status == 0 ) ? {
                         icon: 'delete',
-                        tooltip: 'Delete Car',
+                        tooltip: 'Xóa ',
                         onClick: (event, rowData) => {
                             onClickButtonDelete(event, rowData);
                         }
@@ -316,24 +316,24 @@ export default function LayoutListUsers() {
                 >
                     <Fade in={values.modal}>
                         <div className={classes.paper}>
-                            <h4 id="transition-modal-title">Update Car</h4>
+                            <h4 className="my-3 text-center" id="transition-modal-title">Cập Nhật Xe</h4>
                             <div className="row">
                                 <div className="col-12">
                                     <div className="form-group d-flex flex-column">
                                         <TextField
                                             error={values.errName ? true : false}
-                                            label="Car name"
+                                            label="Tên Xe"
                                             type="search"
                                             variant="outlined"
                                             name="name"
                                             value = {values.name}
-                                            label={values.errName ? "Car Name incorrect format!" : "Car Name"}
+                                            label={values.errName ? "Tên Xe không đúng định dạng!" : "Tên Xe"}
                                             onChange={onChangeInput}
                                         />
                                     </div>
                                     <div className="form-group d-flex flex-column">
                                         <TextField
-                                            label="Car fare"
+                                            label="Giá Vé"
                                             type="number"
                                             value = {values.fare}
                                             step={1}
@@ -344,7 +344,7 @@ export default function LayoutListUsers() {
                                     </div>
                                     <div className="form-group d-flex flex-column">
                                         <TextField
-                                            label="Car seats"
+                                            label="Số Ghế"
                                             type="number"
                                             value = {values.seat}
                                             variant="outlined"
@@ -355,13 +355,13 @@ export default function LayoutListUsers() {
                                     <div className="form-group d-flex flex-column">
                                         <TextField
                                             error={values.errPhone ? true : false}
-                                            label="Phone"
+                                            label="Số Điện Thoại"
                                             type="number"
                                             variant="outlined"
                                             name="phone"
                                             value = {values.phone}
                                             onChange={onChangeInput}
-                                            label={values.errPhone ? "Phone incorrect format!" : "Phone"}
+                                            label={values.errPhone ? "Số điện thoại không đúng định dạng!" : "Số Điện Thoại"}
                                         />
                                     </div>
                                     <div className="form-group d-flex flex-column">
@@ -372,18 +372,18 @@ export default function LayoutListUsers() {
                                             name="carnumber"
                                             value = {values.carnumber}
                                             onChange = {onChangeInput}
-                                            label={values.errCarNumber ? "Car number  incorrect format!  Example : '43H1-43136' " : "Car Number. Example : '43H1-43136'"}
+                                            label={values.errCarNumber ? "Số xe không đúng định dạng!  Ví Dụ : '43H1-43136' " : "Số Xe. Ví Dụ : '43H1-43136'"}
                                         />
                                     </div>
                                     <div className="form-group d-flex flex-column">
                                         <FormControl variant="outlined" >
-                                            <InputLabel htmlFor="outlined-age-native-simple">Category Car</InputLabel>
+                                            <InputLabel htmlFor="outlined-age-native-simple">Loại Xe</InputLabel>
                                             <Select
                                                 native
                                                 value={values.category_car}
                                                 onChange={onChangeInput}
                                                 name="category_car"
-                                                label="Category Car"
+                                                label="Loại Xe"
 
                                             >
                                                 <option aria-label="None" value="" />
@@ -397,13 +397,13 @@ export default function LayoutListUsers() {
                                     </div>
                                     <div className="form-group d-flex ">
                                         <FormControl variant="outlined" >
-                                            <InputLabel htmlFor="outlined-age-native-simple">Trip From</InputLabel>
+                                            <InputLabel htmlFor="outlined-age-native-simple">Nơi Đi</InputLabel>
                                             <Select
                                                 native
                                                 value={values.from}
                                                 onChange={onChangeInput}
                                                 name="from"
-                                                label="tripFrom"
+                                                label="Tuyến Đi"
 
                                             >
                                                 <option aria-label="None" value="" />
@@ -415,13 +415,13 @@ export default function LayoutListUsers() {
                                             </Select>
                                         </FormControl>
                                         <FormControl variant="outlined" >
-                                            <InputLabel htmlFor="outlined-age-native-simple">Trips To</InputLabel>
+                                            <InputLabel htmlFor="outlined-age-native-simple">Nơi Đến</InputLabel>
                                             <Select
                                                 native
                                                 value={values.to}
                                                 onChange={onChangeInput}
                                                 name="to"
-                                                label="tripTo"
+                                                label="Tuyến Đến"
 
                                             >
                                                 <option aria-label="None" value="" />
@@ -440,7 +440,7 @@ export default function LayoutListUsers() {
                                         endIcon={<Icon>send</Icon>}
                                         onClick={onClickButtonSend}
                                     >
-                                        Update
+                                        Cập Nhật
                                     </Button>
                                 </div>
                             </div>
