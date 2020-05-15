@@ -26,12 +26,12 @@ export default function LayoutDashboard() {
     const classes = useStyles();
     const [state, setState] = React.useState({
         columns: [
-            { title: 'Car ID', field: 'Car_Number' },
-            { title: 'Car Name', field: 'Passenger_Car_Name' },
-            { title: 'Fare', field: 'Passenger_Car_fare' },
-            { title: 'Seats', field: 'Passenger_Car_Seats' },
-            { title: 'Category', field: 'Category_Style' },
-            { title: 'Floor', field: 'Category_Floor' },
+            { title: 'Số Xe', field: 'Car_Number' },
+            { title: 'Tên Xe', field: 'Passenger_Car_Name' },
+            { title: 'Giá Vé', field: 'Passenger_Car_fare' },
+            { title: 'Số Ghế', field: 'Passenger_Car_Seats' },
+            { title: 'Kiểu Xe', field: 'Category_Style' },
+            { title: 'Tầng', field: 'Category_Floor' },
            
         ],
         data: [],

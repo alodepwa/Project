@@ -101,20 +101,26 @@ export default function LayoutCreateCar() {
         <div className="container">
             <div className="row justify-content-center">
                 <div className="col-xs-12 col-sm-10 col-md-9 col-lg-5 text-center">
+                    {/* form tạo xe */}
+                    <div className="card">
+                        <div className="card-body">
+                    <div className="form-group">
+                        <h5 className="my-2 text-center">Thêm Xe Khách</h5>
+                    </div>
                     <div className="form-group d-flex flex-column">
                         <TextField
                             error       = { values.errName ? true : false }
-                            label       = "Car name"
+                            label       = "Tên Xe"
                             type        = "search"
                             variant     = "outlined"
                             name        = "name"
-                            label       = {values.errName ? "Car Name incorrect format!" : "Car Name"}
+                            label       = {values.errName ? "Tên xe không đúng định dạng!" : "Tên Xe"}
                             onChange    = {onChangeInput}
                         />
                     </div>
                     <div className="form-group d-flex flex-column">
                         <TextField
-                            label       = "Car fare"
+                            label       = "Giá Vé"
                             type        = "number"
                             step        = {1}
                             variant     = "outlined"
@@ -124,7 +130,7 @@ export default function LayoutCreateCar() {
                     </div>
                     <div className="form-group d-flex flex-column">
                         <TextField
-                            label       = "Car seats"
+                            label       = "Số Ghế Xe"
                             type        = "number"
                             variant     = "outlined"
                             name        = "seat"
@@ -134,12 +140,12 @@ export default function LayoutCreateCar() {
                     <div className="form-group d-flex flex-column">
                         <TextField
                             error       = { values.errPhone ? true : false }
-                            label       = "Phone"
+                            label       = "Số Điện Đhoại"
                             type        = "number"
                             variant     = "outlined"
                             name        = "phone"
                             onChange    = {onChangeInput}
-                            label       = {values.errPhone ? "Phone incorrect format!" : "Phone"}
+                            label       = {values.errPhone ? "Số ddiennj thoại không đúng định dạng!" : "Số Điện Thoại"}
                         />
                     </div>
                     <div className="form-group d-flex flex-column">
@@ -149,18 +155,18 @@ export default function LayoutCreateCar() {
                             variant     = "outlined"
                             name        = "carnumber"
                             onChange    = { onChangeInput }
-                            label       = {values.errCarNumber ? "Car number  incorrect format!  Example : '43H1-43136' " : "Car Number. Example : '43H1-43136'"}
+                            label       = {values.errCarNumber ? "Số xe không đúng định dạng!  Ví dụ : '43H1-43136' " : "Số Xe. Ví dụ : '43H1-43136'"}
                         />
                     </div>
                     <div className="form-group d-flex flex-column">
                         <FormControl variant="outlined" >
-                            <InputLabel htmlFor="outlined-age-native-simple">Category Car</InputLabel>
+                            <InputLabel htmlFor="outlined-age-native-simple">Loại Xe</InputLabel>
                             <Select
                                 native
                                 value       = { values.category_car   }
                                 onChange    = {onChangeInput}
                                 name        = "category_car"
-                                label="Category Car"
+                                label="Loại Xe"
                                 
                             >
                                 <option aria-label="None" value="" />
@@ -180,7 +186,7 @@ export default function LayoutCreateCar() {
                                 value       = {values.from}
                                 onChange    = {onChangeInput}
                                 name        = "from"
-                                label       = "tripFrom"
+                                label       = "Tuyến Đi"
                               
                             >
                                 <option aria-label="None" value="" />
@@ -198,7 +204,7 @@ export default function LayoutCreateCar() {
                                 value           = {values.to}
                                 onChange        = {onChangeInput}
                                 name            = "to"
-                                label           = "tripTo"
+                                label           = "Tuyến Đến"
                             >
                                 <option aria-label="None" value="" />
                                 {
@@ -216,8 +222,12 @@ export default function LayoutCreateCar() {
                         endIcon={<Icon>send</Icon>}
                         onClick = { onClickButtonSend }
                     >
-                        Save
+                        Lưu
                     </Button>
+
+                        </div>
+                    </div>
+                    {/* end form tạo xe */}
                 </div>
             </div>
         </div>

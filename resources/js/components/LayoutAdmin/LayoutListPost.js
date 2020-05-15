@@ -49,12 +49,12 @@ export default function LayoutListPost() {
     const [preUpdate, setPreUpdate] = useState();
     const [state, setState] = React.useState({
         columns: [
-            { title: 'Car ID', field: 'Car_Number' },
-            { title: 'Car Name', field: 'Passenger_Car_Name' },
-            { title: 'Post Content', field: 'Post_Content' },
-            { title: 'Post title', field: 'Post_Title' },
-            { title: 'Post note', field: 'Post_note' },
-            { title: 'status', field: 'status_post', lookup: { 0 : 'pendding', 1: 'deleted', 2 : 'just approve' } },
+            { title: 'Số Xe', field: 'Car_Number' },
+            { title: 'Tên Xe', field: 'Passenger_Car_Name' },
+            { title: 'Nội Dung', field: 'Post_Content' },
+            { title: 'Tiêu Đề', field: 'Post_Title' },
+            { title: 'Ghi Chú', field: 'Post_note' },
+            { title: 'Trạng Thái', field: 'status_post', lookup: { 0 : 'Đang Chờ', 1: 'Xóa', 2 : 'Chấp Nhận' } },
         ],
         data: [],
     });
@@ -100,10 +100,10 @@ export default function LayoutListPost() {
             await axios.post(`${common.HOST}admin/update-post`, data)
                 .then(res => {
                     setValues({ ...values, modal: false }),
-                    res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Update fail!')
+                    res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Cập nhật thất bại!')
                         : (
                             setState({...state, data : dataBefo}),
-                            CommonAlert.showAlert('success', 'Update success!')
+                            CommonAlert.showAlert('success', 'Cập nhật thành công!')
                         )
                 })
                 .catch(err => { throw err });
@@ -143,12 +143,12 @@ export default function LayoutListPost() {
     const onClickButtonApprove = ((event, data) => {
         event.preventDefault();
         Swal.fire({
-            title: 'Are you approve post?',
+            title: 'Bán Có Chấp Nhận Bài Viết?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Có, Chấp Nhận Ngay!'
         }).then(async (result) => {
             if (result.value) {
                 let dataJustChange = {
@@ -161,10 +161,10 @@ export default function LayoutListPost() {
                 await axios.get(`${common.HOST}admin/approve-post/${ data.Post_Id}`)
                     .then(res => {
                         setValues({...values, modal : false}),
-                        res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Delete fail!')
+                        res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Thất bại!')
                             : (
                                 setState({ ...state, data: dataPre }),
-                                CommonAlert.showAlert('success', 'Create success!')
+                                CommonAlert.showAlert('success', 'Thành công!')
                             )
                     })
                     .catch(err => { throw err; })
@@ -177,12 +177,12 @@ export default function LayoutListPost() {
     const onClickButtonDelete = ((event, data) => {
         event.preventDefault();
         Swal.fire({
-            title: 'Are you Delete?',
+            title: 'Bạn Muốn Xóa?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Có, Xóa Ngay!'
         }).then(async (result) => {
             if (result.value) {
                 let dataJustChange = {
@@ -195,10 +195,10 @@ export default function LayoutListPost() {
                 await axios.delete(`${common.HOST}admin/delete-post/${ data.Post_Id}`)
                     .then(res => {
                         setValues({...values, modal : false}),
-                        res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Delete fail!')
+                        res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Xóa thất bại!')
                             : (
                                 setState({ ...state, data: dataPre }),
-                                CommonAlert.showAlert('success', 'Create success!')
+                                CommonAlert.showAlert('success', 'Thành công!')
                             )
                     })
                     .catch(err => { throw err; })
@@ -221,22 +221,22 @@ export default function LayoutListPost() {
 
 
     return (
-        <div className="container">
+        <div className="container-fluid">
             <MaterialTable
-                title="List Cars"
+                title="Danh Sách Bài Viết"
                 columns={state.columns}
                 data={state.data}
                 actions={[
                     rowData => (idLogin != '1' && rowData.status_post == 0) ? {
                         icon: 'edit',
-                        tooltip: 'Update Car',
+                        tooltip: 'Cập Nhật',
                         onClick: (event, rowData) => {
                             onClickButtonUpdate(event, rowData)
                         }
                     } : null,
                     rowData => ((idLogin != '1' && rowData.status_post == 0) ? {
                         icon: 'delete',
-                        tooltip: 'Delete Car',
+                        tooltip: 'Xóa',
                         onClick: (event, rowData) => {
                             onClickButtonDelete(event, rowData);
                         }
@@ -244,7 +244,7 @@ export default function LayoutListPost() {
                     ,
                     rowData => ((idLogin == '1' && (rowData.status_post == 0 || rowData.status_post == 2) ) ? {
                         icon: 'clear',
-                        tooltip: 'Reject post',
+                        tooltip: 'Từ Chối',
                         onClick: (event, rowData) => {
                             onClickButtonDelete(event, rowData);
                         }
@@ -252,7 +252,7 @@ export default function LayoutListPost() {
                     ,
                     rowData => ((idLogin == '1' && rowData.status_post == 0) ? {
                         icon: 'check',
-                        tooltip: 'Approve post',
+                        tooltip: 'Chấp Nhận',
                         onClick: (event, rowData) => {
                             onClickButtonApprove(event, rowData);
                         }
@@ -274,12 +274,16 @@ export default function LayoutListPost() {
                 >
                     <Fade in={values.modal}>
                         <div className={classes.paper}>
-                            <h4 id="transition-modal-title">Update Car</h4>
+                            <h4 id="transition-modal-title">Cập Nhật</h4>
                             <div className="row">
                                 <div className="col-12">
+                                    <div className="card">
+                                        <div className="card-body">
+
+                                      
                                     <div className="form-group d-flex flex-column">
                                         <TextField
-                                            label="Car"
+                                            label="Tên Xe"
                                             type="text"
                                             disabled
                                             value = {values.car}
@@ -295,13 +299,13 @@ export default function LayoutListPost() {
                                             variant="outlined"
                                             name="title"
                                             value = {values.title}
-                                            label={values.errName ? "Post Title incorrect format!" : "Post Title *"}
+                                            label={values.errName ? "Tiêu đề không đúng định dạng!" : "Tiêu Đề *"}
                                             onChange={onChangeInput}
                                         />
                                     </div>
                                     <div className="form-group d-flex flex-column">
                                         <TextField
-                                            label="Post Content * "
+                                            label="Nội Dung * "
                                             type="text"
                                             value = {values.content}
                                             variant="outlined"
@@ -311,7 +315,7 @@ export default function LayoutListPost() {
                                     </div>
                                     <div className="form-group d-flex flex-column">
                                         <TextField
-                                            label="Post Note"
+                                            label="Ghi Chú"
                                             type="text"
                                             variant="outlined"
                                             value = {values.note}
@@ -327,8 +331,11 @@ export default function LayoutListPost() {
                                         endIcon={<Icon>send</Icon>}
                                         onClick={onClickButtonSend}
                                     >
-                                        Update
+                                        Cập Nhật
                                     </Button>
+
+                                    </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

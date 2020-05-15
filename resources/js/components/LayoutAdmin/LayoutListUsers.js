@@ -58,16 +58,16 @@ export default function LayoutListUsers() {
     const [preUpdate, setPreUpdate ] = useState();
     const [state, setState] = React.useState({
         columns: [
-            { title: 'Name', field: 'name' },
-            { title: 'Address', field: 'address' },
-            { title: 'Date Off Birth', field: 'birthYear' },
-            { title: 'Phone', field: 'phone' },
+            { title: 'Họ Tên', field: 'name' },
+            { title: 'Địa CHỉ', field: 'address' },
+            { title: 'Ngày Sinh', field: 'birthYear' },
+            { title: 'Số Điện THoại', field: 'phone' },
             {
-                title: 'Gender',
+                title: 'Giới Tính',
                 field: 'gender',
-                lookup: { 1: 'Female', 0: 'Male' },
+                lookup: { 1: 'Nữ', 0: 'Nam' },
             },
-            { title: 'Role', field: 'role' },
+            { title: 'Loại', field: 'role' },
         ],
         data: [],
     });
@@ -124,11 +124,11 @@ export default function LayoutListUsers() {
            
            await axios.post(`${common.HOST}admin/update-user`, data)
                 .then( res => {
-                    res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Create fail!') 
+                    res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Thất bại!') 
                     : (   
                         setValues({...values, modal : false}),
                         setState({...state , data : dataPre}),
-                        CommonAlert.showAlert('success', 'Create success!') 
+                        CommonAlert.showAlert('success', 'Thành công!') 
                     )
                 })
                 .catch(err => { throw err });
@@ -213,12 +213,12 @@ export default function LayoutListUsers() {
     const onClickButtonDelete = ((event, data) => {
         event.preventDefault();
         Swal.fire({
-            title: 'Are you Delete?',
+            title: 'Bạn Có Muốn Xóa?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Có, Xóa Ngay!'
           }).then( async (result) => {
             if (result.value) {
                 let id = data.id;
@@ -228,10 +228,10 @@ export default function LayoutListUsers() {
                 
                 await axios.delete(`${common.HOST}admin/delete-user/${id}`)
                 .then(res => {
-                    res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Delete fail!') 
+                    res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Xóa thất bại!') 
                     : (   
                         setState({...state, data : dataPre}),
-                        CommonAlert.showAlert('success', 'Create success!') 
+                        CommonAlert.showAlert('success', 'Tạo thành công!') 
                     )
                 })
                 .catch(err => { throw err;})
@@ -252,22 +252,22 @@ export default function LayoutListUsers() {
 
 
     return (
-        <div className="container">
+        <div className="container-fluid">
             <MaterialTable
-                title="List Users"
+                title="Danh Sách Nhân Viên"
                 columns={state.columns}
                 data={state.data}
                 actions={[
                     {
                         icon: 'edit',
-                        tooltip: 'Update User',
+                        tooltip: 'Cập Nhật',
                         onClick: (event, rowData) => {
                             onClickButtonUpdate(event, rowData)
                         }
                     },
                     rowData => ( (idLogin == rowData.Parent_id) ? {
                         icon: 'delete',
-                        tooltip: 'Delete User',
+                        tooltip: 'Xóa',
                         onClick: (event, rowData) => {
                             onClickButtonDelete(event, rowData);
                         }
@@ -289,7 +289,7 @@ export default function LayoutListUsers() {
                 >
                     <Fade in={values.modal}>
                         <div className={classes.paper}>
-                            <h4 id="transition-modal-title">Update Users</h4>
+                            <h4 className="my-2 text-center" id="transition-modal-title">Cập Nhật Nhân Viên</h4>
                             <div className="row">
                                 <div className="col-12">
                                     <div className="form-group d-flex flex-column">
@@ -298,7 +298,7 @@ export default function LayoutListUsers() {
                                             type="text"
                                             name="name"
                                             value = { values.name }
-                                            label={values.errName ? "Name  incorrect format! " : 'Name'}
+                                            label={values.errName ? "Họ tên không đúng định dạng! " : 'Họ Tên'}
                                             onChange={onChangeInput}
                                         />
                                     </div>
@@ -309,7 +309,7 @@ export default function LayoutListUsers() {
                                             name="address"
                                             value = { values.address }
                                             onChange={onChangeInput}
-                                            label={values.errAddress ? "Address  incorrect format! " : 'Address'}
+                                            label={values.errAddress ? "Địa chỉ không đúng định dạng! " : 'Địa Chỉ'}
                                         />
                                     </div>
                                     <div className="form-group d-flex flex-column">
@@ -320,7 +320,7 @@ export default function LayoutListUsers() {
                                                 format="yyyy-MM-dd"
                                                 margin="normal"
                                                 id="date-picker-inline"
-                                                label="Date picker inline"
+                                                label="Ngày Sinh"
                                                 value={values.dateOffBirth}
                                                 onChange={handleDateChange}
 
@@ -334,12 +334,12 @@ export default function LayoutListUsers() {
                                             name="phone"
                                             value = { values.phone }
                                             onChange={onChangeInput}
-                                            label={values.errPhone ? "Phone  incorrect format! " : 'Phone'}
+                                            label={values.errPhone ? "Số điện thoại không đúng định dạng! " : 'Số Điện Thoại'}
                                         />
                                     </div>
                                     <div className="form-group d-flex flex-column">
                                         <FormControl component="fieldset">
-                                            <FormLabel component="legend">Sex</FormLabel>
+                                            <FormLabel component="legend">Giới Tính</FormLabel>
                                             <RadioGroup
                                                 aria-label="gender"
                                                 className="d-flex flex-row"
@@ -347,8 +347,8 @@ export default function LayoutListUsers() {
                                                 value={values.sex}
                                                 onChange={handleChange}
                                             >
-                                                <FormControlLabel value="1" control={<Radio />} label="Female" />
-                                                <FormControlLabel value="0" control={<Radio />} label="Male" />
+                                                <FormControlLabel value="1" control={<Radio />} label="Nữ" />
+                                                <FormControlLabel value="0" control={<Radio />} label="Nam" />
                                             </RadioGroup>
                                         </FormControl>
                                     </div>
@@ -379,7 +379,7 @@ export default function LayoutListUsers() {
                                         endIcon={<Icon>send</Icon>}
                                         onClick={onClickButtonSend}
                                     >
-                                        Update
+                                        Cập Nhật
                                     </Button>
                                 </div>
                             </div>

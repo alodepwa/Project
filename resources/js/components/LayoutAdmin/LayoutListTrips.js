@@ -62,24 +62,24 @@ export default function LayoutListTrips() {
     const [preClickShow, setPreClickShow] = useState();
     const [state, setState] = React.useState({
         columns: [
-            { title: 'Car ID', field: 'Car_Number' },
-            { title: 'Car Name', field: 'Passenger_Car_Name' },
-            { title: 'Fare', field: 'Passenger_Car_fare' },
-            { title: 'Seats', field: 'Passenger_Car_Seats' },
-            { title: 'Category', field: 'Category_Style' },
-            { title: 'Floor', field: 'Category_Floor' },
-            { title: 'Phone', field: 'phone' },
-            { title: 'From', field: 'Trips_Start' },
-            { title: 'To', field: 'Trips_Ends' },
+            { title: 'Số Xe', field: 'Car_Number' },
+            { title: 'Tên Xe', field: 'Passenger_Car_Name' },
+            { title: 'Giá Vé', field: 'Passenger_Car_fare' },
+            { title: 'Số Ghế', field: 'Passenger_Car_Seats' },
+            { title: 'Kiểu Xe', field: 'Category_Style' },
+            { title: 'Tầng', field: 'Category_Floor' },
+            { title: 'Số Điện Thoại', field: 'phone' },
+            { title: 'Nơi Đi', field: 'Trips_Start' },
+            { title: 'Nới Đến', field: 'Trips_Ends' },
         ],
         columnsInfo: [
-            { title: 'Car ID', field: 'Car_Number' },
-            { title: 'Car Name', field: 'Passenger_Car_Name' },
-            { title: 'From', field: 'Trips_Start' },
-            { title: 'To', field: 'Trips_Ends' },
-            { title: 'Date', field: 'Trips_Passenger_Car_Date' },
-            { title: 'Time Start', field: 'Trips_Passenger_Car_Time_Start' },
-            { title: 'Time End', field: 'Trips_Passenger_Car_Time_End' },
+            { title: 'Số Xe', field: 'Car_Number' },
+            { title: 'Tên Xe', field: 'Passenger_Car_Name' },
+            { title: 'Nơi Đi', field: 'Trips_Start' },
+            { title: 'Nơi Đến', field: 'Trips_Ends' },
+            { title: 'Ngày Đi', field: 'Trips_Passenger_Car_Date' },
+            { title: 'Thời Gian Đi', field: 'Trips_Passenger_Car_Time_Start' },
+            { title: 'Thời Gian Đến', field: 'Trips_Passenger_Car_Time_End' },
         ],
         columnsShow: [
             { title: 'Tên Khách Hàng', field: 'Car_Ticket_Name_User' },
@@ -191,12 +191,12 @@ export default function LayoutListTrips() {
         };
 
         Swal.fire({
-            title: 'Are you Delete?',
+            title: 'Bạn Muốn Xóa?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Có, Xóa Ngay!'
         }).then(async (result) => {
             if (result.value) {
                 let dataJustChange = {
@@ -210,10 +210,10 @@ export default function LayoutListTrips() {
 
                 await axios.post(`${common.HOST}admin/delete-car`, dataSendDelete)
                     .then(res => {
-                        res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Delete fail!')
+                        res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Xóa thất bại!')
                             : (
                                 setState({ ...state, data: dataPre }),
-                                CommonAlert.showAlert('success', 'Create success!')
+                                CommonAlert.showAlert('success', 'Thành công!')
                             )
                     })
                     .catch(err => { throw err; })
@@ -260,8 +260,8 @@ export default function LayoutListTrips() {
         await axios.post(`${common.HOST}admin/update-trips-passenger-car`, data)
             .then(res => {
                 setValues({ ...values, modal: false });
-                res.data[0].result == 'false' ? CommonAlert.showAlert('error', 'Create fail!')
-                    : (CommonAlert.showAlert('success', 'Create success!'), setDataInfo({ ...dataInfo, data: dataInfoPre }))
+                res.data[0].result == 'false' ? CommonAlert.showAlert('error', 'Thất bại!')
+                    : (CommonAlert.showAlert('success', 'Thành công!'), setDataInfo({ ...dataInfo, data: dataInfoPre }))
             })
             .catch(err => { throw err });
     });
@@ -277,7 +277,7 @@ export default function LayoutListTrips() {
 
 
     return (
-        <div className="container">
+        <div className="container-fluid">
             <MaterialTable
                 title={
                     isClickShow
@@ -290,11 +290,11 @@ export default function LayoutListTrips() {
                                 displayType={'text'} thousandSeparator={true}
                             />  đ</div>
                         </div>
-                        : !isClickInfo ? "List Trips"
+                        : !isClickInfo ? "Danh Sách Tuyến"
                             :
                             <div className="d-flex flex-row align-items-center">
                                 <div className="btn" style={{ fontSize: '20px' }} onClick={(event) => { event.preventDefault(); setIsClickInfo(false); }}> <i className="fas fa-arrow-circle-left"></i> </div>
-                                <h5>List Trips With Passenger Car</h5>
+                                <h5>Danh Sách Tuyến Của Xe</h5>
                             </div>
 
                 }
@@ -304,28 +304,28 @@ export default function LayoutListTrips() {
                 actions={[
                     rowData => ((1 == 1 && !isClickInfo && !isClickShow) ? {
                         icon: 'info',
-                        tooltip: 'Info Trip',
+                        tooltip: 'Thông Tin Hành Trình',
                         onClick: (event, rowData) => {
                             onClickButtonInfo(event, rowData)
                         }
                     } : null),
                     rowData => ((1 == 1 && !isClickInfo && !isClickShow) ? {
                         icon: 'add',
-                        tooltip: 'Add Trip',
+                        tooltip: 'Thêm Hành Trình',
                         onClick: (event, rowData) => {
                             onClickButtonUpdate(event, rowData);
                         }
                     } : null),
                     rowData => ((isClickInfo) ? {
                         icon: 'edit',
-                        tooltip: 'Update Trip',
+                        tooltip: 'Cập Nhật Hành Trình',
                         onClick: (event, rowData) => {
                             onClickButtonUpdate(event, rowData);
                         }
                     } : null),
                     rowData => ((isClickInfo) ? {
                         icon: 'visibility',
-                        tooltip: 'Show Ticket',
+                        tooltip: 'Danh Sách Vé',
                         onClick: (event, rowData) => {
                             onClickButtonShowTicket(event, rowData);
                         }
@@ -347,13 +347,13 @@ export default function LayoutListTrips() {
                 >
                     <Fade in={values.modal}>
                         <div className={classes.paper}>
-                            <h4 id="transition-modal-title">Update Trip</h4>
+                            <h4 className="my-3 text-center" id="transition-modal-title">Cập Nhật Hành Trình</h4>
                             <div className="row">
                                 <div className="col-12 ">
                                     <div className="form-group ">
                                         <TextField
                                             disabled
-                                            label="Car name"
+                                            label="Tên Xe"
                                             type="search"
                                             variant="outlined"
                                             name="name"
@@ -366,7 +366,7 @@ export default function LayoutListTrips() {
                                             variant="outlined"
                                             name="carnumber"
                                             value={values.carnumber}
-                                            label="Car Number"
+                                            label="Số Xe"
                                             disabled
                                         />
                                     </div>
@@ -374,7 +374,7 @@ export default function LayoutListTrips() {
                                         <div className="form-group ">
                                             <TextField
                                                 disabled
-                                                label="From"
+                                                label="Nơi Đi"
                                                 type="search"
                                                 variant="outlined"
                                                 value={preUpdate ? preUpdate.Trips_Start : ''}
@@ -383,7 +383,7 @@ export default function LayoutListTrips() {
                                         <div className="form-group ">
                                             <TextField
                                                 disabled
-                                                label="To"
+                                                label="Nơi Đến"
                                                 type="search"
                                                 variant="outlined"
                                                 value={preUpdate ? preUpdate.Trips_Ends : ''}
@@ -395,7 +395,7 @@ export default function LayoutListTrips() {
                                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                             <KeyboardDatePicker
                                                 margin="normal"
-                                                label="Date Start"
+                                                label="Ngày Đi"
                                                 format="yyyy-MM-dd"
                                                 name="date"
                                                 value={values.date}
@@ -410,7 +410,7 @@ export default function LayoutListTrips() {
                                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                             <KeyboardTimePicker
                                                 margin="normal"
-                                                label="Time Start"
+                                                label="Thời Gian Đi"
                                                 name="timeStart"
                                                 value={values.timeStart}
                                                 onChange={handleDateChangeTimeStart}
@@ -420,7 +420,7 @@ export default function LayoutListTrips() {
                                             />
                                             <KeyboardTimePicker
                                                 margin="normal"
-                                                label="Time End"
+                                                label="Thời Gian Đến"
                                                 value={values.timeEnd}
                                                 onChange={handleDateChangeTimeEnd}
                                                 name="timeEnd"
@@ -437,7 +437,7 @@ export default function LayoutListTrips() {
                                         endIcon={<Icon>send</Icon>}
                                         onClick={!isClickInfo ? onClickButtonSend : onClickButtonSendUpdate}
                                     >
-                                        Save
+                                        Lưu
                                     </Button>
                                 </div>
                             </div>

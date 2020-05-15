@@ -100,7 +100,7 @@ export default function LayoutCreateUsers() {
             }
            await axios.post(`${common.HOST}admin/create-user`, data)
                 .then( res => {
-                    res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Create fail!') : CommonAlert.showAlert('success', 'Create success!')
+                    res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Tạo thất bại!') : CommonAlert.showAlert('success', 'Tạo thành công!')
                 })
                 .catch(err => { throw err });
         }
@@ -110,12 +110,18 @@ export default function LayoutCreateUsers() {
         <div className="container">
             <div className="row justify-content-center">
                 <div className="col-xs-12 col-sm-10 col-md-9 col-lg-5 text-center">
+                    {/* form tạo tài khoản */}
+                    <div className="card">
+                        <div className="card-body">
+                    <div className="form-group">
+                        <h5 className="my-2 text-center">Tạo Tài Khoản</h5>
+                    </div>
                     <div className="form-group d-flex flex-column">
                         <TextField
                             error={values.errName ? true : false}
                             type="text"
                             name="name"
-                            label={values.errName ? "Name  incorrect format! " : 'Name'}
+                            label={values.errName ? "Họ tên không đúng định dạng! " : 'Họ Tên'}
                             onChange = {onChangeInput}
                             inputProps={{
                                 // maxLength: 2,
@@ -128,7 +134,7 @@ export default function LayoutCreateUsers() {
                             type="text"
                             name="address"
                             onChange ={onChangeInput}
-                            label={values.errAddress ? "Address  incorrect format! " : 'Address'}
+                            label={values.errAddress ? "Địa chỉ sai! " : 'Địa Chỉ'}
                         />
                     </div>
                     <div className="form-group d-flex flex-column">
@@ -139,7 +145,7 @@ export default function LayoutCreateUsers() {
                                 format="yyyy-MM-dd"
                                 margin="normal"
                                 id="date-picker-inline"
-                                label="Date Off Birth"
+                                label="Ngày Sinh"
                                 value={ values.dateOffBirth }
                                 onChange={handleDateChange}
                             
@@ -152,12 +158,12 @@ export default function LayoutCreateUsers() {
                             type="number"
                             name="phone"
                             onChange={onChangeInput}
-                            label={values.errPhone ? "Phone  incorrect format! " : 'Phone'}
+                            label={values.errPhone ? "Số điện thoại không đúng định dạng! " : 'Số Điện Thoại'}
                         />
                     </div>
                     <div className="form-group d-flex flex-column">
                         <FormControl component="fieldset">
-                            <FormLabel component="legend">Sex</FormLabel>
+                            <FormLabel component="legend">Giới Tính</FormLabel>
                             <RadioGroup 
                                 aria-label="gender" 
                                 className="d-flex flex-row"                
@@ -165,8 +171,8 @@ export default function LayoutCreateUsers() {
                                 value = { values.sex } 
                                 onChange  = { handleChange }
                             >
-                                <FormControlLabel value="1" control={<Radio />} label="Female" />
-                                <FormControlLabel value="0" control={<Radio />} label="Male" />
+                                <FormControlLabel value="1" control={<Radio />} label="Nữ" />
+                                <FormControlLabel value="0" control={<Radio />} label="Nam" />
                             </RadioGroup>
                         </FormControl>
                     </div>
@@ -197,8 +203,11 @@ export default function LayoutCreateUsers() {
                         endIcon={<Icon>send</Icon>}
                         onClick = { onClickButtonSend }
                     >
-                        Save
+                        Lưu
                     </Button>
+                        </div>
+                    </div>
+                    {/* end form tạo tk */}
                 </div>
             </div>
         </div>

@@ -103,6 +103,10 @@ export default function LayoutProfile() {
     return (
         <div className="row profile justify-content-center">
             <div className="col-xs-12 col-sm-10 col-md-9 col-lg-5 text-center">
+                <div className="card">
+                    <div className="card-body">
+
+                   
                 <div className="profile-sidebar">
                     {/* SIDEBAR USERPIC */}
                     <div className="profile-userpic">
@@ -115,7 +119,7 @@ export default function LayoutProfile() {
                             {values.name ? values.name : 'name'}
                         </div>
                         <div className="profile-usertitle-job">
-                            {values.role_chuc_vu ? values.role_chuc_vu  : 'chuc vu'}
+                            {values.role_chuc_vu ? values.role_chuc_vu  : 'Chúc Vụ'}
                         </div>
                     </div>
 
@@ -126,7 +130,7 @@ export default function LayoutProfile() {
                                 type="text"
                                 name="name"
                                 value = { values.name ? values.name : '' }
-                                label={values.errName ? "Name  incorrect format! " : 'Name'}
+                                label={values.errName ? "Họ tên không đúng định dạng! " : 'Họ Tên'}
                                 onChange={onChangeInput}
                             />
                         </div>
@@ -137,7 +141,7 @@ export default function LayoutProfile() {
                                 name="address"
                                 value = { values.address }
                                 onChange={onChangeInput}
-                                label={values.errAddress ? "Address  incorrect format! " : 'Address'}
+                                label={values.errAddress ? "Địa chỉ không đúng định dạng! " : 'Địa Chỉ'}
                             />
                         </div>
                         <div className="form-group d-flex flex-column">
@@ -148,7 +152,7 @@ export default function LayoutProfile() {
                                     format="yyyy-MM-dd"
                                     margin="normal"
                                     id="date-picker-inline"
-                                    label="Date Off Birth"
+                                    label="Ngày Sinh"
                                     value={values.dateOffBirth ? values.dateOffBirth : new date() }
                                     onChange={handleDateChange}
 
@@ -162,12 +166,12 @@ export default function LayoutProfile() {
                                 name="phone"
                                 onChange={onChangeInput}
                                 value = { values.phone }
-                                label={values.errPhone ? "Phone  incorrect format! " : 'Phone'}
+                                label={values.errPhone ? "Số Điện Thoại không đúng định dạng! " : 'Số Điện Thoại'}
                             />
                         </div>
                         <div className="form-group d-flex flex-column">
                             <FormControl component="fieldset">
-                                <FormLabel component="legend">Sex</FormLabel>
+                                <FormLabel component="legend">Giới Tính</FormLabel>
                                 <RadioGroup
                                     aria-label="gender"
                                     className="d-flex flex-row"
@@ -175,8 +179,8 @@ export default function LayoutProfile() {
                                     value={values.sex}
                                     onChange={handleChange}
                                 >
-                                    <FormControlLabel value="1" control={<Radio />} label="Female" />
-                                    <FormControlLabel value="0" control={<Radio />} label="Male" />
+                                    <FormControlLabel value="1" control={<Radio />} label="Nữ" />
+                                    <FormControlLabel value="0" control={<Radio />} label="Nam" />
                                 </RadioGroup>
                             </FormControl>
                         </div>
@@ -189,7 +193,7 @@ export default function LayoutProfile() {
                                         color       = "primary"
                                     />
                                 }
-                                label="Change password."
+                                label="Đổi Mật Khẩu."
                             />
                         </div>
                         {
@@ -201,7 +205,7 @@ export default function LayoutProfile() {
                                         name="password"
                                         value = {values.password}
                                         onChange={onChangeInput}
-                                        label={values.errAddress ? "Password  incorrect format! " : 'Password'}
+                                        label={values.errAddress ? "Mật khẩu không đúng định dạng ! " : 'Mật Khẩu'}
                                     />
                                 </div>
                             ) : null
@@ -214,8 +218,10 @@ export default function LayoutProfile() {
                             endIcon={<Icon>send</Icon>}
                             onClick={onClickButtonSend}
                         >
-                            Save
-                                </Button>
+                            Lưu
+                        </Button>
+                        </div>
+                        </div>
                     </div>
 
                 </div>
