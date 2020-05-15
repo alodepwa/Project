@@ -245,24 +245,37 @@ export default function LayoutListUsers() {
     const onChangeInput = (event) => {
         event.preventDefault();
         let { value } = event.target;
-        if (event.target.name == "phone") {
-            let parrtenPhone = /^[0][1-9][0-9]{7,9}$/;
-            let errPhone = 'Phone isn\'t correctly!'
-            parrtenPhone.test(value) ? setValues({ ...values, [event.target.name]: value, errPhone: '' }) : setValues({ ...values, errPhone, err: '' });
-        }
-        else if (event.target.name == "name") {
-            let parrtenText = /^[^!~`@#@\$%^&\*()\+_\-=\\|}{}\]\["';?\/><]*$/;
-            let errName = 'Name isn\'t correctly format!';
-            parrtenText.test(value) ? setValues({ ...values, [event.target.name]: value, errName: '' }) : setValues({ ...values, errName, err: '' });
-
-        }
-        else if (event.target.name == "carnumber") {
-            let parrtenText = /^[0-9]{1,2}[A-Z][0-9][-][0-9]{3,5}$/
-            let errCarNumber = 'Car number isn\'t correct format!';
-            parrtenText.test(value) ? setValues({ ...values, [event.target.name]: value, errCarNumber: '' }) : setValues({ ...values, errCarNumber, err : '' });
-        }
-        else{
-            setValues({ ...values, [event.target.name] : event.target.value });
+        switch (event.target.name) {
+            case 'phone':
+                let parrtenPhone = /^[0][1-9][0-9]{7,9}$/;
+                let errPhone = 'Phone isn\'t correctly!'
+                parrtenPhone.test(value) ? setValues({ ...values, [event.target.name]: value, errPhone: '' }) : setValues({ ...values, errPhone, err: '' });
+                break;
+            case 'name':
+                let parrtenText = /^[^!~`@#@\$%^&\*()\+_\-=\\|}{}\]\["';?\/><]*$/;
+                let errName = 'Name isn\'t correctly format!';
+                parrtenText.test(value) ? setValues({ ...values, [event.target.name]: value, errName: '' }) : setValues({ ...values, errName, err: '' });
+                break;
+            case 'carnumber' :
+                let parrtenTextNumber = /^[0-9]{1,2}[A-Z][0-9][-][0-9]{3,5}$/
+                let errCarNumber = 'Car number isn\'t correct format!';
+                parrtenTextNumber.test(value) ? setValues({ ...values, [event.target.name]: value, errCarNumber: '' }) : setValues({ ...values, errCarNumber, err : '' });
+                break;
+            case 'from':
+                if (values.to != event.target.value)
+                    setValues({ ...values, [event.target.name]: event.target.value });
+                else
+                    setValues({ ...values, [event.target.name]: false });
+                break;
+            case 'to':
+                if (values.from != event.target.value)
+                    setValues({ ...values, [event.target.name]: event.target.value });
+                else
+                    setValues({ ...values, [event.target.name] : false });
+                break;
+            default:
+                setValues({ ...values, [event.target.name] : event.target.value });
+                break;
         }
     }
     /**
@@ -397,13 +410,14 @@ export default function LayoutListUsers() {
                                     </div>
                                     <div className="form-group d-flex ">
                                         <FormControl variant="outlined" >
-                                            <InputLabel htmlFor="outlined-age-native-simple">Nơi Đi</InputLabel>
+                                            <InputLabel htmlFor="outlined-age-native-simple">{values.from === false ? "Nơi đi không được trùng!" : "Nơi đi"}</InputLabel>
                                             <Select
                                                 native
                                                 value={values.from}
                                                 onChange={onChangeInput}
                                                 name="from"
-                                                label="Tuyến Đi"
+                                                error={values.from === false ? true : false}
+                                                label = 'Nơi đi không được trùng!'
 
                                             >
                                                 <option aria-label="None" value="" />
@@ -415,13 +429,14 @@ export default function LayoutListUsers() {
                                             </Select>
                                         </FormControl>
                                         <FormControl variant="outlined" >
-                                            <InputLabel htmlFor="outlined-age-native-simple">Nơi Đến</InputLabel>
+                                            <InputLabel htmlFor="outlined-age-native-simple">{values.to === false ? "Nơi đến không được trùng!" : "Nơi đến"}</InputLabel>
                                             <Select
                                                 native
                                                 value={values.to}
                                                 onChange={onChangeInput}
                                                 name="to"
-                                                label="Tuyến Đến"
+                                                error={values.to === false ? true : false}
+                                                label = 'Nơi đi không được trùng!'
 
                                             >
                                                 <option aria-label="None" value="" />
