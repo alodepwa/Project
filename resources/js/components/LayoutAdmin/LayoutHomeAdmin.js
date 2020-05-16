@@ -66,24 +66,6 @@ export default function LayoutHomeAdmin() {
                                                 <span className="col-2"></span>
                                             </Link>
                                         </li>
-                                        <li >
-                                            <a href="#" className="row menu-toggle">
-                                                <span className="col-1"><i className="fas fa-user"></i></span>
-                                                <span className="col-7"><p> Tài Khoản</p></span>
-                                                <span className="col-2">
-                                                    <i className="fas icon-toggle fa-chevron-down hide-icon" />
-                                                    <i className="fas icon-toggle  fa-chevron-right" />
-                                                </span>
-                                            </a>
-                                            <ul className="menu-child menu-child-toggle">
-                                                {
-                                                    (user_role_login == 2 || user_role_login == 1) ? (
-                                                        <li className="mb-3 nav-link link">
-                                                            <Link to="/admin/create-user" className="ml-4">Tạo Tài Khoản</Link>
-                                                        </li>) : null
-                                                }
-                                            </ul>
-                                        </li>
 
                                         <li className="">
                                             <a href="#" className="row menu-toggle">
