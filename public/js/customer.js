@@ -2,9 +2,9 @@ $(document).ready(function(){
    /*
 	* TrungLV background image home page move
 	*/
-	$('.body .top').backgroundMove({
-	  	movementStrength:'50'
-	});
+	// $('.body .top').backgroundMove({
+	//   	movementStrength:'50'
+	// });
 
 	/*
 	* TrungLV  toggle info when click btn "thông tin chi tiết"

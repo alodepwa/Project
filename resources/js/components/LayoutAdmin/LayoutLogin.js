@@ -6,9 +6,16 @@ import md5 from 'md5';
 import axios from 'axios';
 import * as common from './../../common';
 import Swal from 'sweetalert2';
+import { makeStyles } from '@material-ui/core/styles';
 import { Redirect, useHistory } from 'react-router-dom';
+const useStyles = makeStyles((theme) => ({
+    margin: {
+        margin: theme.spacing(1),
+    },
+}));
 
 export default function LayoutLogin() {
+    const classes = useStyles();
     const [values, setValues] = useState({ password: '', phone: '', errPassword: '', errPhone: '', err: '' });
     let history = useHistory();
     /**
@@ -50,72 +57,57 @@ export default function LayoutLogin() {
     useEffect(() => {
         sessionStorage.setItem('tokens', '');
         sessionStorage.setItem('isLogin', false);
-    }, [])
+    }, []);
     return (
         <div className="layout-login">
             <div className="container form-login">
-                <div className="card">
-                    <div className="card-body">
-                        <div className="row bg-light">
-                            <div className="col-lg-6">
-                                <div className="">
-                                    <img className="card-img" src="https://dailysg.vn/wp-content/uploads/2017/10/DailySG.vn-xe-khach-29-34-cho-samco-isuzu-1.png"></img>
+                <div className="card-body">
+                    <div className="row d-flex justify-content-center ">
+                        <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 formLogin">
+                            <form >
+                                <div className="form-group">
+                                    <label style={{ color: 'red' }}>{values.err ? values.err : values.errPhone ? values.errPhone : ''}</label>
+                                    
+                                    <TextField className="form-control "
+                                        label="Số Điện Thoại..."
+                                        type='number'
+                                        name='phone'
+                                        InputProps={{
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <AccountCircle />
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                        onChange={onChangeInput}
+                                    />
                                 </div>
-                            </div>
-                            <div className="col-lg-6 row">
-                                <div className="col-lg-12">
-                                    <div className="d-flex flex-column">
-                                        <div className="text-center">
-                                            <h1 className="h4 text-gray-900 my-4">Chào Mừng Bạn</h1>
-                                        </div>
-                                        <form >
-                                            <div className="form-group">
-                                                <label style={{ color: 'red' }}>{values.err ? values.err : values.errPhone ? values.errPhone : ''}</label>
-                                                <TextField className="form-control bg-light"
-                                                    label="Số Điện Thoại..."
-                                                    type='number'
-                                                    name='phone'
-                                                    InputProps={{
-                                                        startAdornment: (
-                                                            <InputAdornment position="start">
-                                                                <AccountCircle />
-                                                            </InputAdornment>
-                                                        ),
-                                                    }}
-                                                    onChange={onChangeInput}
-                                                />
-                                            </div>
-                                            <div className="form-group">
-                                                <TextField className="form-control bg-light"
-                                                    label="Mật Khẩu..."
-                                                    name='password'
-                                                    type='password'
-                                                    onChange={onChangeInput}
-                                                    InputProps={{
-                                                        startAdornment: (
-                                                            <InputAdornment position="start">
-                                                                <AccountCircle />
-                                                            </InputAdornment>
-                                                        ),
-                                                    }}
-                                                />
-                                            </div>
-                                            <div className="d-flex justify-content-between">
-                                                <button
-                                                    type="submit"
-                                                    className="btn btn-primary"
-                                                    disabled={values.password && values.phone && !values.errPhone && !values.errPassword ? false : true}
-                                                    // style = {{  values.password &&  }}
-                                                    onClick={onClickButtonLogin}
-                                                >Đăng Nhập</button>
-                                                <a href="#">Quên Mật Khẩu!</a>
-                                            </div>
-
-                                        </form>
-                                    </div>
+                                <div className="form-group">
+                                    <TextField className="form-control"
+                                        label="Mật Khẩu..."
+                                        name='password'
+                                        type='password'
+                                        onChange={onChangeInput}
+                                        InputProps={{
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <AccountCircle />
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                </div>
+                                <div className="d-flex justify-content-center">
+                                    <button
+                                        type="submit"
+                                        className="btn btn-primary"
+                                        disabled={values.password && values.phone && !values.errPhone && !values.errPassword ? false : true}
+                                        // style = {{  values.password &&  }}
+                                        onClick={onClickButtonLogin}
+                                    >Đăng Nhập</button>
                                 </div>
 
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>

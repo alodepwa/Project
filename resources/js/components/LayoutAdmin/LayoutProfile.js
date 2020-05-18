@@ -87,11 +87,11 @@ export default function LayoutProfile() {
                 address         : values.address,
                 dateOffBirth    : values.dateOffBirth,
                 sex             : values.sex,
-                password        : md5(values.password)
+                password        : values.password ? md5(values.password) : ''
             };
            await axios.post(`${common.HOST}admin/update-profile`, data)
                 .then( res => {
-                    res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Update fail!') : CommonAlert.showAlert('success', 'Update success!')
+                    res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Cập nhật thất bại. Số điện thoại đã tồn tại!') : CommonAlert.showAlert('success', 'Cập nhật thành công!')
                 })
                 .catch(err => { throw err });
         }
