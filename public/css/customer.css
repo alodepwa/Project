@@ -346,3 +346,58 @@ body {
         margin-left: 60px;
     }
   }
+
+/*format lay out login*/
+.layout-login{
+  background-image: url('https://ak.picdn.net/shutterstock/videos/22876729/thumb/1.jpg');
+  background-repeat: none;
+  background-size: cover;
+  width: 100%;
+  height: 600px;
+}
+.formLogin{
+  background: white;
+  padding: 50px 20px 0px 20px;
+  height: auto;
+  border-radius: 4px;
+}
+.layout-login .title h2 {
+  font-family: cursive;
+  font-style: oblique;
+  color: #ff000096;
+}
+.layout-login .MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-formControl {
+    width: 100% !important;
+    height: 48px !important;
+    border-radius: 24px !important;
+    text-align: center !important;
+    
+}
+.layout-login input.MuiInputBase-input.MuiOutlinedInput-input{
+  background: none !important;
+}
+.btnLogin{
+  width: 100%;
+  border-radius: 24px !important;
+  margin-bottom: 25px;
+  background-color: #0226eb !important;
+  height: 48px;
+}
+.bottom-title{
+  margin-bottom: 20px;
+}
+/* .layout-login .MuiInputLabel-outlined{
+  transform: translate(14px ,14px)scale(1) !important;
+} */
+
+/* home admin*/
+.adminHome{
+  width: 108% !important;
+  padding: 0px !important;
+}
+.toggleBtnMenu i{
+  font-size: 20px;
+}
+.toggleBtnMenu {
+  margin: 0px 0px 10px 1.5%;
+}

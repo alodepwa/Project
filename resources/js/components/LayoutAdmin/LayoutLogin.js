@@ -8,9 +8,14 @@ import * as common from './../../common';
 import Swal from 'sweetalert2';
 import { makeStyles } from '@material-ui/core/styles';
 import { Redirect, useHistory } from 'react-router-dom';
+import IconButton from '@material-ui/core/IconButton';
 const useStyles = makeStyles((theme) => ({
     margin: {
         margin: theme.spacing(1),
+    },
+    root: {
+        background: 'none !important',
+        margin : '25px 0px'
     },
 }));
 
@@ -63,51 +68,39 @@ export default function LayoutLogin() {
             <div className="container form-login">
                 <div className="card-body">
                     <div className="row d-flex justify-content-center ">
-                        <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 formLogin">
-                            <form >
-                                <div className="form-group">
-                                    <label style={{ color: 'red' }}>{values.err ? values.err : values.errPhone ? values.errPhone : ''}</label>
-                                    
-                                    <TextField className="form-control "
-                                        label="Số Điện Thoại..."
-                                        type='number'
-                                        name='phone'
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <AccountCircle />
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                        onChange={onChangeInput}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <TextField className="form-control"
-                                        label="Mật Khẩu..."
-                                        name='password'
-                                        type='password'
-                                        onChange={onChangeInput}
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <AccountCircle />
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                    />
+                        <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 formLogin mt-5">
+                            <div className="d-flex flex-column">
+                                <div className="title text-center mb-5"><h2>Vé Xe 2020</h2></div>
+                                <TextField
+                                    error={values.errPhone ? true : false}
+                                    type='number'
+                                    name='phone'
+                                    label={!values.errPhone ? 'Số điện thoại ' : 'Sai định dạng'}
+                                    variant="outlined"
+                                    onChange={onChangeInput}
+                                />
+                                <TextField
+                                    error={values.errPhone ? true : false}
+                                    type='password'
+                                    name='password'
+                                    label='Mật khẩu'
+                                    variant="outlined"
+                                    onChange={onChangeInput}
+                                    className = { classes.root}
+                                />
+                                 <div className="form-group text-right">
+                                    <a link="#" style={{color : '#0268b9'}}>Forget Password?</a>
                                 </div>
                                 <div className="d-flex justify-content-center">
                                     <button
                                         type="submit"
-                                        className="btn btn-primary"
+                                        className="btn btn-primary btnLogin"
                                         disabled={values.password && values.phone && !values.errPhone && !values.errPassword ? false : true}
-                                        // style = {{  values.password &&  }}
                                         onClick={onClickButtonLogin}
                                     >Đăng Nhập</button>
                                 </div>
-
-                            </form>
+                                <div className="bottom-title text-center">New User? <a style={{color : '#0268b9'}}>Sign up for a new account.</a></div>
+                            </div>
                         </div>
                     </div>
                 </div>

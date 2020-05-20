@@ -26,21 +26,21 @@ $(document).ready(function(){
 		parent.find('.col_input_info').addClass('col_btn_info_show');
 	})
 
-	/*
-	* TrungLV  toggle info when click btn "thông tin chi tiết"
-	*/ 
-	var step1 = [];
-	$(document).on('click', '.iconEmpty', function(e){
-		e.preventDefault();
-		$(this).toggleClass('iconCheck');
-		// let id = $(this).attr('data-id');
-		// let check     = step1.indexOf(id);
-		// if(check == -1)
-		// 	step1.push(id);
-		// else
-		// 	step1.splice(check, 1);
-		// localStorage.setItem('step1', step1);
-	});
+	// /*
+	// * TrungLV  toggle info when click btn "thông tin chi tiết"
+	// */ 
+	// var step1 = [];
+	// $(document).on('click', '.iconEmpty', function(e){
+	// 	e.preventDefault();
+	// 	$(this).toggleClass('iconCheck');
+	// 	// let id = $(this).attr('data-id');
+	// 	// let check     = step1.indexOf(id);
+	// 	// if(check == -1)
+	// 	// 	step1.push(id);
+	// 	// else
+	// 	// 	step1.splice(check, 1);
+	// 	// localStorage.setItem('step1', step1);
+	// });
 
 	/*
 	* TrungLV  toggle info when click btn "thông tin chi tiết"
@@ -87,4 +87,42 @@ $(document).ready(function(){
 			$(this).siblings('#content').toggle();
 		})
 	});
+
+	//toggle btn and menu
+	$(window).resize(function(){
+		if($('.admin').width() < 950 && $('.admin').width() >600){
+			$('.toggleBtnMenu').css('display','initial');
+			$('.admin-left').css('display','none ');
+			// $('.admin-right').css('width','130%')
+			$('.admin-right').addClass('col-sm-12 col-md-12');
+		}if($('.admin').width() > 950){
+			$('.toggleBtnMenu').css('display','none ');
+			$('.admin-left').css('display','initial');
+			// $('.admin-right').css('width','100%')
+			$('.admin-right').removeClass('col-sm-12 col-md-12')
+			$('.admin-right').addClass('col-sm-8 col-md-9')
+		}else{
+			$('.admin-right').addClass('col-sm-12');
+		}
+	});
+	if($('.admin').width() < 950 && $('.admin').width() >600){
+		$('.toggleBtnMenu').css('display','initial');
+		$('.admin-left').css('display','none');
+		$('.admin-right').addClass('col-sm-12 col-md-12');
+	}else{
+		$('.toggleBtnMenu').css('display','none');
+	}
+	let dem = 0;
+	$(document).on('click','.toggleBtnMenu', function(event){
+		event.preventDefault();
+		dem++;
+		if(dem % 2 == 0){
+			$('.admin-left').css('display','none');
+			$('.admin-right').addClass('col-sm-12 col-md-12');
+		}else{
+			$('.admin-left').css('display','initial');
+			$('.admin-right').removeClass('col-sm-12 col-md-12');
+			$('.admin-right').addClass('col-sm-12 col-md-9');
+		}
+	})
 })
