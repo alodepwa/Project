@@ -256,22 +256,22 @@ export default function LayoutListCar() {
             case 'name':
                 let parrtenText = /^[^!~`@#@\$%^&\*()\+_\-=\\|}{}\]\["';?\/><]*$/;
                 let errName = 'Name isn\'t correctly format!';
-                parrtenText.test(value) ? setValues({ ...values, [event.target.name]: value, errName: '' }) : setValues({ ...values, errName, err: '' });
+                parrtenText.test(value) ? setValues({ ...values, [event.target.name]: value, errName: '' }) : setValues({ ...values, [event.target.name]: value, errName, err: '' });
                 break;
             case 'carnumber':
                 let parrtenTextNumber = /^[0-9]{1,2}[A-Z][0-9][-][0-9]{3,5}$/
                 let errCarNumber = 'Car number isn\'t correct format!';
-                parrtenTextNumber.test(value) ? setValues({ ...values, [event.target.name]: value, errCarNumber: '' }) : setValues({ ...values, errCarNumber, err: '' });
+                parrtenTextNumber.test(value) ? setValues({ ...values, [event.target.name]: value, errCarNumber: '' }) : setValues({ ...values, [event.target.name]: value, errCarNumber, err: '' });
                 break;
             case 'fare':
                 let parrtenFare = /^[0-9]*$/;
                 let errFare = 'Car number isn\'t correct format!';
-                parrtenFare.test(value) ? setValues({ ...values, [event.target.name]: value, errFare: '' }) : setValues({ ...values, errFare, err: '' });
+                parrtenFare.test(value) ? setValues({ ...values, [event.target.name]: value, errFare: '' }) : setValues({ ...values, [event.target.name]: value, errFare, err: '' });
                 break;
             case 'seat':
                 let parrtenSeat = /^[0-9]*$/;
                 let errSeat = 'Car number isn\'t correct format!';
-                parrtenSeat.test(value) && (value > 0 && value < 50) ? setValues({ ...values, [event.target.name]: value, errSeat: '' }) : setValues({ ...values, errSeat, err: '' });
+                parrtenSeat.test(value) && (value > 0 && value < 50) ? setValues({ ...values, [event.target.name]: value, errSeat: '' }) : setValues({ ...values, [event.target.name]: value, errSeat, err: '' });
                 break;
             case 'from':
                 if (values.to != event.target.value)
@@ -350,7 +350,6 @@ export default function LayoutListCar() {
                                         <TextField
                                             error={values.errName ? true : false}
                                             required={true}
-                                            label="Tên Xe"
                                             type="search"
                                             variant="outlined"
                                             name="name"
@@ -472,7 +471,7 @@ export default function LayoutListCar() {
                                         </FormControl>
                                     </div>
                                     <Button
-                                        disabled={values.seat && values.to && values.from && values.fare && values.name && values.phone && values.category_car && !values.errName && !values.errPhone && !values.errCarNumber ? false : true}
+                                        disabled={values.seat && values.to && values.from && values.fare && values.name && values.phone && values.category_car && !values.errName && !values.errPhone && !values.errCarNumber && !values.errFare && !values.errSeat ? false : true}
                                         variant="contained"
                                         color="primary"
                                         endIcon={<Icon>send</Icon>}

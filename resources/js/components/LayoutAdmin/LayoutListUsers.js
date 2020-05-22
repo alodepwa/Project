@@ -177,18 +177,18 @@ export default function LayoutListUsers() {
         if (event.target.name == "phone") {
             let parrtenPhone = /^[0][1-9][0-9]{7,9}$/;
             let errPhone = 'Phone isn\'t correctly!'
-            parrtenPhone.test(value) ? setValues({ ...values, [event.target.name]: value, errPhone: '' }) : setValues({ ...values, errPhone, err: '' });
+            parrtenPhone.test(value) ? setValues({ ...values, [event.target.name]: value, errPhone: '' }) : setValues({ ...values, [event.target.name]: value, errPhone, err: '' });
         }
         if (event.target.name == "name") {
             let parrtenText = /^[^!~`@#@\$%^&\*()\+_\-=\\|}{}\]\["';?\/><0-9]*$/;
             let errName = 'Name isn\'t correctly format!';
-            parrtenText.test(value) ? setValues({ ...values, [event.target.name]: value, errName: '' }) : setValues({ ...values, errName, err: '' });
+            parrtenText.test(value) ? setValues({ ...values, [event.target.name]: value, errName: '' }) : setValues({ ...values, [event.target.name]: value, errName, err: '' });
 
         }
         if (event.target.name == "address") {
             let parrtenText = /^[^!~`@#@\$%^&\*()\+_\-=\\|}{}\]\["';?\/><]*$/;
             let errAddress = 'Address isn\'t correct format!';
-            parrtenText.test(value) ? setValues({ ...values, [event.target.name]: value, errAddress: '' }) : setValues({ ...values, errAddress, err: '' });
+            parrtenText.test(value) ? setValues({ ...values, [event.target.name]: value, errAddress: '' }) : setValues({ ...values,[event.target.name]: value,  errAddress, err: '' });
         }
     }
     /**
