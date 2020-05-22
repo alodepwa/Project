@@ -24,22 +24,27 @@ import {
     Redirect,
 
 } from "react-router-dom";
-
+import {
+    useWindowWidth,
+  } from '@react-hook/window-size'
 export default function LayoutHomeAdmin() {
-    // const get_data = useSelector(state => console.log(state));
+    const  width  = useWindowWidth();
     const user_name_login = sessionStorage.getItem('tokens') ? JSON.parse(sessionStorage.getItem('tokens')).Admin_Name : '';
     const user_role_login = sessionStorage.getItem('tokens') ? JSON.parse(sessionStorage.getItem('tokens')).Roles_Id : '';
     return (
         <HashRouter>
             <div className="admin">
-                <button className=" btn toggleBtnMenu" type="button">
+                {
+                    width < 950 && (<button className="btn toggleBtnMenu " type="button">
                     <span><i className="fas fa-bars"></i></span>
-                </button>
+                </button>)
+                }
                 <div className="row">
-                    <div className="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-2 admin-left">
+                   
+                    <div className="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-2 admin-left" style={ width < 950 ? { display : 'none' } : { display : 'initial' } }>
                         {/* <div className="navbar navbar-expand-lg d-flex justify-content-end adminHome"> */}
                             {/* <div className="navbar-collapse collapse" id="content"> */}
-                                <ul className="block-menu nav-link w-100">
+                                <ul className="block-menu nav-link" style={{ width : '110%'}}>
                                     <li className="">
                                         <a href="#" className="row menu-toggle">
                                             <span className="iconAvatar col-1"><Avatar src="https://cdn4.iconfinder.com/data/icons/people-std-pack/512/boss-512.png" /></span>
@@ -54,7 +59,7 @@ export default function LayoutHomeAdmin() {
                                                 <Link to="/login" className="ml-4">Đăng Xuất</Link>
                                             </li>
                                             <li className="mb-3 link nav-link">
-                                                <Link to="/admin/profile" className="ml-4">Thông tin tài khoản</Link>
+                                                <Link to="/admin/profile" className="ml-4">Thông tin <br/>tài khoản</Link>
                                             </li>
                                         </ul>
                                     </li>
@@ -93,12 +98,12 @@ export default function LayoutHomeAdmin() {
                                             {
                                                 (user_role_login == 1) ? (
                                                     <li className="nav-link link">
-                                                        <Link to="/admin/list-users" className="ml-4 "><p>DS Khách Hàng</p></Link>
+                                                        <Link to="/admin/list-users" className="ml-4 "><p>Danh Sách <br/> Khách Hàng</p></Link>
                                                     </li>
                                                 ) :
                                                     user_role_login == 2 ? (
                                                         <li className="nav-link link">
-                                                            <Link to="/admin/list-users" className="ml-4 "><p>DS Nhân Viên</p></Link>
+                                                            <Link to="/admin/list-users" className="ml-4 "><p>Danh Sách <br /> Nhân Viên</p></Link>
                                                         </li>
                                                     ) : null
                                             }
@@ -154,7 +159,7 @@ export default function LayoutHomeAdmin() {
                                                 </a>
                                                 <ul className="menu-child menu-child-toggle">
                                                     <li className="nav-link link">
-                                                        <Link to="/admin/list-trips" className="ml-4 "><p>Danh Sách Tuyến</p></Link>
+                                                        <Link to="/admin/list-trips" className="ml-4 "><p>Danh Sách <br /> Tuyến</p></Link>
                                                     </li>
                                                 </ul>
                                             </li>
@@ -178,7 +183,7 @@ export default function LayoutHomeAdmin() {
                                                 )
                                             }
                                             <li className="nav-link link">
-                                                <Link to="/admin/list-posts" className="ml-4 link"><p>Danh Sách Bài Viết</p></Link>
+                                                <Link to="/admin/list-posts" className="ml-4 link"><p>Danh Sách <br /> Bài Viết</p></Link>
                                             </li>
                                         </ul>
                                     </li>
@@ -188,7 +193,7 @@ export default function LayoutHomeAdmin() {
                         {/* </div> */}
                     </div>
                     <div className="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-10 admin-right">
-                        <div className="a12dmin-right">
+                        <div className="content">
                             <Switch>
                                 <Route path="/admin/logout">
                                     <LayoutLogin />

@@ -93,12 +93,10 @@ $(document).ready(function(){
 		if($('.admin').width() < 950 && $('.admin').width() >600){
 			$('.toggleBtnMenu').css('display','initial');
 			$('.admin-left').css('display','none ');
-			// $('.admin-right').css('width','130%')
 			$('.admin-right').addClass('col-sm-12 col-md-12');
 		}if($('.admin').width() > 950){
 			$('.toggleBtnMenu').css('display','none ');
 			$('.admin-left').css('display','initial');
-			// $('.admin-right').css('width','100%')
 			$('.admin-right').removeClass('col-sm-12 col-md-12')
 			$('.admin-right').addClass('col-sm-8 col-md-9')
 		}else{
@@ -109,7 +107,10 @@ $(document).ready(function(){
 		$('.toggleBtnMenu').css('display','initial');
 		$('.admin-left').css('display','none');
 		$('.admin-right').addClass('col-sm-12 col-md-12');
-	}else{
+	}else if($('.admin').width() < 600){
+		$('.toggleBtnMenu').css('display','initial');
+	}
+	else{
 		$('.toggleBtnMenu').css('display','none');
 	}
 	let dem = 0;

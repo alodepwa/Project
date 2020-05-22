@@ -312,12 +312,14 @@ export default function LayoutListTrips() {
                     rowData => ((1 == 1 && !isClickInfo && !isClickShow) ? {
                         icon: 'add',
                         tooltip: 'Thêm Hành Trình',
+                        iconProps: { style: { color: "#28a745" } },
                         onClick: (event, rowData) => {
                             onClickButtonUpdate(event, rowData);
                         }
                     } : null),
                     rowData => ((isClickInfo) ? {
                         icon: 'edit',
+                        iconProps: { style: { color: "#007bff" } },
                         tooltip: 'Cập Nhật Hành Trình',
                         onClick: (event, rowData) => {
                             onClickButtonUpdate(event, rowData);

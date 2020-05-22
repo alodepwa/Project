@@ -212,4 +212,12 @@ class AdminController extends Controller
         $get = DB::select('exec getListTicketOfCar ?', [(int)$id]);
         return response()->json($get);
     }
+    function getProfitMonth($id){
+        $get = DB::select('exec THONGKEDOANHTHU1THANG ?', [(int)$id]);
+        return response()->json($get);
+    }
+    function getTripsWeek($id){
+        $get = DB::select('exec THONGKESOCHUYENDITRONGTUAN ?', [(int)$id]);
+        return response()->json($get);
+    }
 }

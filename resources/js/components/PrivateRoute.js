@@ -10,7 +10,6 @@ export default function PrivateRoute({children, ...rest}){
         return sessionStorage.getItem('isLogin') ? sessionStorage.getItem('isLogin') : false;
     });
     // let login = sessionStorage.getItem('isLogin') ? sessionStorage.getItem('isLogin') : false ;
-    console.log(typeof isLogin)
     return (
         <Route
             {...rest}

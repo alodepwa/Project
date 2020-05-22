@@ -71,6 +71,10 @@ export default function LayoutLogin() {
                         <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 formLogin mt-5">
                             <div className="d-flex flex-column">
                                 <div className="title text-center mb-5"><h2>Vé Xe 2020</h2></div>
+                                
+                                {
+                                    values.err && <div className="text-center pb-3" style={{color : 'red'}}>{values.err}</div>
+                                }
                                 <TextField
                                     error={values.errPhone ? true : false}
                                     type='number'

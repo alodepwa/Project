@@ -5,6 +5,8 @@ import Swal from 'sweetalert2';
 import Rating from '@material-ui/lab/Rating';
 import Avatar from '@material-ui/core/Avatar';
 import NumberFormat from 'react-number-format';
+import Chip from '@material-ui/core/Chip';
+import DirectionsCarIcon from '@material-ui/icons/DirectionsCar';
 function format_money(money, seat) {
     let format = money.replace(/,/g, '');
     let total = seat * format;
@@ -42,7 +44,19 @@ class LayoutInfoTicket extends Component {
         this.onChangeInputFrom = this.onChangeInputFrom.bind(this);
         this.onClickSubStep2 = this.onClickSubStep2.bind(this);
         this.onClickComment = this.onClickComment.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
 
+    }
+    // seat int seat number when click remove
+    handleDelete(event, seat) {
+        event.preventDefault();
+        var { step1 } = this.state;
+        let check = step1.indexOf(seat);
+        if (check !== -1)
+            step1.splice(check, 1);
+        this.setState({
+            step1
+        });
     }
     onClickComment(e, value) {
         e.preventDefault();
@@ -197,16 +211,16 @@ class LayoutInfoTicket extends Component {
                         <div key={i} className="iconBus iconChecked btn" ><i className="fas fa-bus" /></div>
                     );
                 else
-                        if(step1.indexOf(i) === -1){
-                            layout.push(
-                                <div title={` Ghế số ${i} `} data-id={i} key={i} className="iconBus iconEmpty btn" onClick={(e) => ClickStep1(e, i)}><i className="fas fa-bus" /></div>
-                            );
-                        }else{
-                            layout.push(
-                                <div title={` Ghế số ${i} `} data-id={i} key={i} className="iconBus iconCheck btn" onClick={(e) => ClickStep1(e, i)}><i className="fas fa-bus" /></div>
-                            );
-                        }
-                   
+                    if (step1.indexOf(i) === -1) {
+                        layout.push(
+                            <div title={` Ghế số ${i} `} data-id={i} key={i} className="iconBus iconEmpty btn" onClick={(e) => ClickStep1(e, i)}><i className="fas fa-bus" /></div>
+                        );
+                    } else {
+                        layout.push(
+                            <div title={` Ghế số ${i} `} data-id={i} key={i} className="iconBus iconCheck btn" onClick={(e) => ClickStep1(e, i)}><i className="fas fa-bus" /></div>
+                        );
+                    }
+
             }
             return layout;
         }
@@ -345,7 +359,7 @@ class LayoutInfoTicket extends Component {
                                                 </div>
                                             </div>
                                             <div className="col-xs-12 col-sm-6 col-md-4 col-lg-4 ">
-                                                <div className="row d-flex" style={{height : '100%'}}>
+                                                <div className="row d-flex" style={{ height: '100%' }}>
                                                     <div className="col-lg-12">
                                                         <div className="d-flex justify-content-start">
                                                             <p><u>Giá Vé </u>: <strong>{value.Passenger_Car_fare}&nbsp;đ</strong></p>
@@ -362,7 +376,7 @@ class LayoutInfoTicket extends Component {
                                                                 <p><small></small></p>
                                                             </div>
                                                             <div className="d-flex justify-content-center">
-                                                                <button onClick={(e) => this.onClickBtnInfo(e, value.Post_Id)} className="btn btn-primary btn_info">
+                                                                <button onClick={(e) => this.onClickBtnInfo(e, value.Post_Id)} className="btn btn-primary btn_info mr-1">
                                                                     Thông tin chi tiết
                                                                 </button>
                                                                 <button className="btn btn-success btn_register_ticket"
@@ -384,7 +398,7 @@ class LayoutInfoTicket extends Component {
                                                     <a className="nav-link" href="#" data-toggle="tab" data-target={`#map${key}`}>Điểm đón trả</a>
                                                     <a className="nav-link" href="#" data-toggle="tab" data-target={`#danhgia${key}`} onClick={e => this.onClickComment(e, value.Post_Id)} >Đánh giá</a>
                                                     <a className="nav-link" href="#" data-toggle="tab" data-target={`#info${key}`}>Thông tin bài post</a>
-                                                    <div className="btn btn-danger text-center closeToggle"><i className="far fa-times-circle" style={{paddingTop:'6px'}} ></i></div>
+                                                    <div className="btn btn-danger text-center closeToggle"><i className="far fa-times-circle" style={{ paddingTop: '6px' }} ></i></div>
                                                 </nav>
                                                 <div className="tab-content mt-3">
                                                     <div className="container tab-pane active" id={`imagesId${key}`}>
@@ -438,19 +452,19 @@ class LayoutInfoTicket extends Component {
                                                             })
                                                         }
                                                     </div>
-                                                   
+
                                                     <div className="container tab-pane" id={`info${key}`}>
                                                         <div className="row">
                                                             <p><strong>Tiêu đề : </strong> &nbsp;</p>
-                                                            <p>{ value.Post_Title}</p>
+                                                            <p>{value.Post_Title}</p>
                                                         </div>
                                                         <div className="row">
                                                             <p><strong>Nội dung : </strong> &nbsp;</p>
-                                                            <p>{ value.Post_Content}</p>
+                                                            <p>{value.Post_Content}</p>
                                                         </div>
                                                         <div className="row">
                                                             <p><strong>Chú ý : </strong> &nbsp;</p>
-                                                            <p>{ value.Post_note}</p>
+                                                            <p>{value.Post_note}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -464,11 +478,13 @@ class LayoutInfoTicket extends Component {
                                                             <div className="row">
                                                                 <div className="col-lg-12">
                                                                     <div className="d-flex justify-content-between">
-                                                                        <div className="number">
-                                                                            <p><span className="bg-primary border rounded-circle">1</span> Chọn chổ</p>
+                                                                        <div className="number d-flex">
+                                                                            <p className="stepActive pr-1" style={{ background: '#007bff' }}>1</p>
+                                                                            <p>Chọn Chỗ</p>
                                                                         </div>
-                                                                        <div className="number">
-                                                                            <p><span className=" border rounded-circle">3</span> Nhập thông tin</p>
+                                                                        <div className="number d-flex">
+                                                                            <p className="stepActive">2</p>
+                                                                            <p>Nhập thông tin</p>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -494,12 +510,21 @@ class LayoutInfoTicket extends Component {
                                                                 <div className="col-lg-12">
                                                                     <div className="border border-bottom-0 border-left-0 border-right-0 ">
                                                                         <div className="d-flex justify-content-between mt-3">
-                                                                            <div>
-                                                                                <p>Ghế: &nbsp;<strong>
+                                                                            <div className="d-flex align-items-center">
+                                                                                <div>Ghế  :  &nbsp;
                                                                                     {
-                                                                                        this.state.step1.length > 0 ? this.state.step1.map(index => ` ${index} `) : ''
-                                                                                    }</strong>
-                                                                                </p>
+                                                                                        this.state.step1.length > 0 ? this.state.step1.map((index, key) =>
+
+                                                                                            <Chip
+                                                                                                key={key}
+                                                                                                icon={<DirectionsCarIcon />}
+                                                                                                label={index}
+                                                                                                onDelete={(e) => this.handleDelete(e, index)}
+                                                                                                color="primary"
+                                                                                            />
+                                                                                        ) : ''
+                                                                                    }
+                                                                                </div>
                                                                             </div>
                                                                             <div className="d-flex">
                                                                                 <p className="p-1 mr-2">Tổng cộng: <strong>
@@ -508,7 +533,7 @@ class LayoutInfoTicket extends Component {
                                                                                             value={format_money(value.Passenger_Car_fare, this.state.step1.length)}
                                                                                             displayType={'text'} thousandSeparator={true}
                                                                                         />
-                                                                                        : 0 }&nbsp;đ</strong></p>
+                                                                                        : 0}&nbsp;đ</strong></p>
                                                                                 <button
                                                                                     disabled={this.state.step1.length > 0 ? false : true}
                                                                                     style={{ cursor: this.state.step1.length > 0 ? '' : 'no-drop' }} className="btn submit-step1 btn-primary" >Tiếp tục</button>
@@ -531,24 +556,38 @@ class LayoutInfoTicket extends Component {
                                                             <div className="row">
                                                                 <div className="col-lg-12">
                                                                     <div className="d-flex justify-content-between">
-                                                                        <div className="number">
-                                                                            <p><span className=" border rounded-circle">1</span> Chọn chổ</p>
+                                                                        <div className="number d-flex">
+                                                                            <p className="stepActive" >1</p>
+                                                                            <p>Chọn Chỗ</p>
                                                                         </div>
-                                                                        <div className="number">
-                                                                            <p><span className="bg-primary border rounded-circle">2</span> Nhập thông tin</p>
+                                                                        <div className="number d-flex">
+                                                                            <p className="stepActive pr-1" style={{ background: '#007bff' }}>2</p>
+                                                                            <p>Nhập thông tin</p>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div className="col-lg-12">
                                                                     <div className="row">
-                                                                        <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-center">
+                                                                        <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-center">
                                                                             <strong>From</strong> : {value.Trips_Start}
                                                                             &nbsp;
                                                                         <strong>To</strong> : {value.Trips_Ends}
                                                                         </div>
-                                                                        <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-center">
-                                                                            <strong>Ghế</strong> : {
-                                                                                this.state.step1.map(value => ` ${value} `)
+                                                                        <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5 text-center">
+                                                                            {
+                                                                                this.state.step1.map(value =>
+                                                                                    (
+                                                                                        <Chip
+                                                                                            icon={<DirectionsCarIcon />}
+                                                                                            key={value}
+                                                                                            label={value}
+                                                                                            clickable
+                                                                                            color="primary"
+                                                                                            onDelete={(e) => this.handleDelete(e, value)}
+
+                                                                                        />
+                                                                                    )
+                                                                                )
                                                                             }
                                                                         </div>
                                                                         <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-center">
@@ -557,7 +596,7 @@ class LayoutInfoTicket extends Component {
                                                                                     value={format_money(value.Passenger_Car_fare, this.state.step1.length)}
                                                                                     displayType={'text'} thousandSeparator={true}
                                                                                 />
-                                                                                : 0 } &nbsp;đ
+                                                                                : 0} &nbsp;đ
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -581,11 +620,6 @@ class LayoutInfoTicket extends Component {
                                                                                     <label style={{ color: 'red' }}>&nbsp;&nbsp;{this.state.phoneErr ? this.state.phoneErr : ''}</label>
                                                                                 </div>
                                                                                 <div className="input-group">
-                                                                                    <select >
-                                                                                        <option value={0}>84</option>
-                                                                                        <option value={0}>84</option>
-                                                                                        <option value={0}>84</option>
-                                                                                    </select>
                                                                                     <input type="number" step={0}
                                                                                         required
                                                                                         className="form-control phone" onChange={
@@ -594,10 +628,6 @@ class LayoutInfoTicket extends Component {
                                                                                     ></input>
                                                                                 </div>
                                                                             </div>
-                                                                            {/* <div className="form-group">
-                                                                                <label>Nơi ở hiện tại <span style={{color:red}}> * </span></label>
-                                                                                <input type="text" className="form-control"></input>
-                                                                            </div> */}
                                                                             <div className="form-group">
                                                                                 <div className="row">
                                                                                     <label>Nơi đón khách <span style={{ color: 'red' }}> * </span></label>
@@ -639,21 +669,21 @@ class LayoutInfoTicket extends Component {
                                                                 </div>
                                                                 <div className="col-lg-12">
                                                                     <div className="d-flex justify-content-between my-3">
-                                                                        <div className="btn btn-success btn-rollback" >Quay lại</div>
-                                                                        <div className="d-flex flex-column">
-                                                                            <button
-                                                                                className="btn-primary p-1"
-                                                                                disabled={
-                                                                                    this.state.nameStep2 && this.state.phoneStep2 && this.state.fromStep2 && this.state.toStep2 ? false : true
-                                                                                }
-                                                                                style={{
-                                                                                    cursor:
-                                                                                        this.state.nameStep2 && this.state.phoneStep2 && this.state.fromStep2 && this.state.toStep2 ? '' : 'no-drop'
-                                                                                }}
-                                                                                onClick={(e) => this.onClickSubStep2(e, value.Trips_Passenger_Car_Id)}>
-                                                                                Tiếp tục
+                                                                        <button className="btn btn-success btn-rollback ">
+                                                                            Quay lại
+                                                                        </button>
+                                                                        <button
+                                                                            className="btn-primary submit-step2 p-1"
+                                                                            disabled={
+                                                                                this.state.nameStep2 && this.state.phoneStep2 && this.state.fromStep2 && this.state.toStep2 ? false : true
+                                                                            }
+                                                                            style={{
+                                                                                cursor:
+                                                                                    this.state.nameStep2 && this.state.phoneStep2 && this.state.fromStep2 && this.state.toStep2 ? '' : 'no-drop'
+                                                                            }}
+                                                                            onClick={(e) => this.onClickSubStep2(e, value.Trips_Passenger_Car_Id)}>
+                                                                            Tiếp tục
                                                                             </button>
-                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>

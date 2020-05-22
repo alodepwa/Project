@@ -41,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
     },
+    iconDelete : {
+        color : 'red'
+    }
 }));
 
 export default function LayoutListPost() {
@@ -230,6 +233,7 @@ export default function LayoutListPost() {
                     rowData => (idLogin != '1' && rowData.status_post == 0) ? {
                         icon: 'edit',
                         tooltip: 'Cập Nhật',
+                        iconProps: { style: { color: "#007bff" } },
                         onClick: (event, rowData) => {
                             onClickButtonUpdate(event, rowData)
                         }
@@ -237,6 +241,7 @@ export default function LayoutListPost() {
                     rowData => ((idLogin != '1' && rowData.status_post == 0) ? {
                         icon: 'delete',
                         tooltip: 'Xóa',
+                        iconProps: { style: { color: "red" } },
                         onClick: (event, rowData) => {
                             onClickButtonDelete(event, rowData);
                         }
@@ -245,6 +250,7 @@ export default function LayoutListPost() {
                     rowData => ((idLogin == '1' && (rowData.status_post == 0 || rowData.status_post == 2) ) ? {
                         icon: 'clear',
                         tooltip: 'Từ Chối',
+                        iconProps: { style: { color: "red" } },
                         onClick: (event, rowData) => {
                             onClickButtonDelete(event, rowData);
                         }
@@ -253,6 +259,7 @@ export default function LayoutListPost() {
                     rowData => ((idLogin == '1' && rowData.status_post == 0) ? {
                         icon: 'check',
                         tooltip: 'Chấp Nhận',
+                        iconProps: { style: { color: "#007bff" } },
                         onClick: (event, rowData) => {
                             onClickButtonApprove(event, rowData);
                         }

@@ -25,8 +25,8 @@
 	height: 650px;
     width: 100%;
     background-repeat: no-repeat;
-    background-size: auto;
-    background-image: url(https://thuthuatnhanh.com/wp-content/uploads/2018/07/hinh-anh-thien-nhien-phong-canh-dep-nhat.jpg);
+    background-size: cover;
+    background-image: url(https://static.vexere.com/production/banners/330/neu-ban-phai-di.png);
     position: relative;
     overflow: hidden;
 }
@@ -35,6 +35,9 @@
 	position: absolute !important;
 	top: 40% !important;
 	text-align: center;
+}
+.body-top i.fas.iconLocation.fa-map-marker-alt {
+  color: #FFEB3B;
 }
 .inputSearch {
     width: 250px;
@@ -175,6 +178,9 @@ body{
  .block-child, .menu-child{
     text-align: center;
  }
+ ul.menu-child.menu-child-toggle {
+  border-left: 1px solid #80808061;
+}
  .hide-icon, .hide{
     visibility: hidden;
  }
@@ -196,6 +202,9 @@ body{
 .iconAvatar .MuiAvatar-root {
     width: 24px !important;
     height: 24px !important;
+}
+.admin li.nav-link.link{
+  padding : 0px 1rem !important;
 }
 @media (max-width : 990px){
   .layoutFilter{
@@ -222,13 +231,28 @@ body{
   width: 30% !important;
 }
 
-.body .MuiButtonBase-root svg.MuiSvgIcon-root, .menu-search .MuiButtonBase-root svg.MuiSvgIcon-root {
+.body-top .MuiButtonBase-root svg.MuiSvgIcon-root, .menu-search .MuiButtonBase-root svg.MuiSvgIcon-root {
   font-size: 40px;
+  
+}
+.body-top .MuiButtonBase-root svg.MuiSvgIcon-root{
+  color: #FFEB3B;
+}
+.body-top .MuiInput-root{
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+}
+.hide-title{
+  font-size: 17px;
+    font-weight: 600;
+    background-color: white;
 }
 
 body {
     background: #F1F3FA;
-  }
+    font-family: sans-serif;
+}
   
   /* Profile container */
   .profile {
@@ -335,18 +359,39 @@ body {
     background: #fff;
     min-height: 460px;
   }
+.submit-step1, .submit-step2, .btn-rollback{
+  width: 110px;
+  height: 50px;
+  border-radius: 30px !important;
+}
+.btn_info, .btn_register_ticket {
+  border-radius: 25px !important;
+  height: 42px;
+  font-weight: 500 !important;
+}
+#seatsposition input {
+  border-radius: 20px !important;
+}
+#seatsposition textarea {
+  border-radius: 50px !important;
+}
 
-
-
-  @media (max-width: 576px){
+  @media (max-width: 779px){
     .hide-title{
       display: none;
     }
     .link{ 
-        margin-left: 60px;
+        margin-left: 11.5%;
     }
   }
-
+@media (max-width: 576px){
+  .hide-title{
+    display: none;
+  }
+  .link{ 
+      margin-left: 9.5%;
+  }
+}
 /*format lay out login*/
 .layout-login{
   background-image: url('https://ak.picdn.net/shutterstock/videos/22876729/thumb/1.jpg');
@@ -400,4 +445,43 @@ body {
 }
 .toggleBtnMenu {
   margin: 0px 0px 10px 1.5%;
+}
+.text-color{
+  color : #fffffff2;
+  font-size: 18px !important;
+}
+.admin .content .MTableToolbar-title-114{
+  width: 55% !important;
+  margin-top:24px !important;
+}
+
+
+/* footer */
+.footer .top {
+  text-align: center;
+  margin-top: 50px;
+}
+.footer .bottom {
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 20px;
+}
+.footer .right {
+  width: 20%;
+  display: flex;
+  justify-content: space-between;
+}
+.footer .right i {
+  font-size: 22px;
+}
+
+/* register ticket */
+.stepActive{
+  width: 24px; 
+  height: 24px;
+  border-radius: 12px;
+  text-align: center;
+}
+h5.logoMenu {
+  margin-top: -10px;
 }

@@ -265,71 +265,26 @@ class LayoutRegTick extends React.Component {
 							) : ''}
 						</div>
 
-						{/* Thông tin chung về tuyến đường */}
-						<div className="container my-4">
-
-						</div>
-						{/* link liên kết */}
-						<div className="bg-light">
-							<div className="container">
-								<div className="row mb-4">
-									<div className="col-lg-3 col-md-6">
-										<div className="d-flex flex-column">
-											<div className="nav-link"><strong>Tuyến đường</strong></div>
-											<div className="d-flex flex-column">
-												<a className="nav-link" href="#">Hà nội đi vinh</a>
-												<a className="nav-link" href="#">Hà nội đi vinh</a>
-												<a className="nav-link" href="#">Hà nội đi vinh</a>
-												<a className="nav-link" href="#">Hà nội đi vinh</a>
-											</div>
-										</div>
-									</div>
-									<div className="col-lg-3 col-md-6">
-										<div className="flex-column">
-											<div className="nav-link"><strong>Bến xe</strong></div>
-											<div className="d-flex flex-column">
-												<a className="nav-link" href="#">Hà nội đi vinh</a>
-												<a className="nav-link" href="#">Hà nội đi vinh</a>
-												<a className="nav-link" href="#">Hà nội đi vinh</a>
-												<a className="nav-link" href="#">Hà nội đi vinh</a>
-											</div>
-										</div>
-									</div>
-									<div className="col-lg-3 col-md-6">
-										<div className="d-flex flex-column">
-											<div className="nav-link"><strong>Nhà xe</strong></div>
-											<div className="d-flex flex-column">
-												<a className="nav-link" href="#">Hà nội đi vinh</a>
-												<a className="nav-link" href="#">Hà nội đi vinh</a>
-												<a className="nav-link" href="#">Hà nội đi vinh</a>
-												<a className="nav-link" href="#">Hà nội đi vinh</a>
-											</div>
-										</div>
-									</div>
-									<div className="col-lg-3 col-md-6">
-										<div className="d-flex flex-column">
-											<div className="nav-link"><strong>Xe Limousine</strong></div>
-											<div className="d-flex flex-column">
-												<a className="nav-link" href="#">Limousine Sài Gòn đi Đà Lạt</a>
-												<a className="nav-link" href="#">Limousine Sài Gòn đi Đà Lạt</a>
-												<a className="nav-link" href="#">Limousine Sài Gòn đi Đà Lạt</a>
-												<a className="nav-link" href="#">Limousine Sài Gòn đi Đà Lạt</a>
-											</div>
-										</div>
-									</div>
+						{/* footer */}
+						<div className="container footer mt-5">
+							<div className="top">
+								<div className="top-title">
+									<h3 className="pb-3">Vé Xe 2020</h3>
+								</div>
+								<div className="bottom-title">
+									<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
 								</div>
 							</div>
-						</div>
-						{/* end link liên kết */}
-						{/* footer */}
-						<div className="bg-dark">
-							<div className="container py-4">
-								<div className="text-center text-light">
-									<div><strong>Công ty cổ phần Vexere</strong></div>
-									<div>Địa chỉ đăng ký kinh doanh: 8C Chữ Đồng Tử, Phường 7, Quận Tân Bình, Thành Phố Hồ Chí Minh, Việt Nam</div>
-									<a className="nav-link" href="#">Địa chỉ: Lầu 8,9, Tòa nhà CirCO, 222 Điện Biên Phủ, Quận 3, TP. Hồ Chí Minh, Việt Nam</a>
-									<div>Giấy chứng nhận ĐKKD số 0312387105 do Sở KH và ĐT TP. Hồ Chí Minh cấp lần đầu ngày 25/7/2013</div>
-									<div>Bản quyền © 2019 thuộc về Bùi Tấn Toán</div>
+							<div className="bottom my-5">
+								<div className="left">
+									&copy; 2020 All rights reserved.
+								</div>
+								<div className="right">
+									<i className="fab fa-twitter"></i>
+									<i className="fab fa-facebook"></i>
+									<i className="fab fa-google-plus-g"></i>
+									<i className="fab fa-skype"></i>
+									<i className="fab fa-youtube"></i>
 								</div>
 							</div>
 						</div>

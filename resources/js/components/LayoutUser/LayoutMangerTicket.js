@@ -332,7 +332,7 @@ class LayoutMangerTicket extends React.Component {
                                 </div>) :
                                     (
                                         <MaterialTable
-                                            title={"List Ticket"}
+                                            title={"Danh sách vé bạn đã đặt"}
                                             columns={this.state.columns}
                                             data={this.state.dataSearch}
                                             onRowClick={(event, selectRow) => onClickRowTable(event, selectRow)}

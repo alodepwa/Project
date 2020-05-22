@@ -38,7 +38,7 @@ class Main extends React.Component{
                             <div className="row">
                                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div className="d-flex align-items-center justify-content-around">
-                                        <div className="logo nav-link flex-fill"> <h5>Ve Xe 2020</h5></div>
+                                        <div className="logo nav-link flex-fill"> <h5 className="logoMenu">VÉ XE 2020</h5></div>
             
                                         <div className="menu flex-fill" id="">
                                             <ul  className="d-flex mr-auto">
@@ -55,7 +55,7 @@ class Main extends React.Component{
                                                     <Link to="/alo2"><i className="fas fa-globe-africa" title="Việt Nam"/> <small className="hide-title">Viet Nam</small></Link>
                                                 </li>
                                                 <li className="nav-item nav-link">
-                                                    <Link to="/alo3"><i className="fas fa-phone-volume" title="Call Now"/><small className="hide-title">Call Now</small></Link>
+                                                    <Link to=""><i className="fas fa-phone-volume" title="Call Now"/><small className="hide-title">Gọi ngay</small></Link>
                                                 </li>
                                             </ul>
                                         </div>

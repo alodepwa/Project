@@ -25,7 +25,9 @@ export default function LayoutCreateCar() {
         to: '',
         errName: '',
         errPhone: '',
-        errCarNumber: ''
+        errCarNumber: '',
+        errFare : '',
+        errSeat : ''
 
     });
     const getTrips = async () => {
@@ -59,10 +61,20 @@ export default function LayoutCreateCar() {
                 let errName = 'Name isn\'t correctly format!';
                 parrtenText.test(value) ? setValues({ ...values, [event.target.name]: value, errName: '' }) : setValues({ ...values, errName, err: '' });
                 break;
-            case 'carnumber' :
+            case 'carnumber':
                 let parrtenTextNumber = /^[0-9]{1,2}[A-Z][0-9][-][0-9]{3,6}$/;
                 let errCarNumber = 'Car number isn\'t correct format!';
                 parrtenTextNumber.test(value) ? setValues({ ...values, [event.target.name]: value, errCarNumber: '' }) : setValues({ ...values, errCarNumber, err: '' });
+                break;
+            case 'fare':
+                let parrtenFare = /^[0-9]*$/;
+                let errFare = 'Car number isn\'t correct format!';
+                parrtenFare.test(value) ? setValues({ ...values, [event.target.name]: value, errFare: '' }) : setValues({ ...values, errFare, err: '' });
+                break;
+            case 'seat':
+                let parrtenSeat = /^[0-9]*$/;
+                let errSeat = 'Car number isn\'t correct format!';
+                parrtenSeat.test(value) && (value > 0 && value < 50 ) ? setValues({ ...values, [event.target.name]: value, errSeat: '' }) : setValues({ ...values, errSeat, err: '' });
                 break;
             case 'from':
                 if (values.to != event.target.value)
@@ -74,45 +86,12 @@ export default function LayoutCreateCar() {
                 if (values.from != event.target.value)
                     setValues({ ...values, [event.target.name]: event.target.value });
                 else
-                    setValues({ ...values, [event.target.name] : false });
+                    setValues({ ...values, [event.target.name]: false });
                 break;
             default:
                 setValues({ ...values, [event.target.name]: event.target.value });
                 break;
         }
-        // if (event.target.name === "phone") {
-        //     let parrtenPhone = /^[0][1-9][0-9]{7,9}$/
-        //     let errPhone = 'Phone isn\'t correctly!';
-        //     console.log( parrtenPhone.test(value))
-        //     // parrtenPhone.test(value) ? setValues({ ...values, [event.target.name]: value, errPhone: '' }) : setValues({ ...values, errPhone, err: '' });
-        //     parrtenPhone.test(value) ? setValues({ ...values, [event.target.name]: value, errPhone: '' }) : setValues({ ...values, errPhone, err: '' });
-        // }
-        //     else if (event.target.name === "name") {
-        //     let parrtenText = /^[^!~`@#@\$%^&\*()\+_\-=\\|}{}\]\["';?\/><]*$/;
-        //     let errName = 'Name isn\'t correctly format!';
-        //     parrtenText.test(value) ? setValues({ ...values, [event.target.name]: value, errName: '' }) : setValues({ ...values, errName, err: '' });
-
-        // }
-        // else if (event.target.name === "carnumber") {
-        //     let parrtenText = /^[0-9]{1,2}[A-Z][0-9][-][0-9]{3,6}$/
-        //     let errCarNumber = 'Car number isn\'t correct format!';
-        //     parrtenText.test(value) ? setValues({ ...values, [event.target.name]: value, errCarNumber: '' }) : setValues({ ...values, errCarNumber, err: '' });
-        // }
-        // else if (event.target.name == "from") {
-        //     if (values.to != event.target.value)
-        //         setValues({ ...values, [event.target.name]: event.target.value });
-        //     else
-        //         setValues({ ...values, [event.target.name]: '' });
-        // }
-        // else if (event.target.name == "to") {
-        //     if (values.from != event.target.value)
-        //         setValues({ ...values, [event.target.name]: event.target.value });
-        //     else
-        //         setValues({ ...values, [event.target.name]: '' });
-        // }
-        // else {
-        //     setValues({ ...values, [event.target.name]: event.target.value });
-        // }
     }
 
     const onClickButtonSend = async (event) => {
@@ -145,124 +124,139 @@ export default function LayoutCreateCar() {
         <div className="container">
             <div className="row justify-content-center">
                 <div className="col-xs-12 col-sm-10 col-md-9 col-lg-5 text-center">
-                    <div className="form-group d-flex flex-column">
-                        <TextField
-                            error={values.errName ? true : false}
-                            label="Car name"
-                            type="search"
-                            variant="outlined"
-                            name="name"
-                            label={values.errName ? "Car Name incorrect format!" : "Car Name"}
-                            onChange={onChangeInput}
-                        />
-                    </div>
-                    <div className="form-group d-flex flex-column">
-                        <TextField
-                            label="Car fare"
-                            type="number"
-                            step={1}
-                            variant="outlined"
-                            name="fare"
-                            onChange={onChangeInput}
-                        />
-                    </div>
-                    <div className="form-group d-flex flex-column">
-                        <TextField
-                            label="Car seats"
-                            type="number"
-                            variant="outlined"
-                            name="seat"
-                            onChange={onChangeInput}
-                        />
-                    </div>
-                    <div className="form-group d-flex flex-column">
-                        <TextField
-                            error={values.errPhone ? true : false}
-                            label="Phone"
-                            type="number"
-                            variant="outlined"
-                            name="phone"
-                            onChange={onChangeInput}
-                            label={values.errPhone ? "Phone incorrect format!" : "Phone"}
-                        />
-                    </div>
-                    <div className="form-group d-flex flex-column">
-                        <TextField
-                            error={values.errCarNumber ? true : false}
-                            type="search"
-                            variant="outlined"
-                            name="carnumber"
-                            onChange={onChangeInput}
-                            label={values.errCarNumber ? "Car number  incorrect format!  Example : '43H1-43136' " : "Car Number. Example : '43H1-43136'"}
-                        />
-                    </div>
-                    <div className="form-group d-flex flex-column">
-                        <FormControl variant="outlined" >
-                            <InputLabel htmlFor="outlined-age-native-simple">Category Car</InputLabel>
-                            <Select
-                                native
-                                value={values.category_car}
-                                onChange={onChangeInput}
-                                name="category_car"
-                                label="Category Car"
+                    <div className="card">
+                        <div className="card-body">
+                            <div className="form-group">
+                                <h5>Tạo Xe</h5>
+                            </div>
+                            <div className="form-group d-flex flex-column">
+                                <TextField
+                                    required={true}
+                                    error={values.errName ? true : false}
+                                    type="search"
+                                    variant="outlined"
+                                    name="name"
+                                    label={values.errName ? "Tên Xe không đúng định dạng!" : "Tên Xe"}
+                                    onChange={onChangeInput}
+                                />
+                            </div>
+                            <div className="form-group d-flex flex-column">
+                                <TextField
+                                    error = { values.errFare ? true : false }
+                                    label="Giá Vé"
+                                    type="text"
+                                    required={true}
+                                    step={1}
+                                    variant="outlined"
+                                    name="fare"
+                                    onChange={onChangeInput}
+                                    label={values.errFare ? "Giá Vé yêu cầu giá trị số!" : "Giá Vé"}
+                                />
+                            </div>
+                            <div className="form-group d-flex flex-column">
+                                <TextField
+                                    error = {values.errSeat ? true : false}
+                                    type="text"
+                                    required={true}
+                                    variant="outlined"
+                                    inputProps={{ maxLength: 12 }}
+                                    name="seat"
+                                    onChange={onChangeInput}
+                                    label={values.errSeat ? "Số Ghế cần số và nhỏ hơn 50!" : "Số Ghế"}
+                                />
+                            </div>
+                            <div className="form-group d-flex flex-column">
+                                <TextField
+                                    error={values.errPhone ? true : false}
+                                    type="number"
+                                    required={true}
+                                    variant="outlined"
+                                    name="phone"
+                                    onChange={onChangeInput}
+                                    label={values.errPhone ? "SĐT không đúng định dạng!" : "Số Điện Thoại"}
+                                />
+                            </div>
+                            <div className="form-group d-flex flex-column">
+                                <TextField
+                                    error={values.errCarNumber ? true : false}
+                                    type="search"
+                                    variant="outlined"
+                                    required={true}
+                                    name="carnumber"
+                                    onChange={onChangeInput}
+                                    label={values.errCarNumber ? "Biển Số Xe không đúng định dạng!  Ví Dụ : '43H1-43136' " : "Biển Số Xe. Ví Dụ: '43H1-43136'"}
+                                />
+                            </div>
+                            <div className="form-group d-flex flex-column">
+                                <FormControl variant="outlined" >
+                                    <InputLabel htmlFor="outlined-age-native-simple">Loại Xe</InputLabel>
+                                    <Select
+                                        native
+                                        value={values.category_car}
+                                        onChange={onChangeInput}
+                                        name="category_car"
+                                        label="Loại Xe"
 
+                                    >
+                                        <option aria-label="None" value="" />
+                                        {
+                                            categoryCar.map((value, key) => {
+                                                return <option value={value.Category_Id} key={key}>{`${value.Category_Style} - ${value.Category_Floor} tầng`}</option>
+                                            })
+                                        }
+                                    </Select>
+                                </FormControl>
+                            </div>
+                            <div className="form-group d-flex ">
+                                <FormControl variant="outlined" >
+                                    <InputLabel htmlFor="outlined-age-native-simple">{values.from === false ? "Nơi đi không được trùng!" : "Nơi đi"}</InputLabel>
+                                    <Select
+                                        native
+                                        value={values.from}
+                                        onChange={onChangeInput}
+                                        name="from"
+                                        error={values.from === false ? true : false}
+                                        label='Nơi đi không được trùng!'
+                                    >
+                                        <option aria-label="None" value="" />
+                                        {
+                                            trips.start.map((value, key) => {
+                                                return <option value={value.Trips_Start} key={key}>{value.Trips_Start}</option>
+                                            })
+                                        }
+                                    </Select>
+                                </FormControl>
+                                <FormControl variant="outlined" >
+                                    <InputLabel htmlFor="outlined-age-native-simple">{values.to === false ? "Nơi đến không được trùng!" : "Nơi đến"}</InputLabel>
+                                    <Select
+                                        native
+                                        value={values.to}
+                                        onChange={onChangeInput}
+                                        name="to"
+                                        error={values.to === false ? true : false}
+                                        label='Nơi đi không được trùng!'
+                                    >
+                                        <option aria-label="None" value="" />
+                                        {
+                                            trips.end.map((value, key) => {
+                                                return <option value={value.Trips_Ends} key={key}>{value.Trips_Ends}</option>
+                                            })
+                                        }
+                                    </Select>
+                                </FormControl>
+                            </div>
+                            <Button
+                                disabled={values.seat && values.to && values.from && values.fare && values.name && values.phone && values.category_car && !values.errName && !values.errPhone && !values.errCarNumber  && !values.errFare && !values.errSeat ? false : true}
+                                variant="contained"
+                                color="primary"
+                                endIcon={<Icon>send</Icon>}
+                                onClick={onClickButtonSend}
                             >
-                                <option aria-label="None" value="" />
-                                {
-                                    categoryCar.map((value, key) => {
-                                        return <option value={value.Category_Id} key={key}>{`${value.Category_Style} - ${value.Category_Floor} tầng`}</option>
-                                    })
-                                }
-                            </Select>
-                        </FormControl>
+                                Lưu
+                            </Button>
+                        </div>
                     </div>
-                    <div className="form-group d-flex ">
-                        <FormControl variant="outlined" >
-                            <InputLabel htmlFor="outlined-age-native-simple">{values.from === false ? "Nơi đi không được trùng!" : "Nơi đi"}</InputLabel>
-                            <Select
-                                native
-                                value={values.from}
-                                onChange={onChangeInput}
-                                name="from"
-                                error={values.from === false ? true : false}
-                                label = 'Nơi đi không được trùng!'
-                            >
-                                <option aria-label="None" value="" />
-                                {
-                                    trips.start.map((value, key) => {
-                                        return <option value={value.Trips_Start} key={key}>{value.Trips_Start}</option>
-                                    })
-                                }
-                            </Select>
-                        </FormControl>
-                        <FormControl variant="outlined" >
-                            <InputLabel htmlFor="outlined-age-native-simple">{values.to === false ? "Nơi đến không được trùng!" : "Nơi đến"}</InputLabel>
-                            <Select
-                                native
-                                value={values.to}
-                                onChange={onChangeInput}
-                                name="to"
-                                error={values.to === false ? true : false}
-                                label = 'Nơi đi không được trùng!'
-                            >
-                                <option aria-label="None" value="" />
-                                {
-                                    trips.end.map((value, key) => {
-                                        return <option value={value.Trips_Ends} key={key}>{value.Trips_Ends}</option>
-                                    })
-                                }
-                            </Select>
-                        </FormControl>
-                    </div>
-                    <Button
-                        disabled={values.seat && values.to && values.from && values.fare && values.name && values.phone && values.category_car && !values.errName && !values.errPhone && !values.errCarNumber ? false : true}
-                        variant="contained"
-                        color="primary"
-                        endIcon={<Icon>send</Icon>}
-                        onClick={onClickButtonSend}
-                    >
-                        Save
-                    </Button>
+
                 </div>
             </div>
         </div>

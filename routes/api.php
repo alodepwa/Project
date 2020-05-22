@@ -53,4 +53,6 @@ Route::group(['prefix' => 'admin'], function(){
     Route::GET('get-myprofile/{id}', 'api\AdminController@getMyProfile');
     Route::POST('update-profile', 'api\AdminController@updateMyProfile');
     Route::GET('get-ticket-by-car/{id}','api\AdminController@getTicketByCar');
+    Route::GET('get-profit-month/{id}' ,'api\AdminController@getProfitMonth');
+    Route::GET('get-trips-week/{id}', 'api\AdminController@getTripsWeek');
 });

@@ -61,7 +61,7 @@ export default function LayoutListUsers() {
             { title: 'Họ Tên', field: 'name' },
             { title: 'Địa CHỉ', field: 'address' },
             { title: 'Ngày Sinh', field: 'birthYear' },
-            { title: 'Số Điện THoại', field: 'phone' },
+            { title: 'Số Điện Thoại', field: 'phone' },
             {
                 title: 'Giới Tính',
                 field: 'gender',
@@ -261,12 +261,14 @@ export default function LayoutListUsers() {
                     {
                         icon: 'edit',
                         tooltip: 'Cập Nhật',
+                        iconProps: { style: { color: "#007bff" } },
                         onClick: (event, rowData) => {
                             onClickButtonUpdate(event, rowData)
                         }
                     },
                     rowData => ( (idLogin == rowData.Parent_id) ? {
                         icon: 'delete',
+                        iconProps: { style: { color: "red" } },
                         tooltip: 'Xóa',
                         onClick: (event, rowData) => {
                             onClickButtonDelete(event, rowData);

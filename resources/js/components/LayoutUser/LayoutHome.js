@@ -86,7 +86,7 @@ class LayoutHome extends React.Component {
 					<div className="container">
 						<div className="row">
 							<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 body-top">
-								<div className="title"><h3>Vé Xe 2020 - Hệ thống đặt vé xe trên cả nước Việt Nam.</h3></div>
+								{/* <div className="title"><h3>Vé Xe 2020 - Hệ thống đặt vé xe trên cả nước Việt Nam.</h3></div> */}
 								<div className="menu-search mt-4">
 									<div className="row">
 										<div className="col-xs-12 col-sm-12 col-md-4 col-lg-3">
@@ -156,10 +156,6 @@ class LayoutHome extends React.Component {
 											</Button>
 										</div>
 									</div>
-
-
-
-
 								</div>
 							</div>
 						</div>

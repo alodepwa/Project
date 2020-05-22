@@ -43,15 +43,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function LayoutListUsers() {
-    const classes                           = useStyles();
-    const [idLogin, setIdLogin]             = useState('');
-    const [trips, setTrips ]                = useState({
-        end     : [],
-        start : []
+export default function LayoutListCar() {
+    const classes = useStyles();
+    const [idLogin, setIdLogin] = useState('');
+    const [trips, setTrips] = useState({
+        end: [],
+        start: []
     });
-    const [categoryCar, setCategoryCar ]    = useState([]);
-    const [preUpdate, setPreUpdate ] = useState();
+    const [categoryCar, setCategoryCar] = useState([]);
+    const [preUpdate, setPreUpdate] = useState();
     const [state, setState] = React.useState({
         columns: [
             { title: 'Số Xe', field: 'Car_Number' },
@@ -63,7 +63,7 @@ export default function LayoutListUsers() {
             { title: 'Số Điện Thoại', field: 'phone' },
             { title: 'Nơi Đi', field: 'Trips_Start' },
             { title: 'Nơi Đến', field: 'Trips_Ends' },
-            { title: 'Ngày Tạo', field: 'created_at'},
+            { title: 'Ngày Tạo', field: 'created_at' },
             { title: 'Người Tạo', field: 'created_by' },
             { title: 'Ngày Cập Nhật', field: 'updated_at' },
             { title: 'NGười Cập Nhật', field: 'updated_by' },
@@ -74,40 +74,42 @@ export default function LayoutListUsers() {
     });
     const [values, setValues] = useState({
         modal: false,
-        id              : '',
-        name            : '',
-        seat            : '',
-        fare            : '',
-        carnumber       : '',
-        phone           : '',
-        category_car    : '',
-        from            : '',
-        to              : '',
-        errName         : '',
-        errPhone        : '',
-        errCarNumber    : ''
+        id: '',
+        name: '',
+        seat: '',
+        fare: '',
+        carnumber: '',
+        phone: '',
+        category_car: '',
+        from: '',
+        to: '',
+        errName: '',
+        errPhone: '',
+        errCarNumber: '',
+        errFare : '',
+        errSeat : ''
     });
     const getTrips = async () => {
-        await axios.get(`${common.HOST}home`).then( res => {
-			if(res.data){	
-				setTrips({ end : res.data['end'], start : res.data['start']});
-			}			
-		}).catch(err => {throw err});
+        await axios.get(`${common.HOST}home`).then(res => {
+            if (res.data) {
+                setTrips({ end: res.data['end'], start: res.data['start'] });
+            }
+        }).catch(err => { throw err });
     }
     const getCategoryCar = async () => {
-        await axios.get(`${common.HOST}admin/get-category-car`).then( res => {
-			if(res.data){	
-				setTimeout(() => {
+        await axios.get(`${common.HOST}admin/get-category-car`).then(res => {
+            if (res.data) {
+                setTimeout(() => {
                     setCategoryCar(res.data);
                 }, 500);
-			}			
-		}).catch(err => {throw err});
+            }
+        }).catch(err => { throw err });
     }
     /**
      * get list car by id
      */
     const fetchListCar = (async () => {
-        let parent_id = JSON.parse(sessionStorage.getItem('tokens')).Parent_id ? JSON.parse(sessionStorage.getItem('tokens')).Parent_id : JSON.parse(sessionStorage.getItem('tokens')).Admin_ID ;
+        let parent_id = JSON.parse(sessionStorage.getItem('tokens')).Parent_id ? JSON.parse(sessionStorage.getItem('tokens')).Parent_id : JSON.parse(sessionStorage.getItem('tokens')).Admin_ID;
         await axios.get(`${common.HOST}admin/get-list-car/${parent_id}`)
             .then(res => { res.data ? setState({ ...state, data: res.data }) : null })
             .catch(err => { throw err; })
@@ -122,31 +124,31 @@ export default function LayoutListUsers() {
             let id = JSON.parse(sessionStorage.getItem('tokens')).Admin_ID;
             let updated_by = JSON.parse(sessionStorage.getItem('tokens')).Admin_Name;
             let data = {
-                id_car              : preUpdate.Passenger_Car_Id,
-                id_trip             : preUpdate.Trips_ID,
-                Car_Number          : values.carnumber,
-                Passenger_Car_Name  : values.name,
-                phone               : values.phone,
-                Passenger_Car_fare  : values.fare,
-                Passenger_Car_Seats : values.seat,
-                admin_id            : id,
-                category_car        : values.category_car,
-                name_admin          : updated_by,
-                Trips_Start         : values.from,
-                Trips_Ends          : values.to
+                id_car: preUpdate.Passenger_Car_Id,
+                id_trip: preUpdate.Trips_ID,
+                Car_Number: values.carnumber,
+                Passenger_Car_Name: values.name,
+                phone: values.phone,
+                Passenger_Car_fare: values.fare,
+                Passenger_Car_Seats: values.seat,
+                admin_id: id,
+                category_car: values.category_car,
+                name_admin: updated_by,
+                Trips_Start: values.from,
+                Trips_Ends: values.to
             };
             let data1 = {
                 ...preUpdate,
-                phone               : values.phone,
-                category_car        : values.category_car,
-                Trips_Ends          : values.to,
-                Trips_Start         : values.from,
-                updated_by          : updated_by,
-                Car_Number          : values.carnumber,
-                Passenger_Car_Name  : values.name,
-                Passenger_Car_fare  : values.fare,
-                Passenger_Car_Seats : values.seat,
-                updated_at          : moment(new Date()).format('YYYY-MM-DD h:mm:ss'),
+                phone: values.phone,
+                category_car: values.category_car,
+                Trips_Ends: values.to,
+                Trips_Start: values.from,
+                updated_by: updated_by,
+                Car_Number: values.carnumber,
+                Passenger_Car_Name: values.name,
+                Passenger_Car_fare: values.fare,
+                Passenger_Car_Seats: values.seat,
+                updated_at: moment(new Date()).format('YYYY-MM-DD h:mm:ss'),
             }
             let data_pre_update = preUpdate;
             const dataPre = [...state.data];
@@ -171,15 +173,15 @@ export default function LayoutListUsers() {
         setValues({
             ...values,
             modal: true,
-            id              : data.Passenger_Car_Id,
-            name            : data.Passenger_Car_Name,
-            seat            : data.Passenger_Car_Seats,
-            fare            : data.Passenger_Car_fare,
-            carnumber       : data.Car_Number,
-            phone           : data.phone,
-            category_car    : data.Category_Id,
-            from            : data.Trips_Start,
-            to              : data.Trips_Ends,
+            id: data.Passenger_Car_Id,
+            name: data.Passenger_Car_Name,
+            seat: data.Passenger_Car_Seats,
+            fare: data.Passenger_Car_fare,
+            carnumber: data.Car_Number,
+            phone: data.phone,
+            category_car: data.Category_Id,
+            from: data.Trips_Start,
+            to: data.Trips_Ends,
         });
         setPreUpdate(data);
     }
@@ -208,10 +210,10 @@ export default function LayoutListUsers() {
         let id = data.Passenger_Car_Id;
         let name_admin = JSON.parse(sessionStorage.getItem('tokens')).Admin_Name;
         let dataSendDelete = {
-            id           : id,
-            user_deleted : name_admin
+            id: id,
+            user_deleted: name_admin
         };
-        
+
         Swal.fire({
             title: 'Banh Có Muốn Xóa?',
             icon: 'question',
@@ -223,11 +225,11 @@ export default function LayoutListUsers() {
             if (result.value) {
                 let dataJustChange = {
                     ...data,
-                    car_status : 1,
-                    deleted_by : name_admin,
-                    deleted_at : moment(new Date()).format('YYYY-MM-DD h:mm:ss')
+                    car_status: 1,
+                    deleted_by: name_admin,
+                    deleted_at: moment(new Date()).format('YYYY-MM-DD h:mm:ss')
                 };
-                let dataPre             = [...state.data];
+                let dataPre = [...state.data];
                 dataPre[dataPre.indexOf(data)] = dataJustChange;
 
                 await axios.post(`${common.HOST}admin/delete-car`, dataSendDelete)
@@ -247,19 +249,29 @@ export default function LayoutListUsers() {
         let { value } = event.target;
         switch (event.target.name) {
             case 'phone':
-                let parrtenPhone = /^[0][1-9][0-9]{7,9}$/;
-                let errPhone = 'Phone isn\'t correctly!'
+                let parrtenPhone = /^[0][1-9][0-9]{7,9}$/
+                let errPhone = 'Phone isn\'t correctly!';
                 parrtenPhone.test(value) ? setValues({ ...values, [event.target.name]: value, errPhone: '' }) : setValues({ ...values, errPhone, err: '' });
-                break;
+                break; 
             case 'name':
                 let parrtenText = /^[^!~`@#@\$%^&\*()\+_\-=\\|}{}\]\["';?\/><]*$/;
                 let errName = 'Name isn\'t correctly format!';
                 parrtenText.test(value) ? setValues({ ...values, [event.target.name]: value, errName: '' }) : setValues({ ...values, errName, err: '' });
                 break;
-            case 'carnumber' :
+            case 'carnumber':
                 let parrtenTextNumber = /^[0-9]{1,2}[A-Z][0-9][-][0-9]{3,5}$/
                 let errCarNumber = 'Car number isn\'t correct format!';
-                parrtenTextNumber.test(value) ? setValues({ ...values, [event.target.name]: value, errCarNumber: '' }) : setValues({ ...values, errCarNumber, err : '' });
+                parrtenTextNumber.test(value) ? setValues({ ...values, [event.target.name]: value, errCarNumber: '' }) : setValues({ ...values, errCarNumber, err: '' });
+                break;
+            case 'fare':
+                let parrtenFare = /^[0-9]*$/;
+                let errFare = 'Car number isn\'t correct format!';
+                parrtenFare.test(value) ? setValues({ ...values, [event.target.name]: value, errFare: '' }) : setValues({ ...values, errFare, err: '' });
+                break;
+            case 'seat':
+                let parrtenSeat = /^[0-9]*$/;
+                let errSeat = 'Car number isn\'t correct format!';
+                parrtenSeat.test(value) && (value > 0 && value < 50) ? setValues({ ...values, [event.target.name]: value, errSeat: '' }) : setValues({ ...values, errSeat, err: '' });
                 break;
             case 'from':
                 if (values.to != event.target.value)
@@ -271,10 +283,10 @@ export default function LayoutListUsers() {
                 if (values.from != event.target.value)
                     setValues({ ...values, [event.target.name]: event.target.value });
                 else
-                    setValues({ ...values, [event.target.name] : false });
+                    setValues({ ...values, [event.target.name]: false });
                 break;
             default:
-                setValues({ ...values, [event.target.name] : event.target.value });
+                setValues({ ...values, [event.target.name]: event.target.value });
                 break;
         }
     }
@@ -301,12 +313,14 @@ export default function LayoutListUsers() {
                     {
                         icon: 'edit',
                         tooltip: 'Cập Nhật',
+                        iconProps: { style: { color: "#007bff" } },
                         onClick: (event, rowData) => {
                             onClickButtonUpdate(event, rowData)
                         }
                     },
-                    rowData => ((idLogin == '2' && rowData.car_status == 0 ) ? {
+                    rowData => ((idLogin == '2' && rowData.car_status == 0) ? {
                         icon: 'delete',
+                        iconProps: { style: { color: "red" } },
                         tooltip: 'Xóa ',
                         onClick: (event, rowData) => {
                             onClickButtonDelete(event, rowData);
@@ -335,44 +349,52 @@ export default function LayoutListUsers() {
                                     <div className="form-group d-flex flex-column">
                                         <TextField
                                             error={values.errName ? true : false}
+                                            required={true}
                                             label="Tên Xe"
                                             type="search"
                                             variant="outlined"
                                             name="name"
-                                            value = {values.name}
+                                            value={values.name}
                                             label={values.errName ? "Tên Xe không đúng định dạng!" : "Tên Xe"}
                                             onChange={onChangeInput}
                                         />
                                     </div>
                                     <div className="form-group d-flex flex-column">
                                         <TextField
+                                            required={true}
+                                            error = { values.errFare ? true : false }
                                             label="Giá Vé"
-                                            type="number"
-                                            value = {values.fare}
+                                            type="text"
+                                            value={values.fare}
                                             step={1}
                                             variant="outlined"
                                             name="fare"
                                             onChange={onChangeInput}
+                                            label={values.errFare ? "Giá Vé yêu cầu giá trị số!" : "Giá Vé"}
                                         />
                                     </div>
                                     <div className="form-group d-flex flex-column">
                                         <TextField
                                             label="Số Ghế"
-                                            type="number"
-                                            value = {values.seat}
+                                            error = {values.errSeat ? true : false}
+                                            required={true}
+                                            type="text"
+                                            value={values.seat}
                                             variant="outlined"
                                             name="seat"
                                             onChange={onChangeInput}
+                                            label={values.errSeat ? "Số Ghế cần số và nhỏ hơn 50!" : "Số Ghế"}
                                         />
                                     </div>
                                     <div className="form-group d-flex flex-column">
                                         <TextField
                                             error={values.errPhone ? true : false}
+                                            required={true}
                                             label="Số Điện Thoại"
                                             type="number"
                                             variant="outlined"
                                             name="phone"
-                                            value = {values.phone}
+                                            value={values.phone}
                                             onChange={onChangeInput}
                                             label={values.errPhone ? "Số điện thoại không đúng định dạng!" : "Số Điện Thoại"}
                                         />
@@ -380,11 +402,12 @@ export default function LayoutListUsers() {
                                     <div className="form-group d-flex flex-column">
                                         <TextField
                                             error={values.errCarNumber ? true : false}
+                                            required={true}
                                             type="text"
                                             variant="outlined"
                                             name="carnumber"
-                                            value = {values.carnumber}
-                                            onChange = {onChangeInput}
+                                            value={values.carnumber}
+                                            onChange={onChangeInput}
                                             label={values.errCarNumber ? "Số xe không đúng định dạng!  Ví Dụ : '43H1-43136' " : "Số Xe. Ví Dụ : '43H1-43136'"}
                                         />
                                     </div>
@@ -417,7 +440,7 @@ export default function LayoutListUsers() {
                                                 onChange={onChangeInput}
                                                 name="from"
                                                 error={values.from === false ? true : false}
-                                                label = 'Nơi đi không được trùng!'
+                                                label='Nơi đi không được trùng!'
 
                                             >
                                                 <option aria-label="None" value="" />
@@ -436,7 +459,7 @@ export default function LayoutListUsers() {
                                                 onChange={onChangeInput}
                                                 name="to"
                                                 error={values.to === false ? true : false}
-                                                label = 'Nơi đi không được trùng!'
+                                                label='Nơi đi không được trùng!'
 
                                             >
                                                 <option aria-label="None" value="" />
@@ -449,7 +472,7 @@ export default function LayoutListUsers() {
                                         </FormControl>
                                     </div>
                                     <Button
-                                        disabled = { values.seat && values.to && values.from && values.fare && values.name && values.phone && values.category_car  && !values.errName && !values.errPhone && !values.errCarNumber ? false :true }
+                                        disabled={values.seat && values.to && values.from && values.fare && values.name && values.phone && values.category_car && !values.errName && !values.errPhone && !values.errCarNumber ? false : true}
                                         variant="contained"
                                         color="primary"
                                         endIcon={<Icon>send</Icon>}
