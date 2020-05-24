@@ -457,22 +457,24 @@ body {
 
 
 /* footer */
-.footer .top {
+.Mainfooter .topFootter {
   text-align: center;
   margin-top: 50px;
 }
-.footer .bottom {
+.Mainfooter .bottom {
   display: flex;
   justify-content: space-around;
   padding-bottom: 20px;
 }
-.footer .right {
-  width: 20%;
+.Mainfooter .right {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
-.footer .right i {
+.Mainfooter .right i {
   font-size: 22px;
+}
+.Mainfooter{
+  border-top: 1px solid #80808059;
 }
 
 /* register ticket */

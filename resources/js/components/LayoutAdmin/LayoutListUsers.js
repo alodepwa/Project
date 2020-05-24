@@ -249,7 +249,7 @@ export default function LayoutListUsers() {
         let role_id_login = JSON.parse(sessionStorage.getItem('tokens')).Admin_ID;
         setIdLogin(role_id_login);
     }, [])
-
+    let role_id_admin_web = JSON.parse(sessionStorage.getItem('tokens')).Roles_Id;
 
     return (
         <div className="container-fluid">
@@ -266,14 +266,14 @@ export default function LayoutListUsers() {
                             onClickButtonUpdate(event, rowData)
                         }
                     },
-                    rowData => ( (idLogin == rowData.Parent_id) ? {
+                    rowData => ( (idLogin == rowData.Parent_id && idLogin != rowData.id || role_id_admin_web == 1) && {
                         icon: 'delete',
                         iconProps: { style: { color: "red" } },
                         tooltip: 'Xóa',
                         onClick: (event, rowData) => {
                             onClickButtonDelete(event, rowData);
                         }
-                    } : null)
+                    } )
                 ]}
             />
             <div className={classes.root}>
@@ -389,7 +389,6 @@ export default function LayoutListUsers() {
                     </Fade>
                 </Modal>
             </div>
-
         </div>
     )
 }

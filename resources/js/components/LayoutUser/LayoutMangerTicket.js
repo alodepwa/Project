@@ -359,7 +359,7 @@ class LayoutMangerTicket extends React.Component {
                                     <h6 className="text-center">Thông tin danh sách vé <strong>{this.state.phone}</strong></h6>
                                 </div>
 
-                                <div className={classes.root}>
+                                <div className={ this.state.data.length > 0 ?  classes.root : '' }>
                                     <Modal
                                         aria-labelledby="transition-modal-title"
                                         aria-describedby="transition-modal-description"

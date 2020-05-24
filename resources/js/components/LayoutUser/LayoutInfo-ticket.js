@@ -675,11 +675,11 @@ class LayoutInfoTicket extends Component {
                                                                         <button
                                                                             className="btn-primary submit-step2 p-1"
                                                                             disabled={
-                                                                                this.state.nameStep2 && this.state.phoneStep2 && this.state.fromStep2 && this.state.toStep2 ? false : true
+                                                                                this.state.nameStep2 && this.state.phoneStep2 && this.state.fromStep2 && this.state.toStep2 && this.state.step1.length > 0 ? false : true
                                                                             }
                                                                             style={{
                                                                                 cursor:
-                                                                                    this.state.nameStep2 && this.state.phoneStep2 && this.state.fromStep2 && this.state.toStep2 ? '' : 'no-drop'
+                                                                                    this.state.nameStep2 && this.state.phoneStep2 && this.state.fromStep2 && this.state.toStep2 && this.state.step1.length > 0 ? '' : 'no-drop'
                                                                             }}
                                                                             onClick={(e) => this.onClickSubStep2(e, value.Trips_Passenger_Car_Id)}>
                                                                             Tiếp tục

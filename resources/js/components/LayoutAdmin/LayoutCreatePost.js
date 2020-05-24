@@ -79,7 +79,7 @@ export default function LayoutCreatePost() {
                             // error       = { values.errName ? true : false }
                             type        = "search"
                             variant     = "outlined"
-                            name        = "Tiêu Đề"
+                            name        = "title"
                             label       = {values.errName ? "Tiêu đề không đúng định dạng!" : "Tiêu Đề *"}
                             onChange    = {onChangeInput}
                         />
