@@ -330,7 +330,6 @@ export default function LayoutListPost() {
                                             onChange={onChangeInput}
                                         />
                                     </div>
-                                    
                                     <Button
                                         disabled={values.title && values.content && values.car ? false : true}
                                         variant="contained"

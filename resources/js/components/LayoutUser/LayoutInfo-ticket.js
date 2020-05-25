@@ -321,7 +321,7 @@ class LayoutInfoTicket extends Component {
                                     <div className="card-body">
                                         <div className="row">
                                             <div className="col-xs-12 col-sm-12 col-md-4 col-lg-3">
-                                                <img className="image" src={ value.Path_Image ?  value.Path_Image : `https://sc02.alicdn.com/kf/HTB1JnQraJfvK1RjSspfq6zzXFXaz/prices-yutong-bus-new-electric-bus-king.jpg` } alt={value.Name_Image} height="170px" width="100%" />
+                                                <img className="image" src={ `uploadIMG\\${value.Path_Image}` } alt={value.Name_Image} height="170px" width="100%" />
                                             </div>
                                             <div className="col-xs-12 col-sm-6 col-md-4 col-lg-5">
                                                 <div className="row">

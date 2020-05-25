@@ -148,14 +148,31 @@ class AdminController extends Controller
         $list_car = DB::select('exec getListTripPassengerCarForPosts ?', [(int)$id]);
         return response()->json($list_car);
     }
+    
+    public function imageEdit($data){
+        $png_url = strtotime(now()).'.'."jpg";
+        if(strlen($png_url)>20){
+            $png_url = substr($png_url,-1,19);
+        }
+        $path = public_path(). '/uploadIMG/'.$png_url;
+        $img = substr($data, strpos($data, ",")+1);
+        $bas64 = base64_decode($img);
+        $success = file_put_contents($path, $bas64);
+        return $png_url;
+    }
+
+
     function createPost(Request $request){
+        
+        $nameImg = $this->imageEdit($request->get('img'));
         $data = [
             $request->get('title'),
             $request->get('content'),
             $request->get('note'),
             $request->get('car'),
+            $nameImg
         ];
-        $create = DB::select('exec createPost ?, ?, ?, ?', $data);
+        $create = DB::select('exec createPost ?, ?, ?, ?, ?', $data);
         return response()->json($create);
     }
     function getListPost(Request $request){
