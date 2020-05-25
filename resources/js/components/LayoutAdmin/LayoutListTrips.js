@@ -51,6 +51,7 @@ export default function LayoutListTrips() {
     const [idLogin, setIdLogin] = useState('');
     const [isClickInfo, setIsClickInfo] = useState(false);
     const [isClickShow, setIsClickShow] = useState(false);
+    const [isClickUpdate, setIsClickUpdate] = useState(false);
     const [dataInfo, setDataInfo] = useState({
         data: [],
         Car_Number: '',
@@ -89,7 +90,7 @@ export default function LayoutListTrips() {
             { title: 'Ghế', field: 'Seats_Position' },
             { title: 'Giá Vé', field: 'Passenger_Car_fare' },
             { title: 'Điểm Đi', field: 'Car_Ticket_Start_Point' },
-            { title: 'Điểm Đến', field: 'Car_Ticket_End_Point ' },
+            { title: 'Điểm Đến', field: 'Car_Ticket_End_Point' },
             { title: 'Chú Thích', field: 'Car_Ticket_Note' },
         ],
         data: []
@@ -140,14 +141,14 @@ export default function LayoutListTrips() {
                 id_car: preUpdate.Passenger_Car_Id,
                 id_trip: preUpdate.Trips_ID,
                 date: values.date,
-                timeStart: moment(values.timeStart).format('h:mm:ss'),
-                timeEnd: moment(values.timeEnd).format('h:mm:ss')
+                timeStart: moment(values.timeStart).format('h:mm:ss A'),
+                timeEnd: moment(values.timeEnd).format('h:mm:ss A')
             };
             await axios.post(`${common.HOST}admin/create-trip-passenger-car`, data)
                 .then(res => {
                     setValues({ ...values, modal: false });
-                    res.data[0].result == 'false' ? CommonAlert.showAlert('error', 'Create fail!')
-                        : CommonAlert.showAlert('success', 'Create success!')
+                    res.data[0].result == 'false' ? CommonAlert.showAlert('error', 'Hành trình đã tồn tại!')
+                        : CommonAlert.showAlert('success', 'Thêm mới thành công!')
                 })
                 .catch(err => { throw err });
         }
@@ -167,7 +168,7 @@ export default function LayoutListTrips() {
             from: data.Trips_Start,
             to: data.Trips_Ends,
             date: data.Trips_Passenger_Car_Date ? data.Trips_Passenger_Car_Date : moment(new Date()).format('YYYY-MM-DD'),
-            timeStart: data.Trips_Passenger_Car_Time_Start ? new Date(`${data.Trips_Passenger_Car_Date}:${data.Trips_Passenger_Car_Time_Start}`) : new Date(),
+            timeStart: data.Trips_Passenger_Car_Time_Start ?  new Date(`${data.Trips_Passenger_Car_Date}:${data.Trips_Passenger_Car_Time_Start}`) : new Date(),
             timeEnd: data.Trips_Passenger_Car_Time_End ? new Date(`${data.Trips_Passenger_Car_Date}:${data.Trips_Passenger_Car_Time_End}`) : new Date()
         });
         setPreUpdate(data);
@@ -250,8 +251,8 @@ export default function LayoutListTrips() {
         let data = {
             id: preUpdate.Trips_Passenger_Car_Id,
             date: values.date,
-            timeStart: moment(values.timeStart).format('h:mm:ss'),
-            timeEnd: moment(values.timeEnd).format('h:mm:ss')
+            timeStart: moment(values.timeStart).format('h:mm:ss A'),
+            timeEnd: moment(values.timeEnd).format('h:mm:ss A')
         };
         let dataInfoPre = [...dataInfo.data];
         let dataPreUpd = { ...preUpdate, Trips_Passenger_Car_Date: values.date, Trips_Passenger_Car_Time_End: moment(values.timeEnd).format('h:mm:ss'), Trips_Passenger_Car_Time_Start: moment(values.timeStart).format('h:mm:ss') };
@@ -260,8 +261,8 @@ export default function LayoutListTrips() {
         await axios.post(`${common.HOST}admin/update-trips-passenger-car`, data)
             .then(res => {
                 setValues({ ...values, modal: false });
-                res.data[0].result == 'false' ? CommonAlert.showAlert('error', 'Thất bại!')
-                    : (CommonAlert.showAlert('success', 'Thành công!'), setDataInfo({ ...dataInfo, data: dataInfoPre }))
+                res.data[0].result == 'false' ? CommonAlert.showAlert('error', 'Cập nhật thất bại!')
+                    : (CommonAlert.showAlert('success', 'Cập nhật thành công!'), setDataInfo({ ...dataInfo, data: dataInfoPre }))
             })
             .catch(err => { throw err });
     });
@@ -286,7 +287,7 @@ export default function LayoutListTrips() {
                             <div className="btn" style={{ fontSize: '20px' }} onClick={(event) => { event.preventDefault(); setIsClickShow(false), setIsClickInfo(true); }}> <i className="fas fa-arrow-circle-left"></i></div>
                             <div><u>Biển số xe </u>: {preClickShow.data ? preClickShow.data.Car_Number : ''} &nbsp;</div>
                             <div style={{ width: '50%' }}><u>Tổng tiền</u> :  <NumberFormat
-                                value= {  preClickShow.fare ? ( dataShow.length * preClickShow.fare ) : 0}
+                                value={preClickShow.fare ? (dataShow.length * preClickShow.fare) : 0}
                                 displayType={'text'} thousandSeparator={true}
                             />  đ</div>
                         </div>
@@ -351,89 +352,117 @@ export default function LayoutListTrips() {
                         <div className={classes.paper}>
                             <h4 className="my-3 text-center" id="transition-modal-title">Cập Nhật Hành Trình</h4>
                             <div className="row">
-                                <div className="col-12 ">
-                                    <div className="form-group ">
-                                        <TextField
-                                            disabled
-                                            label="Tên Xe"
-                                            type="search"
-                                            variant="outlined"
-                                            name="name"
-                                            value={values.name}
-                                        />
-                                    </div>
-                                    <div className="form-group ">
-                                        <TextField
-                                            type="text"
-                                            variant="outlined"
-                                            name="carnumber"
-                                            value={values.carnumber}
-                                            label="Số Xe"
-                                            disabled
-                                        />
-                                    </div>
-                                    <div className="form-group ">
-                                        <div className="form-group ">
-                                            <TextField
-                                                disabled
-                                                label="Nơi Đi"
-                                                type="search"
-                                                variant="outlined"
-                                                value={preUpdate ? preUpdate.Trips_Start : ''}
-                                            />
+                                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div className="row">
+                                        <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                            <div className="form-group ">
+                                                <TextField
+                                                    disabled
+                                                    label="Tên Xe"
+                                                    type="search"
+                                                    variant="outlined"
+                                                    name="name"
+                                                    value={values.name}
+                                                />
+                                            </div>
                                         </div>
-                                        <div className="form-group ">
-                                            <TextField
-                                                disabled
-                                                label="Nơi Đến"
-                                                type="search"
-                                                variant="outlined"
-                                                value={preUpdate ? preUpdate.Trips_Ends : ''}
-                                            />
+                                        <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                            <div className="form-group ">
+                                                <TextField
+                                                    type="text"
+                                                    variant="outlined"
+                                                    name="carnumber"
+                                                    value={values.carnumber}
+                                                    label="Số Xe"
+                                                    disabled
+                                                />
+                                            </div>
                                         </div>
                                     </div>
-
-                                    <div className="form-group ">
-                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                            <KeyboardDatePicker
-                                                margin="normal"
-                                                label="Ngày Đi"
-                                                format="yyyy-MM-dd"
-                                                name="date"
-                                                value={values.date}
-                                                onChange={handleDateChangeDate}
-                                                KeyboardButtonProps={{
-                                                    'aria-label': 'change date',
-                                                }}
-                                            />
-                                        </MuiPickersUtilsProvider>
+                                    <div className="row">
+                                        <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                            <div className="form-group ">
+                                                <TextField
+                                                    disabled
+                                                    label="Nơi Đi"
+                                                    type="search"
+                                                    variant="outlined"
+                                                    value={preUpdate ? preUpdate.Trips_Start : ''}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                            <div className="form-group ">
+                                                <TextField
+                                                    disabled
+                                                    label="Nơi Đến"
+                                                    type="search"
+                                                    variant="outlined"
+                                                    value={preUpdate ? preUpdate.Trips_Ends : ''}
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="form-group ">
-                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                            <KeyboardTimePicker
-                                                margin="normal"
-                                                label="Thời Gian Đi"
-                                                name="timeStart"
-                                                value={values.timeStart}
-                                                onChange={handleDateChangeTimeStart}
-                                                KeyboardButtonProps={{
-                                                    'aria-label': 'change time',
-                                                }}
-                                            />
-                                            <KeyboardTimePicker
-                                                margin="normal"
-                                                label="Thời Gian Đến"
-                                                value={values.timeEnd}
-                                                onChange={handleDateChangeTimeEnd}
-                                                name="timeEnd"
-                                                KeyboardButtonProps={{
-                                                    'aria-label': 'change time',
-                                                }}
-                                            />
-                                        </MuiPickersUtilsProvider>
+                                    <div className="row">
+                                        <div className="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                                            <div className="form-group ">
+                                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                    <KeyboardDatePicker
+                                                       disabled = {
+                                                            isClickInfo ? true : false
+                                                       }
+                                                        margin="normal"
+                                                        label="Ngày Đi"
+                                                        format="yyyy-MM-dd"
+                                                        name="date"
+                                                        value={values.date}
+                                                        onChange={handleDateChangeDate}
+                                                        KeyboardButtonProps={{
+                                                            'aria-label': 'change date',
+                                                        }}
+                                                    />
+                                                </MuiPickersUtilsProvider>
+                                            </div>
+                                        </div>
+                                        <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                            <div className="form-group ">
+                                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                    <KeyboardTimePicker
+                                                        margin="normal"
+                                                        label="Thời Gian Đi"
+                                                        name="timeStart"
+                                                        value={values.timeStart}
+                                                        onChange={handleDateChangeTimeStart}
+                                                        KeyboardButtonProps={{
+                                                            'aria-label': 'change time',
+                                                        }}
+                                                    />
+                                                </MuiPickersUtilsProvider>
+                                            </div>
+                                        </div>
+                                        <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                            <div className="form-group ">
+                                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                    <KeyboardTimePicker
+                                                        margin="normal"
+                                                        label="Thời Gian Đến"
+                                                        value={values.timeEnd}
+                                                        onChange={handleDateChangeTimeEnd}
+                                                        name="timeEnd"
+                                                        KeyboardButtonProps={{
+                                                            'aria-label': 'change time',
+                                                        }}
+                                                    />
+                                                </MuiPickersUtilsProvider>
+                                            </div>
+                                        </div>
                                     </div>
                                     <Button
-                                        // disabled={values.seat && values.to && values.from && values.fare && values.name && values.phone && values.category_car && !values.errName && !values.errPhone && !values.errCarNumber ? false : true}
+                                        disabled = {
+                                            isClickInfo ? 
+                                                (values.date == moment(new Date()).format('YYYY-MM-DD') && true)
+                                             : values.date > moment(new Date()).format('YYYY-MM-DD')  ? false : true
+                                        }
                                         variant="contained"
                                         color="primary"
                                         endIcon={<Icon>send</Icon>}

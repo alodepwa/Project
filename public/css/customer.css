@@ -30,6 +30,13 @@
     position: relative;
     overflow: hidden;
 }
+.imagePost{
+  width: 50%;
+  float: left;
+  object-fit: cover;
+  height: 175px;
+}
+
 .body-top{
 	width: 80% !important;
 	position: absolute !important;

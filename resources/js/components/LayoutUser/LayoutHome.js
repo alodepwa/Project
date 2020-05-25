@@ -309,17 +309,6 @@ class LayoutHome extends React.Component {
 						</div>
 					</div>
 				</div>
-				<div className="bg-light">
-					<div className="container">
-						<div className="d-flex justify-content-around py-4">
-							<div>Bùi Tấn Toán</div>
-							<div>Lê Văn Trung</div>
-							<div>Lê Quang Khanh</div>
-							<div>NGuyễn Đình Quang</div>
-							<div>Võ Hoàng Kim</div>
-						</div>
-					</div>
-				</div>
 			</div>
 		);
 	}

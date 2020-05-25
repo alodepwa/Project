@@ -63,7 +63,7 @@ class LayoutMangerTicket extends React.Component {
                 { title: 'Giá Vé', field: 'Passenger_Car_fare' },
                 { title: 'Ghế', field: 'Seats_Position' },
                 { title: 'Điểm Đi', field: 'Trips_Start' },
-                { title: 'Điểm Đến', field: 'Trips_Ends ' },
+                { title: 'Điểm Đến', field: 'Trips_Ends' },
                 { title: 'Chú Thích', field: 'Car_Ticket_Note' },
                 { title: 'Tên Xe', field: 'Passenger_Car_Name' },
                 { title: 'Biển Số', field: 'Car_Number' },
@@ -335,7 +335,6 @@ class LayoutMangerTicket extends React.Component {
                                             title={"Danh sách vé bạn đã đặt"}
                                             columns={this.state.columns}
                                             data={this.state.dataSearch}
-                                            onRowClick={(event, selectRow) => onClickRowTable(event, selectRow)}
                                             actions={[
                                                 rowData => ((moment(rowData.Trips_Passenger_Car_Date).format('YYYY-MM-DD') < this.state.date) ? {
                                                     icon: 'comment',

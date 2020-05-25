@@ -7,6 +7,7 @@ import Avatar from '@material-ui/core/Avatar';
 import NumberFormat from 'react-number-format';
 import Chip from '@material-ui/core/Chip';
 import DirectionsCarIcon from '@material-ui/icons/DirectionsCar';
+import moment from 'moment';
 function format_money(money, seat) {
     let format = money.replace(/,/g, '');
     let total = seat * format;
@@ -298,7 +299,6 @@ class LayoutInfoTicket extends Component {
             addressStep2: ''
         });
     }
-
     onClickBtnInfo(e, value) {
         e.preventDefault();
         axios.get(`${common.HOST}home/get-img-post/${value}`)
@@ -321,7 +321,7 @@ class LayoutInfoTicket extends Component {
                                     <div className="card-body">
                                         <div className="row">
                                             <div className="col-xs-12 col-sm-12 col-md-4 col-lg-3">
-                                                <img className="image" src="images/xe_khach_1_1.jpg" alt={value.Name_Image} height="170px" width="100%" />
+                                                <img className="image" src={ value.Path_Image ?  value.Path_Image : `https://sc02.alicdn.com/kf/HTB1JnQraJfvK1RjSspfq6zzXFXaz/prices-yutong-bus-new-electric-bus-king.jpg` } alt={value.Name_Image} height="170px" width="100%" />
                                             </div>
                                             <div className="col-xs-12 col-sm-6 col-md-4 col-lg-5">
                                                 <div className="row">
@@ -345,7 +345,7 @@ class LayoutInfoTicket extends Component {
                                                                 </p>
                                                             </div>
                                                             <div>
-                                                                <p data-toggle="tooltip" data-placement="top" title="Strips time about"><small>-------------</small></p>
+                                                            <p data-toggle="tooltip" data-placement="top" title="Strips time about"><small>--------------------</small></p>
                                                             </div>
                                                             <div>
                                                                 <p>
@@ -380,6 +380,9 @@ class LayoutInfoTicket extends Component {
                                                                     Thông tin chi tiết
                                                                 </button>
                                                                 <button className="btn btn-success btn_register_ticket"
+                                                                    disabled = {
+                                                                        value.Trips_Passenger_Car_Date == moment(new Date()).format('YYYY-MM-DD') && moment(value.Trips_Passenger_Car_Time_Start).format('h:mm:ss A') > moment(new Date()).format('h:mm:ss A') ? true : false
+                                                                    }
                                                                     onClick={(e) => { this.onClickBtnRegTicket(e, value.Trips_Passenger_Car_Id) }}
                                                                 >
                                                                     Đặt Vé
@@ -401,8 +404,13 @@ class LayoutInfoTicket extends Component {
                                                     <div className="btn btn-danger text-center closeToggle"><i className="far fa-times-circle" style={{ paddingTop: '6px' }} ></i></div>
                                                 </nav>
                                                 <div className="tab-content mt-3">
-                                                    <div className="container tab-pane active" id={`imagesId${key}`}>
-                                                        <img src="images/xe_khach_1_1.jpg" alt="" />
+                                                    <div className="container tab-pane bodyImage active" id={`imagesId${key}`}>
+                                                        {
+                                                            this.state.images.map((data,key) => {
+                                                              return ( <img className="imagePost" key={key} src={data.Path_Image} alt={data.Name_Image} />)
+                                                            })
+                                                        }
+                                                        
                                                     </div>
                                                     <div className="container tab-pane" id={`map${key}`}>
                                                         <p><strong>Lưu ý</strong></p>

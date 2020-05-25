@@ -10,6 +10,7 @@ import axios from 'axios';
 import * as common from './../../common';
 import moment from 'moment';
 import NumberFormat from 'react-number-format';
+import LayoutProfile from './LayoutProfile';
 const useStyles = makeStyles({
     root: {
         minWidth: 275,
@@ -84,7 +85,7 @@ export default function LayoutDashboard() {
         total = parseInt(temp) + total;
     });
     return (
-        role_id != 1 && (
+        role_id != 1 ? (
             <div className="container-fluid dashboard">
                 <div className="row d-flex justify-content-around">
                     <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
@@ -151,6 +152,6 @@ export default function LayoutDashboard() {
                     />
                 </div>
             </div>
-        )
+        ) : (<LayoutProfile />)
     )
 }
