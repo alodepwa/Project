@@ -174,6 +174,36 @@ export default function LayoutListPost() {
             }
         })
     });
+    const onClickButtonReject = ((event,data)=>{
+        Swal.fire({
+            title: 'Bạn Muốn Từ Chối?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Có, Xóa Ngay!'
+        }).then(async (result) => {
+            if (result.value) {
+                let dataJustChange = {
+                    ...data,
+                    status_post : 1
+                };
+                let dataPre = [...state.data];
+                dataPre[dataPre.indexOf(data)] = dataJustChange;
+
+                await axios.delete(`${common.HOST}admin/reJectPost/${ data.Post_Id}`)
+                    .then(res => {
+                        setValues({...values, modal : false}),
+                        res.data[0].result === 'false' ? CommonAlert.showAlert('error', 'Thất bại!')
+                            : (
+                                setState({ ...state, data: dataPre }),
+                                CommonAlert.showAlert('success', 'Thành công!')
+                            )
+                    })
+                    .catch(err => { throw err; })
+            }
+        })
+    })
     /**
      * when click button delete
      */
@@ -252,7 +282,7 @@ export default function LayoutListPost() {
                         tooltip: 'Từ Chối',
                         iconProps: { style: { color: "red" } },
                         onClick: (event, rowData) => {
-                            onClickButtonDelete(event, rowData);
+                            onClickButtonReject(event, rowData);
                         }
                     } : null)
                     ,

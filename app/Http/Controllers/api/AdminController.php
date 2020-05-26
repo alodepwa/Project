@@ -212,6 +212,11 @@ class AdminController extends Controller
         return response()->json($get);
     }
 
+    function reJectPost($id){
+        $reJect = DB::select('exec reJectPost ?', [(int)$id]);
+        return response()->json($reJect);
+    }
+
     function updateMyProfile(Request $request){
         $data = [
             $request->get('id'),

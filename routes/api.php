@@ -55,4 +55,5 @@ Route::group(['prefix' => 'admin'], function(){
     Route::GET('get-ticket-by-car/{id}','api\AdminController@getTicketByCar');
     Route::GET('get-profit-month/{id}' ,'api\AdminController@getProfitMonth');
     Route::GET('get-trips-week/{id}', 'api\AdminController@getTripsWeek');
+    Route::DELETE('reJectPost/{id}','api\AdminController@reJectPost');
 });
