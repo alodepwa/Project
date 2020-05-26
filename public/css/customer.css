@@ -158,7 +158,13 @@ strong.formatOverText {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
+#seatsposition .MuiFormControl-root.MuiTextField-root{
+  width: 100% !important;
+}
+#seatsposition .MuiOutlinedInput-root{
+  border-radius: 40px !important;
+  height: 50px !important;
+}
 /* admin */
 body{
     overflow-x: hidden;

@@ -8,6 +8,7 @@ import NumberFormat from 'react-number-format';
 import Chip from '@material-ui/core/Chip';
 import DirectionsCarIcon from '@material-ui/icons/DirectionsCar';
 import moment from 'moment';
+import TextField from '@material-ui/core/TextField';
 function format_money(money, seat) {
     let format = money.replace(/,/g, '');
     let total = seat * format;
@@ -321,7 +322,7 @@ class LayoutInfoTicket extends Component {
                                     <div className="card-body">
                                         <div className="row">
                                             <div className="col-xs-12 col-sm-12 col-md-4 col-lg-3">
-                                                <img className="image" src={ `uploadIMG\\${value.Path_Image}` } alt={value.Name_Image} height="170px" width="100%" />
+                                                <img className="image" src={`uploadIMG\\${value.Path_Image}`} alt={value.Name_Image} height="170px" width="100%" />
                                             </div>
                                             <div className="col-xs-12 col-sm-6 col-md-4 col-lg-5">
                                                 <div className="row">
@@ -345,7 +346,7 @@ class LayoutInfoTicket extends Component {
                                                                 </p>
                                                             </div>
                                                             <div>
-                                                            <p data-toggle="tooltip" data-placement="top" title="Strips time about"><small>--------------------</small></p>
+                                                                <p data-toggle="tooltip" data-placement="top" title="Strips time about"><small>--------------------</small></p>
                                                             </div>
                                                             <div>
                                                                 <p>
@@ -380,7 +381,7 @@ class LayoutInfoTicket extends Component {
                                                                     Thông tin chi tiết
                                                                 </button>
                                                                 <button className="btn btn-success btn_register_ticket"
-                                                                    disabled = {
+                                                                    disabled={
                                                                         value.Trips_Passenger_Car_Date == moment(new Date()).format('YYYY-MM-DD') && moment(value.Trips_Passenger_Car_Time_Start).format('h:mm:ss A') > moment(new Date()).format('h:mm:ss A') ? true : false
                                                                     }
                                                                     onClick={(e) => { this.onClickBtnRegTicket(e, value.Trips_Passenger_Car_Id) }}
@@ -406,11 +407,11 @@ class LayoutInfoTicket extends Component {
                                                 <div className="tab-content mt-3">
                                                     <div className="container tab-pane bodyImage active" id={`imagesId${key}`}>
                                                         {
-                                                            this.state.images.map((data,key) => {
-                                                              return ( <img className="imagePost" key={key} src={data.Path_Image} alt={data.Name_Image} />)
+                                                            this.state.images.map((data, key) => {
+                                                                return (<img className="imagePost" key={key} src={`uploadIMG\\${value.Path_Image}`} alt={data.Name_Image} />)
                                                             })
                                                         }
-                                                        
+
                                                     </div>
                                                     <div className="container tab-pane" id={`map${key}`}>
                                                         <p><strong>Lưu ý</strong></p>
@@ -578,7 +579,7 @@ class LayoutInfoTicket extends Component {
                                                                     <div className="row">
                                                                         <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-center">
                                                                             <strong>From</strong> : {value.Trips_Start}
-                                                                            &nbsp;
+                                                                            <br />
                                                                         <strong>To</strong> : {value.Trips_Ends}
                                                                         </div>
                                                                         <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5 text-center">
@@ -608,22 +609,28 @@ class LayoutInfoTicket extends Component {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div className="col-lg-12">
+                                                                <div className="col-lg-12 mt-3">
                                                                     <div className="container">
                                                                         <div className="d-flex flex-column">
-                                                                            <div className="form-group">
-
-                                                                                <div className="row">
-                                                                                    <label>Họ tên <span style={{ color: 'red' }}> * </span></label>
-                                                                                    <label style={{ color: 'red' }}>&nbsp;&nbsp;{this.state.nameErr ? this.state.nameErr : ''}</label>
-                                                                                </div>
-                                                                                <input type="text"
-                                                                                    required className="form-control name" onBlur={
+                                                                            <div className="form-group mt-2">
+                                                                                {/* <input type="text"
+                                                                                    required
+                                                                                    error={true}
+                                                                                    className="form-control name" onBlur={
                                                                                         (e) => this.onChangeInputName(e)
-                                                                                    }></input>
+                                                                                    } /> */}
+                                                                                <TextField
+                                                                                    required={true}
+                                                                                    error={this.state.nameErr ? true : false}
+                                                                                    type="text"
+                                                                                    variant="outlined"
+                                                                                    name="name"
+                                                                                    label={this.state.nameErr ? "Họ tên không đúng định dạng!" : "Họ Tên"}
+                                                                                    onChange={(e) => this.onChangeInputName(e)}
+                                                                                />
                                                                             </div>
-                                                                            <div className="form-group">
-                                                                                <div className="row">
+                                                                            <div className="form-group mt-2">
+                                                                                {/* <div className="row">
                                                                                     <label>Số điện thoại <span style={{ color: 'red' }}> * </span></label>
                                                                                     <label style={{ color: 'red' }}>&nbsp;&nbsp;{this.state.phoneErr ? this.state.phoneErr : ''}</label>
                                                                                 </div>
@@ -634,10 +641,19 @@ class LayoutInfoTicket extends Component {
                                                                                             (e) => this.onChangeInputPhone(e)
                                                                                         }
                                                                                     ></input>
-                                                                                </div>
+                                                                                </div> */}
+                                                                                 <TextField
+                                                                                    required={true}
+                                                                                    error={this.state.phoneErr ? true : false}
+                                                                                    type="number"
+                                                                                    variant="outlined"
+                                                                                    name="phone"
+                                                                                    label={this.state.phoneErr ? "Sđt không đúng định dạng!" : "Số Điện Thoại"}
+                                                                                    onChange={(e) => this.onChangeInputPhone(e)}
+                                                                                />
                                                                             </div>
-                                                                            <div className="form-group">
-                                                                                <div className="row">
+                                                                            <div className="form-group mt-2">
+                                                                                {/* <div className="row">
                                                                                     <label>Nơi đón khách <span style={{ color: 'red' }}> * </span></label>
                                                                                     <label style={{ color: 'red' }}>&nbsp;&nbsp;{this.state.fromErr ? this.state.fromErr : ''}</label>
                                                                                 </div>
@@ -646,10 +662,19 @@ class LayoutInfoTicket extends Component {
                                                                                         (e) => this.onChangeInputFrom(e)
                                                                                     }
                                                                                     required className="form-control from"
-                                                                                ></input>
+                                                                                ></input> */}
+                                                                                <TextField
+                                                                                    required={true}
+                                                                                    error={this.state.fromErr ? true : false}
+                                                                                    type="text"
+                                                                                    variant="outlined"
+                                                                                    name="from"
+                                                                                    label={this.state.fromErr ? "Nơi đón không đúng định dạng" : "Nơi Đón"}
+                                                                                    onChange={(e) => this.onChangeInputFrom(e)}
+                                                                                />
                                                                             </div>
-                                                                            <div className="form-group">
-                                                                                <div className="row">
+                                                                            <div className="form-group mt-2">
+                                                                                {/* <div className="row">
                                                                                     <label>Nơi trả khách <span style={{ color: 'red' }}> * </span></label>
                                                                                     <label style={{ color: 'red' }}>&nbsp;&nbsp;{this.state.toErr ? this.state.toErr : ''}</label>
                                                                                 </div>
@@ -658,10 +683,19 @@ class LayoutInfoTicket extends Component {
                                                                                         (e) => this.onChangeInputTo(e)
                                                                                     }
                                                                                     required className="form-control to"
-                                                                                ></input>
+                                                                                ></input> */}
+                                                                                <TextField
+                                                                                    required={true}
+                                                                                    error={this.state.toErr ? true : false}
+                                                                                    type="text"
+                                                                                    variant="outlined"
+                                                                                    name="to"
+                                                                                    label={this.state.toErr ? "Nơi trả không đúng định dạng" : "Nơi Trả"}
+                                                                                    onChange={(e) => this.onChangeInputTo(e)}
+                                                                                />
                                                                             </div>
-                                                                            <div className="form-group">
-                                                                                <div className="row">
+                                                                            <div className="form-group mt-2">
+                                                                                {/* <div className="row">
                                                                                     <label>Ghi chú </label>
                                                                                     <label style={{ color: 'red' }}>&nbsp;&nbsp;{this.state.addressErr ? this.state.addressErr : ''}</label>
                                                                                 </div>
@@ -670,7 +704,15 @@ class LayoutInfoTicket extends Component {
                                                                                     onBlur={
                                                                                         (e) => this.onChangeInputAddress(e)
                                                                                     }
-                                                                                ></textarea>
+                                                                                ></textarea> */}
+                                                                                <TextField
+                                                                                    error={this.state.addressErr ? true : false}
+                                                                                    type="textarea"
+                                                                                    variant="outlined"
+                                                                                    name="to"
+                                                                                    label={this.state.addressErr ? "Ghi Chú không đúng định dạng" : "Ghi Chú"}
+                                                                                    onChange={(e) => this.onChangeInputAddress(e)}
+                                                                                />
                                                                             </div>
                                                                         </div>
                                                                     </div>
